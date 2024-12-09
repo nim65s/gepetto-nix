@@ -2,6 +2,10 @@
 
 This project is a flake which provide packages and development environment to gepetto members.
 
+## Binary cache
+
+ref. <https://gepetto.cachix.org>
+
 ## NixGL
 
 This is for now mostly intended for people not running NixOS, so nixGL is used.
