@@ -46,6 +46,8 @@
       in
       {
         devShells = {
+          # Expected base entrypoint.
+          # This is "pure" + some stuff wrapped by NixGL
           default = pkgs.mkShell {
             name = "Gepetto Main Dev Shell with NixGL";
             packages = [
@@ -55,7 +57,7 @@
               self.packages.${system}.ros
             ];
           };
-          nixos = pkgs.mkShell {
+          pure = pkgs.mkShell {
             name = "Gepetto Main Dev Shell";
             packages = [
               pkgs.colcon

@@ -16,9 +16,11 @@ Therefore, for nix-direnv, you probably need something like:
 echo 'use flake . --impure' > .envrc
 ```
 
-## NixOS
+## Pure
 
-If you are on NixOS, and want to avoid such impurity:
+If you are on NixOS, or can manage OpenGL on your own, and want to avoid such impurity:
 ```bash
-echo 'use flake .#nixos --impure' > .envrc
+echo 'use flake .#pure' > .envrc
 ```
+
+Also, that one is used for CI and cache.
