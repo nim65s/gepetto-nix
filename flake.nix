@@ -47,10 +47,18 @@
       {
         devShells = {
           default = pkgs.mkShell {
-            name = "Gepetto Main Dev Shell";
+            name = "Gepetto Main Dev Shell with NixGL";
             packages = [
               pkgs.colcon
               self.packages.${system}.nixgl-gepetto-gui
+              self.packages.${system}.python
+              self.packages.${system}.ros
+            ];
+          };
+          nixos = pkgs.mkShell {
+            name = "Gepetto Main Dev Shell";
+            packages = [
+              pkgs.colcon
               self.packages.${system}.python
               self.packages.${system}.ros
             ];
