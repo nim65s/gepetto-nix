@@ -6,5 +6,6 @@ pull_request_rules:
       - or:
         - author = pre-commit-ci[bot]
         - author = dependabot[bot]
+        - author = github-actions[bot]
     actions:
       merge:
