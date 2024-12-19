@@ -76,7 +76,7 @@
           python = pkgs.python3.withPackages (p: [
             p.example-robot-data
             p.gepetto-gui
-            p.hpp
+            p.hpp-corba
           ]);
           ros =
             with pkgs.rosPackages.humble;
