@@ -3,10 +3,10 @@ name: "Build dev shell"
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
 
 jobs:
   ci:
