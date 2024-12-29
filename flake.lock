@@ -108,7 +108,7 @@
     "patch-hpp": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-PjUvva7/n33obAxwVXrR9W/3j9qGGa1Sh6oG4q/Rl5M=",
+        "narHash": "sha256-wMDWz+rdEKctYHrcV2ujA+/0q/1okXejipRZKuvmwX4=",
         "type": "file",
         "url": "https://github.com/NixOS/nixpkgs/pull/362956.patch"
       },
