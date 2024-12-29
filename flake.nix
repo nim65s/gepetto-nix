@@ -1,27 +1,13 @@
 {
   inputs = {
-    ## TODO: this is the expected use
-    # we can't do that for now, and therefore we are loosing ros.cachix.org
-    #nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
-    #nixpkgs.follows = "nix-ros-overlay/nixpkgs"; # IMPORTANT!!!
-
-    # ref. https://github.com/lopsided98/nix-ros-overlay/pull/538: ros pinocchio is nixpkgs pinocchio
-    nix-ros-overlay = {
-      url = "github:nim65s/nix-ros-overlay/pin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # nix-ros-overlay.inputs.nixpkgs is too old for now,
-    # patching packages which were moved to by-name is tedious,
-    # so let's switch to upstream for now.
-    # We'll have to compile / cache ROS stuff we need to gepetto.cachix.org for now.
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
+    nixpkgs.follows = "nix-ros-overlay/nixpkgs";
 
     ## Patches for nixpkgs
     # init HPP v6.0.0
     # also: hpp-fcl v2.4.5 -> coal v3.0.0
     patch-hpp = {
-      url = "https://github.com/NixOS/nixpkgs/pull/362956.patch";
+      url = "https://github.com/nim65s/nixpkgs/pull/1.patch";
       flake = false;
     };
 
