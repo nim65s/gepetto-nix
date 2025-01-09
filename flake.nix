@@ -68,6 +68,7 @@
               paths = [
                 ros-core
                 turtlesim
+                pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
               ];
             };
         };
