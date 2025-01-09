@@ -29,6 +29,11 @@
             inputs.patch-hpp
           ];
         };
+        pure-packages = [
+          pkgs.colcon
+          self.packages.${system}.python
+          self.packages.${system}.ros
+        ];
       in
       {
         devShells = {
@@ -36,20 +41,13 @@
           # This is "pure" + some stuff wrapped by NixGL
           default = pkgs.mkShell {
             name = "Gepetto Main Dev Shell with NixGL";
-            packages = [
-              pkgs.colcon
+            packages = pure-packages ++ [
               self.packages.${system}.nixgl-gepetto-gui
-              self.packages.${system}.python
-              self.packages.${system}.ros
             ];
           };
           pure = pkgs.mkShell {
             name = "Gepetto Main Dev Shell";
-            packages = [
-              pkgs.colcon
-              self.packages.${system}.python
-              self.packages.${system}.ros
-            ];
+            packages = pure-packages;
           };
         };
         packages = {
@@ -60,7 +58,7 @@
               text = "${lib.getExe' nixgl.auto.nixGLDefault "nixGL"} ${lib.getExe python3Packages.gepetto-gui}";
             };
           python = pkgs.python3.withPackages (p: [
-            p.example-robot-data
+            p.crocoddyl
             p.gepetto-gui
             p.hpp-corba
           ]);
