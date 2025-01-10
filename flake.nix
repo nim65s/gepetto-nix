@@ -55,6 +55,32 @@
               self.packages.${system}.ros
             ];
           };
+          ms = pkgs.mkShell {
+            name = "Dev Shell for Maxime";
+            inputsFrom = [ pkgs.python3Packages.crocoddyl ];
+            packages = [
+              (pkgs.python3.withPackages (p: [
+                p.fatrop
+                p.gepetto-gui
+                p.ipython
+                p.matplotlib
+                p.opencv4
+                p.pandas
+                p.proxsuite
+                p.quadprog
+              ]))
+            ];
+            shellHook = ''
+              export ROOT=$HOME/devel
+              export PYTHONPATH=${
+                pkgs.lib.concatStringsSep ":" [
+                  "$ROOT/src/cobotmpc"
+                  "$ROOT/install/${pkgs.python3.sitePackages}"
+                  "$PYTHONPATH"
+                ]
+              }
+            '';
+          };
         };
         packages = {
           python = pkgs.python3.withPackages (p: [
