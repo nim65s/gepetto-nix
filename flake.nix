@@ -10,9 +10,6 @@
       url = "https://github.com/nim65s/nixpkgs/pull/1.patch";
       flake = false;
     };
-
-    ## NixGL, for people not yet on NixOS
-    nixgl.url = "github:nix-community/nixGL";
   };
   outputs =
     { nixpkgs, self, ... }@inputs:
@@ -21,42 +18,24 @@
       let
         pkgs = import ./patched-nixpkgs.nix {
           inherit nixpkgs system;
-          overlays = [
-            inputs.nix-ros-overlay.overlays.default
-            inputs.nixgl.overlay
-          ];
+          overlays = [ inputs.nix-ros-overlay.overlays.default ];
           patches = [
             inputs.patch-hpp
           ];
         };
-        pure-packages = [
-          pkgs.colcon
-          self.packages.${system}.python
-          self.packages.${system}.ros
-        ];
       in
       {
         devShells = {
-          # Expected base entrypoint.
-          # This is "pure" + some stuff wrapped by NixGL
           default = pkgs.mkShell {
-            name = "Gepetto Main Dev Shell with NixGL";
-            packages = pure-packages ++ [
-              self.packages.${system}.nixgl-gepetto-gui
-            ];
-          };
-          pure = pkgs.mkShell {
             name = "Gepetto Main Dev Shell";
-            packages = pure-packages;
+            packages = [
+              pkgs.colcon
+              self.packages.${system}.python
+              self.packages.${system}.ros
+            ];
           };
         };
         packages = {
-          nixgl-gepetto-gui =
-            with pkgs;
-            writeShellApplication {
-              name = "nixgl-gepetto-gui";
-              text = "${lib.getExe' nixgl.auto.nixGLDefault "nixGL"} ${lib.getExe python3Packages.gepetto-gui}";
-            };
           python = pkgs.python3.withPackages (p: [
             p.crocoddyl
             p.gepetto-gui
