@@ -10,6 +10,12 @@
       url = "https://github.com/nim65s/nixpkgs/pull/2.patch";
       flake = false;
     };
+
+    # gepetto-viewer has a fix to understand AMENT_PREFIX_PATH in #239/devel
+    gepetto-viewer = {
+      url = "github:Gepetto/gepetto-viewer/devel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs =
     { nixpkgs, self, ... }@inputs:
@@ -18,7 +24,14 @@
       let
         pkgs = import ./patched-nixpkgs.nix {
           inherit nixpkgs system;
-          overlays = [ inputs.nix-ros-overlay.overlays.default ];
+          overlays = [
+            inputs.nix-ros-overlay.overlays.default
+            (_super: prev: {
+              gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
+                inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
+              };
+            })
+          ];
           patches = [
             inputs.patch-hpp
           ];
