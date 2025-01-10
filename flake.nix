@@ -3,6 +3,16 @@
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
 
+    example-parallel-robots = {
+      url = "github:gepetto/example-parallel-robots";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    toolbox-parallel-robots = {
+      url = "github:gepetto/toolbox-parallel-robots";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ## Patches for nixpkgs
     # init HPP v6.0.0
     # also: hpp-fcl v2.4.5 -> coal v3.0.0
@@ -68,6 +78,7 @@
                 p.pandas
                 p.proxsuite
                 p.quadprog
+                self.packages.${system}.example-parallel-robots
               ]))
             ];
             shellHook = ''
@@ -83,6 +94,15 @@
           };
         };
         packages = {
+          example-parallel-robots =
+            inputs.example-parallel-robots.packages.${system}.example-parallel-robots.override {
+              inherit (pkgs.python3Packages) pinocchio;
+              inherit (self.packages.${system}) toolbox-parallel-robots;
+            };
+          toolbox-parallel-robots =
+            inputs.toolbox-parallel-robots.packages.${system}.toolbox-parallel-robots.override {
+              inherit (pkgs.python3Packages) pinocchio;
+            };
           python = pkgs.python3.withPackages (p: [
             p.crocoddyl
             p.gepetto-gui
