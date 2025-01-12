@@ -106,6 +106,18 @@
         "url": "https://github.com/NixOS/nixpkgs/archive/5487e69da40cbd611ab2cadee0b4637225f7cfae.tar.gz"
       }
     },
+    "patch-example-robot-data": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-z7OOMu0L7/CiTJ6grA9E6+nBoZ2Q1b/DnsMjGVtxISA=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/363802.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/363802.patch"
+      }
+    },
     "patch-hpp": {
       "flake": false,
       "locked": {
@@ -126,6 +138,7 @@
           "nix-ros-overlay",
           "nixpkgs"
         ],
+        "patch-example-robot-data": "patch-example-robot-data",
         "patch-hpp": "patch-hpp"
       }
     },
