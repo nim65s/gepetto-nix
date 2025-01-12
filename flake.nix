@@ -1,13 +1,13 @@
 {
   inputs = {
-    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/master";
+    nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
 
     ## Patches for nixpkgs
     # init HPP v6.0.0
     # also: hpp-fcl v2.4.5 -> coal v3.0.0
     patch-hpp = {
-      url = "https://github.com/nim65s/nixpkgs/pull/1.patch";
+      url = "https://github.com/nim65s/nixpkgs/pull/2.patch";
       flake = false;
     };
   };
