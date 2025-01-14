@@ -69,6 +69,7 @@
                 ros-core
                 turtlesim
                 pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
+                pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
               ];
             };
         };
