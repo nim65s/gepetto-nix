@@ -74,6 +74,7 @@
                 p.gepetto-gui
                 p.ipython
                 p.matplotlib
+                p.mim-solvers
                 p.opencv4
                 p.pandas
                 p.proxsuite
