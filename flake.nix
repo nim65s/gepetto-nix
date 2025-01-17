@@ -83,11 +83,10 @@
               ]))
             ];
             shellHook = ''
-              export ROOT=$HOME/devel
               export PYTHONPATH=${
                 pkgs.lib.concatStringsSep ":" [
-                  "$ROOT/src/cobotmpc"
-                  "$ROOT/install/${pkgs.python3.sitePackages}"
+                  "$PWD/src/cobotmpc"
+                  "$PWD/install/${pkgs.python3.sitePackages}"
                   "$PYTHONPATH"
                 ]
               }
