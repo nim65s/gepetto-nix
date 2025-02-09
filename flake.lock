@@ -9,11 +9,11 @@
         "toolbox-parallel-robots": "toolbox-parallel-robots"
       },
       "locked": {
-        "lastModified": 1738021374,
-        "narHash": "sha256-0aPG/nEj4fcnEi/kzhroHOqkriw3EXunk/whY1CY7Ak=",
+        "lastModified": 1738629612,
+        "narHash": "sha256-PMyIQuzBD7m2TfdWfGoeJVfv6gfJbUojfgS6RIUS4dY=",
         "owner": "gepetto",
         "repo": "example-parallel-robots",
-        "rev": "d0b20ecf79e39a7641ed91d0e6bee6ea48ceadc1",
+        "rev": "ee3735d46e0163e98e17c58880d105b9d1a9b3d9",
         "type": "github"
       },
       "original": {
@@ -102,11 +102,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1738022902,
-        "narHash": "sha256-Kqejvw3FRkeqC0SNDrxa2InrQzQjDjWdJWO2NOslHoI=",
+        "lastModified": 1738943500,
+        "narHash": "sha256-3wFaT5RJl761NxSDo9Cpfluog72is+Y2qeg4kAssOMg=",
         "owner": "Gepetto",
         "repo": "gepetto-viewer",
-        "rev": "5b23a0115b9f4f9a761212bbbe290e10313ac7b6",
+        "rev": "693b212d7cc781ec1057eaad044f650f1bf4aeb5",
         "type": "github"
       },
       "original": {
@@ -274,11 +274,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1738021537,
-        "narHash": "sha256-t9W0+x1vGLdL8IVufKWeO7FxE9WDfZaFKYHd9Pqwpa0=",
+        "lastModified": 1738629828,
+        "narHash": "sha256-T6TBsOlb1m3TBaL58p/K3vB873VWFhm1LU6aAQyJfiI=",
         "owner": "gepetto",
         "repo": "toolbox-parallel-robots",
-        "rev": "eaeb6fbf1f75a4a6af9db13f015e66dca809ad9c",
+        "rev": "e4556ce64480fc7ba875366173cef911ea7e0d65",
         "type": "github"
       },
       "original": {
