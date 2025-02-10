@@ -107,6 +107,8 @@
             p.crocoddyl
             p.gepetto-gui
             p.hpp-corba
+            p.ipython
+            p.matplotlib
           ]);
           ros =
             with pkgs.rosPackages.humble;
