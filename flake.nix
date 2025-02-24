@@ -21,13 +21,6 @@
       flake = false;
     };
 
-    # hpp-tutorial needs PR2 robot in example-robot-data
-    # which is available in >= 4.2.0, which landed in master but not yet on nix-ros
-    patch-example-robot-data = {
-      url = "https://github.com/NixOS/nixpkgs/pull/363802.patch";
-      flake = false;
-    };
-
     # gepetto-viewer has a fix to understand AMENT_PREFIX_PATH in #239/devel
     gepetto-viewer = {
       url = "github:Gepetto/gepetto-viewer/devel";
@@ -50,7 +43,6 @@
             })
           ];
           patches = [
-            inputs.patch-example-robot-data
             inputs.patch-hpp
           ];
         };
