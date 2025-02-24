@@ -191,7 +191,7 @@
     "patch-hpp": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-H3FDc6QA501TMwwnWuLdpudnEiyPvDWnuMazZ3pNsdE=",
+        "narHash": "sha256-+/S2A4p6kTva+ZOFRt+XSd5N04BA3RcJHZvL17ebcLw=",
         "type": "file",
         "url": "https://github.com/nim65s/nixpkgs/pull/2.patch"
       },
