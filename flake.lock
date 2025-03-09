@@ -9,11 +9,11 @@
         "toolbox-parallel-robots": "toolbox-parallel-robots"
       },
       "locked": {
-        "lastModified": 1740428973,
-        "narHash": "sha256-74+AVAQI8Zz2b3w0dvtHKg9ir/bPC5n9Sky2qD4tKg8=",
+        "lastModified": 1741036331,
+        "narHash": "sha256-rEoLk6viG4bfv2c3K8JqIlDPSgA0g5VrLPCcRhzMDA0=",
         "owner": "gepetto",
         "repo": "example-parallel-robots",
-        "rev": "a26105846796812fdbc5cf6859b46207bd854814",
+        "rev": "535d32eda9eb1d8a926d99a3de6462bb71db06fb",
         "type": "github"
       },
       "original": {
@@ -102,11 +102,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1740506466,
-        "narHash": "sha256-GRf9ebRzCUKtPpLfxb89q5KkOhm2buPhtqmmjQ86ENs=",
+        "lastModified": 1741123781,
+        "narHash": "sha256-J33vPZQQ3+uS4p1jRI1hd1gvY/J7NliLIqKVdxa/sFY=",
         "owner": "Gepetto",
         "repo": "gepetto-viewer",
-        "rev": "38515687bfff96799d42a7aabbe07a6fffd5113c",
+        "rev": "c996b096783201baefe2bb467c3fa8251a913d10",
         "type": "github"
       },
       "original": {
@@ -191,7 +191,7 @@
     "patch-hpp": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-+/S2A4p6kTva+ZOFRt+XSd5N04BA3RcJHZvL17ebcLw=",
+        "narHash": "sha256-Rj07W99G9CvZEc/92lAJa8JYqgFKhaIoeyJuatpLlhk=",
         "type": "file",
         "url": "https://github.com/nim65s/nixpkgs/pull/2.patch"
       },
@@ -261,11 +261,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1740429145,
-        "narHash": "sha256-kocwIrnHfeqGz+hD2C2nc494Xlr5l2DQ8jkdVj4tvxI=",
+        "lastModified": 1741036507,
+        "narHash": "sha256-1o8Qfg5CvfFdZ+BxUETi3GXTrLZEx1r+WAjsSgqk0eE=",
         "owner": "gepetto",
         "repo": "toolbox-parallel-robots",
-        "rev": "407b63b0a66c30918c636ceed031eb4e9b8ee0a4",
+        "rev": "037ac7665ed67c4399746f4ea8ac8cbac1d326c7",
         "type": "github"
       },
       "original": {
