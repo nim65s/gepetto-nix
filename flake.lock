@@ -9,11 +9,11 @@
         "toolbox-parallel-robots": "toolbox-parallel-robots"
       },
       "locked": {
-        "lastModified": 1741036331,
-        "narHash": "sha256-rEoLk6viG4bfv2c3K8JqIlDPSgA0g5VrLPCcRhzMDA0=",
+        "lastModified": 1741639195,
+        "narHash": "sha256-PH92MgPycAQ/TQOivYKFEs38OL88YshrSJTXvvJrOPg=",
         "owner": "gepetto",
         "repo": "example-parallel-robots",
-        "rev": "535d32eda9eb1d8a926d99a3de6462bb71db06fb",
+        "rev": "035da61594ca81efeac181dbed03a4d97147d769",
         "type": "github"
       },
       "original": {
@@ -122,11 +122,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1740856386,
-        "narHash": "sha256-8nCsAs0KB7kb8kkgX3zVS8M5zJqbnH2pzlAZPsnknOE=",
+        "lastModified": 1741555473,
+        "narHash": "sha256-8/00ntYZXrEEKxTGeWPfg5EHH3D1VuLRGV2C8odHXac=",
         "owner": "lopsided98",
         "repo": "nix-ros-overlay",
-        "rev": "902905a45b5f3b2aa2771bf5c59df1fcfe003778",
+        "rev": "e6bfafcd05932e92b10e171a9d536c45fdcd0adf",
         "type": "github"
       },
       "original": {
@@ -261,11 +261,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741036507,
-        "narHash": "sha256-1o8Qfg5CvfFdZ+BxUETi3GXTrLZEx1r+WAjsSgqk0eE=",
+        "lastModified": 1741639205,
+        "narHash": "sha256-5m/nvNA8MJ1BwfDrTKAam3P9a2Q8lnhkj6/CGLdqRzI=",
         "owner": "gepetto",
         "repo": "toolbox-parallel-robots",
-        "rev": "037ac7665ed67c4399746f4ea8ac8cbac1d326c7",
+        "rev": "ba0b3672a2fe55d3d8495cbca624be7057dbcbfa",
         "type": "github"
       },
       "original": {
