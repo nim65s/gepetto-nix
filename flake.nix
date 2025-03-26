@@ -14,6 +14,12 @@
     };
 
     ## Patches for nixpkgs
+    # brax
+    patch-brax = {
+      url = "https://github.com/NixOS/nixpkgs/pull/393394.patch";
+      flake = false;
+    };
+
     # init HPP v6.0.0
     # also: hpp-fcl v2.4.5 -> coal v3.0.0
     patch-hpp = {
@@ -43,6 +49,7 @@
             })
           ];
           patches = [
+            inputs.patch-brax
             inputs.patch-hpp
           ];
         };
@@ -86,6 +93,7 @@
           };
         };
         packages = {
+          inherit (pkgs.python3Packages) brax;
           example-parallel-robots =
             inputs.example-parallel-robots.packages.${system}.example-parallel-robots.override {
               inherit (pkgs.python3Packages) pinocchio;
