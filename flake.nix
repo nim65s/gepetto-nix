@@ -228,10 +228,10 @@
                 };
             }
             // {
-
               inherit (pkgs)
                 # keep-sorted start
                 agimus-msgs
+                aligator
                 colmpc
                 crocoddyl
                 example-robot-data
@@ -244,26 +244,25 @@
                 # keep-sorted end
                 ;
             }
-            //
-
-              lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
-                inherit (pkgs.python3Packages)
-                  # keep-sorted start
-                  aligator
-                  brax
-                  colmpc
-                  crocoddyl
-                  example-parallel-robots
-                  example-robot-data
-                  gepetto-gui
-                  linear-feedback-controller
-                  linear-feedback-controller-msgs
-                  mim-solvers
-                  pinocchio
-                  toolbox-parallel-robots
-                  # keep-sorted end
-                  ;
-              };
+            // lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
+              inherit (pkgs.python3Packages)
+                # keep-sorted start
+                aligator
+                brax
+                colmpc
+                crocoddyl
+                example-parallel-robots
+                example-robot-data
+                gepetto-gui
+                hpp-corba
+                linear-feedback-controller
+                linear-feedback-controller-msgs
+                mim-solvers
+                pinocchio
+                toolbox-parallel-robots
+                # keep-sorted end
+                ;
+            };
           treefmt = {
             settings.global.excludes = [
               ".envrc"
