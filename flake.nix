@@ -166,7 +166,7 @@
               devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
               packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
             in
-            lib.filterAttrs (_n: v: v.meta.available) (devShells // packages);
+            lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (devShells // packages);
           devShells = {
             default = pkgs.mkShell {
               name = "Gepetto Main Dev Shell";
