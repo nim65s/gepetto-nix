@@ -252,6 +252,30 @@
                 example-robot-data
                 franka-description
                 gepetto-viewer
+                hpp-affordance
+                hpp-affordance-corba
+                hpp-baxter
+                hpp-bezier-com-traj
+                hpp-centroidal-dynamics
+                hpp-constraints
+                hpp-corbaserver
+                hpp-core
+                hpp-doc
+                hpp-environments
+                hpp-gepetto-viewer
+                hpp-gui
+                hpp-manipulation
+                hpp-manipulation-corba
+                hpp-manipulation-urdf
+                hpp-pinocchio
+                hpp-plot
+                hpp-practicals
+                hpp-romeo
+                hpp-statistics
+                hpp-template-corba
+                hpp-tutorial
+                hpp-universal-robot
+                hpp-util
                 linear-feedback-controller
                 linear-feedback-controller-msgs
                 mim-solvers
@@ -262,6 +286,7 @@
             // lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
               inherit (pkgs.python3Packages)
                 # keep-sorted start
+
                 agimus-msgs
                 aligator
                 brax
@@ -271,6 +296,17 @@
                 example-robot-data
                 gepetto-gui
                 hpp-corba
+                hpp-corbaserver
+                hpp-doc
+                hpp-environments
+                hpp-gepetto-viewer
+                hpp-gui
+                hpp-manipulation-corba
+                hpp-plot
+                hpp-practicals
+                hpp-romeo
+                hpp-tutorial
+                hpp-universal-robot
                 linear-feedback-controller
                 linear-feedback-controller-msgs
                 mim-solvers
