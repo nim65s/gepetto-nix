@@ -59,98 +59,116 @@
           ];
         }
       );
-      overlay = 
-            (_super: prev: {
-              gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
-                inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
-              };
-            });
+      overlay = (
+        _super: prev: {
+          gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
+            inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
+          };
+        }
+      );
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } (
-    { self, ... }:
-    {
-      systems = [ system ];
-      imports = [ inputs.treefmt-nix.flakeModule ];
-      perSystem = { pkgs, self',... }:
+      { self, ... }:
       {
-        _module.args.pkgs = import patchedNixpkgs {
-          inherit system;
-          overlays = [
-            inputs.nix-ros-overlay.overlays.default
-            overlay
-          ];
-        };
-        checks = let
-          packages = pkgs.lib.mapAttrs' (n: pkgs.lib.nameValuePair "package-${n}") self'.packages;
-          devShells = pkgs.lib.mapAttrs' (n: pkgs.lib.nameValuePair "devShell-${n}") self'.devShells;
-        in packages // devShells;
-        devShells = {
-          default = pkgs.mkShell {
-            name = "Gepetto Main Dev Shell";
-            packages = [
-              pkgs.colcon
-              self.packages.${system}.python
-              self.packages.${system}.ros
-            ];
-          };
-          ms = pkgs.mkShell {
-            name = "Dev Shell for Maxime";
-            inputsFrom = [ pkgs.python3Packages.crocoddyl ];
-            packages = [
-              (pkgs.python3.withPackages (p: [
-                p.fatrop
-                p.gepetto-gui
-                p.ipython
-                p.matplotlib
-                p.mim-solvers
-                p.opencv4
-                p.pandas
-                p.proxsuite
-                p.quadprog
-                self.packages.${system}.example-parallel-robots
-              ]))
-            ];
-            shellHook = ''
-              export PYTHONPATH=${
-                pkgs.lib.concatStringsSep ":" [
-                  "$PWD/src/cobotmpc"
-                  "$PWD/install/${pkgs.python3.sitePackages}"
-                  "$PYTHONPATH"
-                ]
-              }
-            '';
-          };
-        };
-        packages = {
-          inherit (pkgs.python3Packages) brax;
-          example-parallel-robots =
-            inputs.example-parallel-robots.packages.${system}.example-parallel-robots.override {
-              inherit (pkgs.python3Packages) pinocchio;
-              inherit (self.packages.${system}) toolbox-parallel-robots;
-            };
-          toolbox-parallel-robots =
-            inputs.toolbox-parallel-robots.packages.${system}.toolbox-parallel-robots.override {
-              inherit (pkgs.python3Packages) pinocchio;
-            };
-          python = pkgs.python3.withPackages (p: [
-            p.crocoddyl
-            p.gepetto-gui
-            p.hpp-corba
-            p.ipython
-            p.matplotlib
-          ]);
-          ros =
-            with pkgs.rosPackages.humble;
-            buildEnv {
-              paths = [
-                ros-core
-                turtlesim
-                pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
-                pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
+        systems = [ system ];
+        imports = [ inputs.treefmt-nix.flakeModule ];
+        perSystem =
+          { pkgs, self', ... }:
+          {
+            _module.args.pkgs = import patchedNixpkgs {
+              inherit system;
+              overlays = [
+                inputs.nix-ros-overlay.overlays.default
+                overlay
               ];
             };
-        };
+            checks =
+              let
+                packages = pkgs.lib.mapAttrs' (n: pkgs.lib.nameValuePair "package-${n}") self'.packages;
+                devShells = pkgs.lib.mapAttrs' (n: pkgs.lib.nameValuePair "devShell-${n}") self'.devShells;
+              in
+              packages // devShells;
+            devShells = {
+              default = pkgs.mkShell {
+                name = "Gepetto Main Dev Shell";
+                packages = [
+                  pkgs.colcon
+                  self.packages.${system}.python
+                  self.packages.${system}.ros
+                ];
+              };
+              ms = pkgs.mkShell {
+                name = "Dev Shell for Maxime";
+                inputsFrom = [ pkgs.python3Packages.crocoddyl ];
+                packages = [
+                  (pkgs.python3.withPackages (p: [
+                    p.fatrop
+                    p.gepetto-gui
+                    p.ipython
+                    p.matplotlib
+                    p.mim-solvers
+                    p.opencv4
+                    p.pandas
+                    p.proxsuite
+                    p.quadprog
+                    self.packages.${system}.example-parallel-robots
+                  ]))
+                ];
+                shellHook = ''
+                  export PYTHONPATH=${
+                    pkgs.lib.concatStringsSep ":" [
+                      "$PWD/src/cobotmpc"
+                      "$PWD/install/${pkgs.python3.sitePackages}"
+                      "$PYTHONPATH"
+                    ]
+                  }
+                '';
+              };
+            };
+            packages = {
+              inherit (pkgs.python3Packages) brax;
+              example-parallel-robots =
+                inputs.example-parallel-robots.packages.${system}.example-parallel-robots.override
+                  {
+                    inherit (pkgs.python3Packages) pinocchio;
+                    inherit (self.packages.${system}) toolbox-parallel-robots;
+                  };
+              toolbox-parallel-robots =
+                inputs.toolbox-parallel-robots.packages.${system}.toolbox-parallel-robots.override
+                  {
+                    inherit (pkgs.python3Packages) pinocchio;
+                  };
+              python = pkgs.python3.withPackages (p: [
+                p.crocoddyl
+                p.gepetto-gui
+                p.hpp-corba
+                p.ipython
+                p.matplotlib
+              ]);
+              ros =
+                with pkgs.rosPackages.humble;
+                buildEnv {
+                  paths = [
+                    ros-core
+                    turtlesim
+                    pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
+                    pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
+                  ];
+                };
+            };
+            treefmt = {
+              settings.global.excludes = [
+                ".envrc"
+                ".git-blame-ignore-revs"
+                "LICENSE"
+              ];
+              programs = {
+                mdformat.enable = true;
+                nixfmt.enable = true;
+                yamlfmt.enable = true;
+              };
+            };
+          };
       }
-    ;
-});
+    );
 }
