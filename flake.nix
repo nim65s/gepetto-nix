@@ -218,7 +218,7 @@
               '';
             };
           };
-          packages =
+          packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
             {
               python = pkgs.python3.withPackages (p: [
                 # keep-sorted start
@@ -278,7 +278,8 @@
                 toolbox-parallel-robots
                 # keep-sorted end
                 ;
-            };
+            }
+          );
           treefmt = {
             settings.global.excludes = [
               ".envrc"
