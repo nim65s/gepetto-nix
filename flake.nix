@@ -23,7 +23,7 @@
       flake = false;
     };
     patch-hpp = {
-      url = "https://github.com/nim65s/nixpkgs/pull/2.patch";
+      url = "https://github.com/nim65s/nixpkgs/pull/3.patch";
       flake = false;
     };
     patch-mim-solvers = {

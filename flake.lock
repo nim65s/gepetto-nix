@@ -126,13 +126,13 @@
     "patch-hpp": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Rj07W99G9CvZEc/92lAJa8JYqgFKhaIoeyJuatpLlhk=",
+        "narHash": "sha256-8kApZVQPyqGJ++E+PVkOatWqozcY5bar9YexrdOUZws=",
         "type": "file",
-        "url": "https://github.com/nim65s/nixpkgs/pull/2.patch"
+        "url": "https://github.com/nim65s/nixpkgs/pull/3.patch"
       },
       "original": {
         "type": "file",
-        "url": "https://github.com/nim65s/nixpkgs/pull/2.patch"
+        "url": "https://github.com/nim65s/nixpkgs/pull/3.patch"
       }
     },
     "patch-mim-solvers": {
