@@ -116,6 +116,7 @@
                   src-toolbox-parallel-robots
                   # keep-sorted end
                   ;
+                agimus-msgs = python-final.toPythonModule final.agimus-msgs;
                 colmpc = python-final.toPythonModule (
                   final.colmpc.override {
                     pythonSupport = true;
@@ -247,6 +248,7 @@
             // lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
               inherit (pkgs.python3Packages)
                 # keep-sorted start
+                agimus-msgs
                 aligator
                 brax
                 colmpc
