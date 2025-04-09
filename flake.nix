@@ -1,16 +1,21 @@
 {
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
 
     example-parallel-robots = {
       url = "github:gepetto/example-parallel-robots";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.toolbox-parallel-robots.follows = "toolbox-parallel-robots";
     };
 
     toolbox-parallel-robots = {
       url = "github:gepetto/toolbox-parallel-robots";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
     };
 
     ## Patches for nixpkgs
@@ -31,30 +36,54 @@
     gepetto-viewer = {
       url = "github:Gepetto/gepetto-viewer/devel";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+    };
+
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
   outputs =
-    { nixpkgs, self, ... }@inputs:
-    inputs.nix-ros-overlay.inputs.flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import ./patched-nixpkgs.nix {
-          inherit nixpkgs system;
-          overlays = [
-            inputs.nix-ros-overlay.overlays.default
-            (_super: prev: {
-              gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
-                inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
-              };
-            })
-          ];
+    inputs:
+    let
+      system = "x86_64-linux";
+      pkgsForPatching = inputs.nixpkgs.legacyPackages.${system};
+      patchedNixpkgs = (
+        pkgsForPatching.applyPatches {
+          name = "patched nixpkgs";
+          src = inputs.nixpkgs;
           patches = [
             inputs.patch-brax
             inputs.patch-hpp
           ];
-        };
-      in
+        }
+      );
+      overlay = 
+            (_super: prev: {
+              gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
+                inherit (inputs.gepetto-viewer.packages.${system}.gepetto-viewer) src;
+              };
+            });
+    in
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+    { self, ... }:
+    {
+      systems = [ system ];
+      imports = [ inputs.treefmt-nix.flakeModule ];
+      perSystem = { pkgs, self',... }:
       {
+        _module.args.pkgs = import patchedNixpkgs {
+          inherit system;
+          overlays = [
+            inputs.nix-ros-overlay.overlays.default
+            overlay
+          ];
+        };
+        checks = let
+          packages = pkgs.lib.mapAttrs' (n: pkgs.lib.nameValuePair "package-${n}") self'.packages;
+          devShells = pkgs.lib.mapAttrs' (n: pkgs.lib.nameValuePair "devShell-${n}") self'.devShells;
+        in packages // devShells;
         devShells = {
           default = pkgs.mkShell {
             name = "Gepetto Main Dev Shell";
@@ -122,5 +151,6 @@
             };
         };
       }
-    );
+    ;
+});
 }
