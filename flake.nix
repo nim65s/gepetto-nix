@@ -69,8 +69,7 @@
   outputs =
     inputs:
     let
-      system = "x86_64-linux";
-      pkgsForPatching = inputs.nixpkgs.legacyPackages.${system};
+      pkgsForPatching = inputs.nixpkgs.legacyPackages.x86_64-linux;
       patches = [
         # sort this by patch application order
         # not alphabetically
@@ -140,7 +139,10 @@
       );
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ system ];
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
       imports = [ inputs.treefmt-nix.flakeModule ];
       flake.overlays.default = overlay;
       perSystem =
@@ -148,6 +150,7 @@
           lib,
           pkgs,
           self',
+          system,
           ...
         }:
         {
