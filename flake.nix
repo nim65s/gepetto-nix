@@ -142,6 +142,7 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ system ];
       imports = [ inputs.treefmt-nix.flakeModule ];
+      flake.overlays.default = overlay;
       perSystem =
         {
           lib,
