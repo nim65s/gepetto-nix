@@ -17,6 +17,4 @@ jobs:
           name: gepetto
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: ros
-      - run: nix build -L .#devShells.x86_64-linux.default
-      - run: nix build -L .#devShells.x86_64-linux.ms
-      - run: nix build -L .#brax
+      - run: nix flake check -L
