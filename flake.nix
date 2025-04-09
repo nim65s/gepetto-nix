@@ -100,6 +100,11 @@
           # keep-sorted start block=yes
           franka-description = prev.rosPackages.humble.franka-description.overrideAttrs {
             src = inputs.src-franka-description;
+            # somehow depends on python3.12-ros-humble-joint-state-publisher-gui
+            # which depends on ros-humble-python-qt-binding
+            # which depends on pyside2
+            # which is broken on darwin
+            meta.broken = final.stdenv.hostPlatform.isDarwin;
           };
           gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
             src = inputs.src-gepetto-viewer;
