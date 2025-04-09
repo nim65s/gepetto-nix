@@ -140,7 +140,7 @@
     "patch-brax": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-+Nhj/IZN7dXWcmrdm6a7uIjshT32aEhRUxSZ8o0n36I=",
+        "narHash": "sha256-Unam5IGRQLkBfOVxnDwMuK1HWRod3fVeoCgbiUjmAFU=",
         "type": "file",
         "url": "https://github.com/NixOS/nixpkgs/pull/393394.patch"
       },
