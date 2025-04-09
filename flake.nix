@@ -112,7 +112,7 @@
           # keep-sorted end
           pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
             (
-              python-final: _python-prev:
+              python-final: python-prev:
               {
                 inherit (inputs)
                   # keep-sorted start
@@ -121,6 +121,11 @@
                   # keep-sorted end
                   ;
                 agimus-msgs = python-final.toPythonModule final.agimus-msgs;
+                brax = python-prev.brax.overrideAttrs {
+                  # depends on mujoco
+                  # which is broken on darwin
+                  meta.broken = final.stdenv.hostPlatform.isDarwin;
+                };
                 colmpc = python-final.toPythonModule (
                   final.colmpc.override {
                     pythonSupport = true;
