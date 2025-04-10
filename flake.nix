@@ -10,16 +10,16 @@
 
     # keep-sorted start block=yes
 
+    patch-0-crocoddyl = {
+      url = "https://github.com/NixOS/nixpkgs/pull/391300.patch";
+      flake = false;
+    };
     patch-1-aligator = {
       url = "https://github.com/NixOS/nixpkgs/pull/390922.patch";
       flake = false;
     };
     patch-brax = {
       url = "https://github.com/NixOS/nixpkgs/pull/393394.patch";
-      flake = false;
-    };
-    patch-0-crocoddyl = {
-      url = "https://github.com/NixOS/nixpkgs/pull/391300.patch";
       flake = false;
     };
     patch-hpp = {
