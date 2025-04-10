@@ -10,7 +10,7 @@
 
     # keep-sorted start block=yes
 
-    patch-aligator = {
+    patch-1-aligator = {
       url = "https://github.com/NixOS/nixpkgs/pull/390922.patch";
       flake = false;
     };
@@ -18,7 +18,7 @@
       url = "https://github.com/NixOS/nixpkgs/pull/393394.patch";
       flake = false;
     };
-    patch-crocoddyl = {
+    patch-0-crocoddyl = {
       url = "https://github.com/NixOS/nixpkgs/pull/391300.patch";
       flake = false;
     };
@@ -36,6 +36,14 @@
     };
     patch-piqp = {
       url = "https://github.com/NixOS/nixpkgs/pull/374657.patch";
+      flake = false;
+    };
+    patch-qtwebengine = {
+      url = "https://github.com/NixOS/nixpkgs/pull/386846.patch";
+      flake = false;
+    };
+    patch-qtwebengine-2 = {
+      url = "https://github.com/NixOS/nixpkgs/pull/383990.patch";
       flake = false;
     };
     src-agimus-msgs = {
@@ -79,15 +87,17 @@
     let
       pkgsForPatching = inputs.nixpkgs.legacyPackages.x86_64-linux;
       patches = [
-        # sort this by patch application order
-        # not alphabetically
-        inputs.patch-crocoddyl
-        inputs.patch-aligator
+        # keep-sorted start
+        inputs.patch-0-crocoddyl
+        inputs.patch-1-aligator
         inputs.patch-brax
         inputs.patch-hpp
         inputs.patch-mim-solvers
         inputs.patch-osg
         inputs.patch-piqp
+        inputs.patch-qtwebengine
+        inputs.patch-qtwebengine-2
+        # keep-sorted end
       ];
       patchedNixpkgs = (
         pkgsForPatching.applyPatches {
