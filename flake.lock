@@ -147,6 +147,18 @@
         "url": "https://github.com/NixOS/nixpkgs/pull/391930.patch"
       }
     },
+    "patch-osg": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-gJL0e5cGFzUGLQOefln8FUqAGNXdjb6QceakP1KGH/o=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/384430.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/384430.patch"
+      }
+    },
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -160,6 +172,7 @@
         "patch-crocoddyl": "patch-crocoddyl",
         "patch-hpp": "patch-hpp",
         "patch-mim-solvers": "patch-mim-solvers",
+        "patch-osg": "patch-osg",
         "src-agimus-msgs": "src-agimus-msgs",
         "src-colmpc": "src-colmpc",
         "src-example-parallel-robots": "src-example-parallel-robots",

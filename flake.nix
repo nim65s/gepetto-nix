@@ -30,6 +30,10 @@
       url = "https://github.com/NixOS/nixpkgs/pull/391930.patch";
       flake = false;
     };
+    patch-osg = {
+      url = "https://github.com/NixOS/nixpkgs/pull/384430.patch";
+      flake = false;
+    };
     src-agimus-msgs = {
       url = "github:agimus-project/agimus_msgs";
       flake = false;
@@ -78,6 +82,7 @@
         inputs.patch-brax
         inputs.patch-hpp
         inputs.patch-mim-solvers
+        inputs.patch-osg
       ];
       patchedNixpkgs = (
         pkgsForPatching.applyPatches {
