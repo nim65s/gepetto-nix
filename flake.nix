@@ -30,6 +30,10 @@
       url = "https://github.com/NixOS/nixpkgs/pull/391930.patch";
       flake = false;
     };
+    patch-mim-solvers-2 = {
+      url = "https://github.com/NixOS/nixpkgs/pull/397664.patch";
+      flake = false;
+    };
     patch-osg = {
       url = "https://github.com/NixOS/nixpkgs/pull/384430.patch";
       flake = false;
@@ -93,6 +97,7 @@
         inputs.patch-brax
         inputs.patch-hpp
         inputs.patch-mim-solvers
+        inputs.patch-mim-solvers-2
         inputs.patch-osg
         inputs.patch-piqp
         inputs.patch-qtwebengine

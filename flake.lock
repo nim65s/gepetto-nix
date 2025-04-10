@@ -147,6 +147,18 @@
         "url": "https://github.com/NixOS/nixpkgs/pull/391930.patch"
       }
     },
+    "patch-mim-solvers-2": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-2LjYEWw3D2G5a1oAYHSd6HSJ1lNKvr54ImeaZEjzm7g=",
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/397664.patch"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://github.com/NixOS/nixpkgs/pull/397664.patch"
+      }
+    },
     "patch-osg": {
       "flake": false,
       "locked": {
@@ -208,6 +220,7 @@
         "patch-brax": "patch-brax",
         "patch-hpp": "patch-hpp",
         "patch-mim-solvers": "patch-mim-solvers",
+        "patch-mim-solvers-2": "patch-mim-solvers-2",
         "patch-osg": "patch-osg",
         "patch-piqp": "patch-piqp",
         "patch-qtwebengine": "patch-qtwebengine",
