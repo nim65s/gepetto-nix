@@ -231,7 +231,6 @@
         "src-franka-description": "src-franka-description",
         "src-gepetto-viewer": "src-gepetto-viewer",
         "src-linear-feedback-controller": "src-linear-feedback-controller",
-        "src-linear-feedback-controller-msgs": "src-linear-feedback-controller-msgs",
         "src-toolbox-parallel-robots": "src-toolbox-parallel-robots",
         "treefmt-nix": "treefmt-nix"
       }
@@ -330,22 +329,6 @@
       "original": {
         "owner": "loco-3d",
         "repo": "linear-feedback-controller",
-        "type": "github"
-      }
-    },
-    "src-linear-feedback-controller-msgs": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1742893469,
-        "narHash": "sha256-+VY+ctfvcDJee+lWvSnemJGSiBhOIAAZDRjmaooI13Q=",
-        "owner": "loco-3d",
-        "repo": "linear-feedback-controller-msgs",
-        "rev": "f5dd80805134e2fa56757637f489a1a6dc68e747",
-        "type": "github"
-      },
-      "original": {
-        "owner": "loco-3d",
-        "repo": "linear-feedback-controller-msgs",
         "type": "github"
       }
     },

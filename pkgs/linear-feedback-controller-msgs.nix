@@ -2,18 +2,23 @@
   lib,
   stdenv,
 
-  src-linear-feedback-controller-msgs,
+  fetchFromGitHub,
 
   cmake,
   eigen,
   python3Packages,
   rosPackages,
 }:
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "linear-feedback-controller-msgs";
-  version = "0.1.3";
+  version = "1.0.0";
 
-  src = src-linear-feedback-controller-msgs;
+  src = fetchFromGitHub {
+    owner = "loco-3d";
+    repo = "linear-feedback-controller-msgs";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-iolp/25VccP7knwRUOj4eQ5kGlcvWEiCfTYHkx/AUrA=";
+  };
 
   nativeBuildInputs = [
     cmake
@@ -43,4 +48,4 @@ stdenv.mkDerivation {
     maintainers = [ lib.maintainers.nim65s ];
     platforms = lib.platforms.linux;
   };
-}
+})
