@@ -75,10 +75,6 @@
       url = "github:loco-3d/linear-feedback-controller";
       flake = false;
     };
-    src-linear-feedback-controller-msgs = {
-      url = "github:loco-3d/linear-feedback-controller-msgs";
-      flake = false;
-    };
     src-toolbox-parallel-robots = {
       url = "github:gepetto/toolbox-parallel-robots";
       flake = false;
@@ -119,7 +115,6 @@
             src-agimus-msgs
             src-colmpc
             src-linear-feedback-controller
-            src-linear-feedback-controller-msgs
             # keep-sorted end
             ;
           # keep-sorted start block=yes
