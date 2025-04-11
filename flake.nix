@@ -179,7 +179,13 @@
         "aarch64-darwin"
       ];
       imports = [ inputs.treefmt-nix.flakeModule ];
-      flake.overlays.default = overlay;
+      flake = {
+        overlays.default = overlay;
+        templates.default = {
+          path = ./template;
+          description = "A template for use with gepetto/nix";
+        };
+      };
       perSystem =
         {
           lib,
