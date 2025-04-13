@@ -4,10 +4,22 @@
 
   fetchFromGitHub,
 
+  # nativeBuildInputs
   cmake,
   eigen,
   python3Packages,
-  rosPackages,
+  ament-cmake,
+  ament-cmake-cppcheck,
+  ament-cmake-cpplint,
+  ament-cmake-flake8,
+  ament-cmake-pep257,
+  ament-cmake-uncrustify,
+  rosidl-default-generators,
+
+  # propagatedBuildInputs
+  geometry-msgs,
+  sensor-msgs,
+  tf2-eigen,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "linear-feedback-controller-msgs";
@@ -24,19 +36,19 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     eigen
     python3Packages.python
-    rosPackages.humble.ament-cmake
-    rosPackages.humble.ament-cmake-cppcheck
-    rosPackages.humble.ament-cmake-cpplint
-    rosPackages.humble.ament-cmake-flake8
-    rosPackages.humble.ament-cmake-pep257
-    rosPackages.humble.ament-cmake-uncrustify
-    rosPackages.humble.rosidl-default-generators
+    ament-cmake
+    ament-cmake-cppcheck
+    ament-cmake-cpplint
+    ament-cmake-flake8
+    ament-cmake-pep257
+    ament-cmake-uncrustify
+    rosidl-default-generators
   ];
 
   propagatedBuildInputs = [
-    rosPackages.humble.geometry-msgs
-    rosPackages.humble.sensor-msgs
-    rosPackages.humble.tf2-eigen
+    geometry-msgs
+    sensor-msgs
+    tf2-eigen
   ];
 
   doCheck = true;

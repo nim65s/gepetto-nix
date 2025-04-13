@@ -4,10 +4,19 @@
 
   src-agimus-msgs,
 
+  # nativeBuildInputs
   cmake,
   eigen,
   python3Packages,
-  rosPackages,
+  ament-cmake,
+  rosidl-default-generators,
+
+  # propagatedBuildInputs
+  rosidl-typesupport-c,
+  rosidl-typesupport-introspection-c,
+  rosidl-runtime-py,
+  sensor-msgs,
+  std-msgs,
 }:
 stdenv.mkDerivation {
   pname = "agimus-msgs";
@@ -19,16 +28,16 @@ stdenv.mkDerivation {
     cmake
     eigen
     python3Packages.python
-    rosPackages.humble.ament-cmake
-    rosPackages.humble.rosidl-default-generators
+    ament-cmake
+    rosidl-default-generators
   ];
 
   propagatedBuildInputs = [
-    rosPackages.humble.rosidl-typesupport-c
-    rosPackages.humble.rosidl-typesupport-introspection-c
-    rosPackages.humble.rosidl-runtime-py
-    rosPackages.humble.sensor-msgs
-    rosPackages.humble.std-msgs
+    rosidl-typesupport-c
+    rosidl-typesupport-introspection-c
+    rosidl-runtime-py
+    sensor-msgs
+    std-msgs
   ];
 
   doCheck = true;

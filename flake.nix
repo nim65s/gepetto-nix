@@ -75,6 +75,10 @@
       url = "github:loco-3d/linear-feedback-controller";
       flake = false;
     };
+    src-linear-feedback-controller-jazzy = {
+      url = "github:loco-3d/linear-feedback-controller/jazzy";
+      flake = false;
+    };
     src-toolbox-parallel-robots = {
       url = "github:gepetto/toolbox-parallel-robots";
       flake = false;
@@ -112,20 +116,10 @@
         {
           inherit (inputs)
             # keep-sorted start
-            src-agimus-msgs
             src-colmpc
-            src-linear-feedback-controller
             # keep-sorted end
             ;
           # keep-sorted start block=yes
-          franka-description = prev.rosPackages.humble.franka-description.overrideAttrs {
-            src = inputs.src-franka-description;
-            # somehow depends on python3.12-ros-humble-joint-state-publisher-gui
-            # which depends on ros-humble-python-qt-binding
-            # which depends on pyside2
-            # which is broken on darwin
-            meta.broken = final.stdenv.hostPlatform.isDarwin;
-          };
           gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
             src = inputs.src-gepetto-viewer;
           };
@@ -140,7 +134,6 @@
                   src-toolbox-parallel-robots
                   # keep-sorted end
                   ;
-                agimus-msgs = python-final.toPythonModule final.agimus-msgs;
                 brax = python-prev.brax.overrideAttrs {
                   # depends on mujoco
                   # which is broken on darwin
@@ -152,8 +145,6 @@
                     python3Packages = python-final;
                   }
                 );
-                linear-feedback-controller-msgs = python-final.toPythonModule final.linear-feedback-controller-msgs;
-                linear-feedback-controller = python-final.toPythonModule final.linear-feedback-controller;
               }
               // final.lib.filesystem.packagesFromDirectoryRecursive {
                 inherit (python-final) callPackage;
@@ -161,6 +152,43 @@
               }
             )
           ];
+          rosPackages = prev.rosPackages // {
+            humble = prev.rosPackages.humble.overrideScope (
+              humble-final: humble-prev:
+              {
+                inherit (inputs)
+                  # keep-sorted start
+                  src-agimus-msgs
+                  src-linear-feedback-controller
+                  # keep-sorted end
+                  ;
+                franka-description = humble-prev.franka-description.overrideAttrs {
+                  src = inputs.src-franka-description;
+                  # depends on pyside2 which is broken on darwin
+                  meta.broken = final.stdenv.hostPlatform.isDarwin;
+                };
+              }
+              // final.lib.filesystem.packagesFromDirectoryRecursive {
+                inherit (humble-final) callPackage;
+                directory = ./humble-pkgs;
+              }
+            );
+            jazzy = prev.rosPackages.jazzy.overrideScope (
+              jazzy-final: _jazzy-prev:
+              {
+                inherit (inputs)
+                  # keep-sorted start
+                  src-agimus-msgs
+                  src-linear-feedback-controller-jazzy
+                  # keep-sorted end
+                  ;
+              }
+              // final.lib.filesystem.packagesFromDirectoryRecursive {
+                inherit (jazzy-final) callPackage;
+                directory = ./jazzy-pkgs;
+              }
+            );
+          };
         }
         // prev.lib.filesystem.packagesFromDirectoryRecursive {
           inherit (final) callPackage;
@@ -271,12 +299,10 @@
             // {
               inherit (pkgs)
                 # keep-sorted start
-                agimus-msgs
                 aligator
                 colmpc
                 crocoddyl
                 example-robot-data
-                franka-description
                 gepetto-viewer
                 hpp-affordance
                 hpp-affordance-corba
@@ -302,8 +328,6 @@
                 hpp-tutorial
                 hpp-universal-robot
                 hpp-util
-                linear-feedback-controller
-                linear-feedback-controller-msgs
                 mim-solvers
                 pinocchio
                 # keep-sorted end
@@ -312,8 +336,6 @@
             // lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
               inherit (pkgs.python3Packages)
                 # keep-sorted start
-
-                agimus-msgs
                 aligator
                 brax
                 colmpc
@@ -333,11 +355,28 @@
                 hpp-romeo
                 hpp-tutorial
                 hpp-universal-robot
-                linear-feedback-controller
-                linear-feedback-controller-msgs
                 mim-solvers
                 pinocchio
                 toolbox-parallel-robots
+                # keep-sorted end
+                ;
+            }
+            // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
+              inherit (pkgs.rosPackages.humble)
+                # keep-sorted start
+                agimus-msgs
+                franka-description
+                linear-feedback-controller
+                linear-feedback-controller-msgs
+                # keep-sorted end
+                ;
+            }
+            // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
+              inherit (pkgs.rosPackages.jazzy)
+                # keep-sorted start
+                agimus-msgs
+                linear-feedback-controller
+                linear-feedback-controller-msgs
                 # keep-sorted end
                 ;
             }
