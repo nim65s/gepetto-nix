@@ -239,11 +239,11 @@
     "src-agimus-msgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1742974966,
-        "narHash": "sha256-q4guibv1FCY041q4bu704nW599vflOBngxSrzGImNPo=",
+        "lastModified": 1744365838,
+        "narHash": "sha256-yQANjY6YEb9FhQy9WpUR3t/MrUGf+JCBngCOzoJsWnA=",
         "owner": "agimus-project",
         "repo": "agimus_msgs",
-        "rev": "6ffc94df901007ab22dc367215dd86f7ff367036",
+        "rev": "41250885ecbfe5faa3a6a1b771f0a87601ea8e5d",
         "type": "github"
       },
       "original": {
@@ -320,11 +320,11 @@
     "src-linear-feedback-controller": {
       "flake": false,
       "locked": {
-        "lastModified": 1741432552,
-        "narHash": "sha256-gkpYMJmvBw6XE89X9jRhTusjzKD56rRWiV8Ipnj3aZs=",
+        "lastModified": 1744374949,
+        "narHash": "sha256-xlMLxL5CPKifbDGDUa46bLHlnVneVWuAMZBkeKQqBsU=",
         "owner": "loco-3d",
         "repo": "linear-feedback-controller",
-        "rev": "7f1d37798ab8140b970cc911e4cb271f95f85260",
+        "rev": "ae453a3308abd32bc627bffe95cca5458c4f767b",
         "type": "github"
       },
       "original": {
