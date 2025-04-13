@@ -2,30 +2,45 @@
   lib,
   stdenv,
 
-  src-linear-feedback-controller,
+  src-linear-feedback-controller-jazzy,
 
+  # nativeBuildInputs
   cmake,
   fmt,
   python3Packages,
-  rosPackages,
+  ament-cmake,
+  ament-cmake-auto,
+  ament-lint-auto,
+  eigen3-cmake-module,
+  generate-parameter-library-py,
+  pluginlib,
+
+  # propagatedBuildInputs
   linear-feedback-controller-msgs,
+  control-toolbox,
+  controller-interface,
+  nav-msgs,
+  pal-statistics,
+  parameter-traits,
+  realtime-tools,
+  rclcpp-lifecycle,
 }:
 stdenv.mkDerivation {
   pname = "linear-feedback-controller";
   version = "1.0.2";
 
-  src = src-linear-feedback-controller;
+  src = src-linear-feedback-controller-jazzy;
 
   nativeBuildInputs = [
     cmake
     fmt
     python3Packages.python
-    rosPackages.humble.ament-cmake
-    rosPackages.humble.ament-cmake-auto
-    rosPackages.humble.ament-lint-auto
-    rosPackages.humble.eigen3-cmake-module # this is a mistake on humble
-    rosPackages.humble.generate-parameter-library-py
-    rosPackages.humble.pluginlib
+    ament-cmake
+    ament-cmake-auto
+    ament-lint-auto
+    eigen3-cmake-module
+    generate-parameter-library-py
+    pluginlib
   ];
 
   propagatedBuildInputs = [
@@ -33,13 +48,13 @@ stdenv.mkDerivation {
     linear-feedback-controller-msgs
     python3Packages.pinocchio
     python3Packages.example-robot-data
-    rosPackages.humble.control-toolbox
-    rosPackages.humble.controller-interface
-    rosPackages.humble.nav-msgs
-    rosPackages.humble.pal-statistics
-    rosPackages.humble.parameter-traits
-    rosPackages.humble.realtime-tools
-    rosPackages.humble.rclcpp-lifecycle
+    control-toolbox
+    controller-interface
+    nav-msgs
+    pal-statistics
+    parameter-traits
+    realtime-tools
+    rclcpp-lifecycle
   ];
 
   # revert https://github.com/lopsided98/nix-ros-overlay/blob/develop/distros/rosidl-generator-py-setup-hook.sh
@@ -53,6 +68,9 @@ stdenv.mkDerivation {
   # generate_parameter_library_markdown complains that build/doc exists
   # ref. https://github.com/PickNikRobotics/generate_parameter_library/pull/212
   enableParallelBuilding = false;
+
+  # some dependency started to leak qtPreHook
+  dontWrapQtApps = true;
 
   meta = {
     description = "RosControl linear feedback controller with pal base estimator and RosTopics external interface.";
