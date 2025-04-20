@@ -2,7 +2,7 @@
   lib,
   stdenv,
 
-  src-linear-feedback-controller-jazzy,
+  fetchFromGitHub,
 
   # nativeBuildInputs
   cmake,
@@ -25,11 +25,16 @@
   realtime-tools,
   rclcpp-lifecycle,
 }:
-stdenv.mkDerivation {
+stdenv.mkDerivation (finalAttrs: {
   pname = "linear-feedback-controller";
-  version = "1.0.2";
+  version = "2.0.0";
 
-  src = src-linear-feedback-controller-jazzy;
+  src = fetchFromGitHub {
+    owner = "loco-3d";
+    repo = "linear-feedback-controller";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-WB0QXTY74jqeYIt+lv5Y9slMw6lx8FfHO26aGpoX7T0=";
+  };
 
   nativeBuildInputs = [
     cmake
@@ -79,4 +84,4 @@ stdenv.mkDerivation {
     maintainers = [ lib.maintainers.nim65s ];
     platforms = lib.platforms.linux;
   };
-}
+})
