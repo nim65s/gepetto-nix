@@ -15,4 +15,6 @@ you can define your own `.envrc.local`
 
 ## GUI issues on non-NixOS distros
 
-Please try <https://github.com/soupglasses/nix-system-graphics>
+```
+sudo nix run .#system-manager -- switch --flake .
+```
