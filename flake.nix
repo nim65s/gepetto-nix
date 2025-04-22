@@ -2,7 +2,15 @@
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
+    nix-system-graphics = {
+      url = "github:soupglasses/nix-system-graphics";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.follows = "nix-ros-overlay/nixpkgs";
+    system-manager = {
+      url = "github:numtide/system-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -194,6 +202,17 @@
       imports = [ inputs.treefmt-nix.flakeModule ];
       flake = {
         overlays.default = overlay;
+        systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
+          modules = [
+            inputs.nix-system-graphics.systemModules.default
+            {
+              config = {
+                nixpkgs.hostPlatform = "x86_64-linux";
+                system-graphics.enable = true;
+              };
+            }
+          ];
+        };
         templates.default = {
           path = ./template;
           description = "A template for use with gepetto/nix";
@@ -201,6 +220,7 @@
       };
       perSystem =
         {
+          inputs',
           lib,
           pkgs,
           self',
@@ -285,6 +305,9 @@
                     # keep-sorted end
                   ];
                 };
+            }
+            // lib.optionalAttrs (system == "x86_64-linux") {
+              inherit (inputs'.system-manager.packages) system-manager;
             }
             // {
               inherit (pkgs)
