@@ -284,7 +284,6 @@
           };
           packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
             {
-              inherit (inputs'.system-manager.packages) system-manager;
               python = pkgs.python3.withPackages (p: [
                 # keep-sorted start
                 p.crocoddyl
@@ -306,6 +305,9 @@
                     # keep-sorted end
                   ];
                 };
+            }
+            // lib.optionalAttrs (system == "x86_64-linux") {
+              inherit (inputs'.system-manager.packages) system-manager;
             }
             // {
               inherit (pkgs)
