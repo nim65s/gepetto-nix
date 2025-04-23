@@ -169,6 +169,7 @@
       ];
       imports = [ inputs.treefmt-nix.flakeModule ];
       flake = {
+        inherit patches;
         overlays.default = overlay;
         systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
           modules = [
