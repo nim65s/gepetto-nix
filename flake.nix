@@ -121,6 +121,21 @@
             )
           ];
           rosPackages = prev.rosPackages // {
+            noetic = prev.rosPackages.noetic.overrideScope (
+              _noetic-final: noetic-prev: {
+                # https://github.com/lopsided98/nix-ros-overlay/blob/develop/distros/noetic/overrides.nix#L206
+                # has https://github.com/ros/rosconsole/pull/58.patch
+                # but github somehow raises HTTP 429
+                rosconsole = noetic-prev.rosconsole.overrideAttrs {
+                  patches = [
+                    (final.fetchpatch {
+                      url = "https://patch-diff.githubusercontent.com/raw/ros/rosconsole/pull/58.patch";
+                      hash = "sha256-Rg+WCPak5sxBqdQ/QR9eboyX921PZTjk3/PuH5mz96U=";
+                    })
+                  ];
+                };
+              }
+            );
             humble = prev.rosPackages.humble.overrideScope (
               humble-final: humble-prev:
               {
@@ -340,6 +355,14 @@
                 mim-solvers
                 pinocchio
                 toolbox-parallel-robots
+                # keep-sorted end
+                ;
+            }
+            // lib.mapAttrs' (n: lib.nameValuePair "ros-noetic-${n}") {
+              inherit (pkgs.rosPackages.noetic)
+                # keep-sorted start
+                rosbag
+                rospy
                 # keep-sorted end
                 ;
             }
