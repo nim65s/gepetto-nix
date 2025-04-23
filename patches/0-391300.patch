@@ -1,0 +1,29 @@
+From 49509ee6874d5b9ff361690f4719c3e1249f3506 Mon Sep 17 00:00:00 2001
+From: "R. Ryantm" <ryantm-bot@ryantm.com>
+Date: Wed, 19 Mar 2025 14:56:34 +0000
+Subject: [PATCH] crocoddyl: 2.2.0 -> 3.0.0
+
+---
+ pkgs/by-name/cr/crocoddyl/package.nix | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkgs/by-name/cr/crocoddyl/package.nix b/pkgs/by-name/cr/crocoddyl/package.nix
+index 77389827762727..f4cab7ae2ba390 100644
+--- a/pkgs/by-name/cr/crocoddyl/package.nix
++++ b/pkgs/by-name/cr/crocoddyl/package.nix
+@@ -16,13 +16,13 @@
+ 
+ stdenv.mkDerivation (finalAttrs: {
+   pname = "crocoddyl";
+-  version = "2.2.0";
++  version = "3.0.0";
+ 
+   src = fetchFromGitHub {
+     owner = "loco-3d";
+     repo = "crocoddyl";
+     rev = "v${finalAttrs.version}";
+-    hash = "sha256-j3TL5TpIdTkTO32Fuu+LyiieiXoOMvShi/LbBL5YYzA=";
++    hash = "sha256-oWcclzzuswiR1SaQJd6GnMltJ2vgt7AgJPT0FJzD1Gs=";
+   };
+ 
+   outputs = [

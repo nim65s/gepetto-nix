@@ -18,44 +18,12 @@
 
     # keep-sorted start block=yes
 
-    patch-0-crocoddyl = {
-      url = "https://github.com/NixOS/nixpkgs/pull/391300.patch";
-      flake = false;
-    };
-    patch-1-aligator = {
-      url = "https://github.com/NixOS/nixpkgs/pull/390922.patch";
-      flake = false;
-    };
-    patch-brax = {
-      url = "https://github.com/NixOS/nixpkgs/pull/393394.patch";
-      flake = false;
-    };
     patch-hpp = {
       url = "https://github.com/nim65s/nixpkgs/pull/3.patch";
       flake = false;
     };
     patch-mim-solvers = {
-      url = "https://github.com/NixOS/nixpkgs/pull/391930.patch";
-      flake = false;
-    };
-    patch-mim-solvers-2 = {
       url = "https://github.com/NixOS/nixpkgs/pull/397664.patch";
-      flake = false;
-    };
-    patch-osg = {
-      url = "https://github.com/NixOS/nixpkgs/pull/384430.patch";
-      flake = false;
-    };
-    patch-piqp = {
-      url = "https://github.com/NixOS/nixpkgs/pull/374657.patch";
-      flake = false;
-    };
-    patch-qtwebengine = {
-      url = "https://github.com/NixOS/nixpkgs/pull/386846.patch";
-      flake = false;
-    };
-    patch-qtwebengine-2 = {
-      url = "https://github.com/NixOS/nixpkgs/pull/383990.patch";
       flake = false;
     };
     src-agimus-msgs = {
@@ -92,16 +60,16 @@
       pkgsForPatching = inputs.nixpkgs.legacyPackages.x86_64-linux;
       patches = [
         # keep-sorted start
-        inputs.patch-0-crocoddyl
-        inputs.patch-1-aligator
-        inputs.patch-brax
+        ./patches/0-391300.patch
+        ./patches/1-390922.patch
+        ./patches/2-386846.patch
+        ./patches/3-383990.patch
+        ./patches/374657.patch
+        ./patches/384430.patch
+        ./patches/391930.patch
+        ./patches/393394.patch
         inputs.patch-hpp
         inputs.patch-mim-solvers
-        inputs.patch-mim-solvers-2
-        inputs.patch-osg
-        inputs.patch-piqp
-        inputs.patch-qtwebengine
-        inputs.patch-qtwebengine-2
         # keep-sorted end
       ];
       patchedNixpkgs = (
