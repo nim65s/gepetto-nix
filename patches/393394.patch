@@ -1,0 +1,329 @@
+From 4d62c8546862064d30282eab7423456fbe08d97f Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 26 Mar 2025 13:58:56 +0100
+Subject: [PATCH 1/4] python3Packages.pytinyrenderer: init at 0.0.14
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Co-authored-by: Gaétan Lepage <33058747+GaetanLepage@users.noreply.github.com>
+---
+ .../python-modules/pytinyrenderer/default.nix | 36 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  2 ++
+ 2 files changed, 38 insertions(+)
+ create mode 100644 pkgs/development/python-modules/pytinyrenderer/default.nix
+
+diff --git a/pkgs/development/python-modules/pytinyrenderer/default.nix b/pkgs/development/python-modules/pytinyrenderer/default.nix
+new file mode 100644
+index 00000000000000..c2dc075095de57
+--- /dev/null
++++ b/pkgs/development/python-modules/pytinyrenderer/default.nix
+@@ -0,0 +1,36 @@
++{
++  lib,
++  buildPythonPackage,
++  fetchPypi,
++  setuptools,
++}:
++
++buildPythonPackage rec {
++  pname = "pytinyrenderer";
++  version = "0.0.14";
++  pyproject = true;
++
++  # github has no tags
++  src = fetchPypi {
++    inherit pname version;
++    hash = "sha256-X+20eYUJy5EaA6O8no3o1NWqNrHeUuuHjv7xBLlaPRU=";
++  };
++
++  build-system = [
++    setuptools
++  ];
++
++  pythonImportsCheck = [
++    "pytinyrenderer"
++  ];
++
++  # There are no tests in the pypi archive
++  doCheck = false;
++
++  meta = {
++    description = "Python bindings for Tiny Renderer";
++    homepage = "https://pypi.org/project/pytinyrenderer/";
++    license = lib.licenses.asl20;
++    maintainers = with lib.maintainers; [ nim65s ];
++  };
++}
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 9abac7174fad67..01db0f0e07f123 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -14898,6 +14898,8 @@ self: super: with self; {
+ 
+   pytimeparse2 = callPackage ../development/python-modules/pytimeparse2 { };
+ 
++  pytinyrenderer = callPackage ../development/python-modules/pytinyrenderer { };
++
+   pytlv = callPackage ../development/python-modules/pytlv { };
+ 
+   pytm = callPackage ../development/python-modules/pytm { };
+
+From 9a6297dc5e8197d53fe7aa02ee847babdbfbb628 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 26 Mar 2025 13:53:16 +0100
+Subject: [PATCH 2/4] python3Packages.mujoco-mjx: init at 3.3.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Co-authored-by: Gaétan Lepage <33058747+GaetanLepage@users.noreply.github.com>
+---
+ .../python-modules/mujoco-mjx/default.nix     | 50 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  2 +
+ 2 files changed, 52 insertions(+)
+ create mode 100644 pkgs/development/python-modules/mujoco-mjx/default.nix
+
+diff --git a/pkgs/development/python-modules/mujoco-mjx/default.nix b/pkgs/development/python-modules/mujoco-mjx/default.nix
+new file mode 100644
+index 00000000000000..7073dc4484d147
+--- /dev/null
++++ b/pkgs/development/python-modules/mujoco-mjx/default.nix
+@@ -0,0 +1,50 @@
++{
++  lib,
++  buildPythonPackage,
++
++  # src / metadata
++  mujoco-main,
++
++  # build-system
++  setuptools,
++
++  # dependencies
++  absl-py,
++  etils,
++  importlib-resources,
++  jax,
++  jaxlib,
++  mujoco,
++  scipy,
++  trimesh,
++}:
++
++buildPythonPackage {
++  pname = "mujoco-mjx";
++  inherit (mujoco-main) src version;
++
++  pyproject = true;
++
++  sourceRoot = "${mujoco-main.src.name}/mjx";
++
++  build-system = [ setuptools ];
++
++  dependencies = [
++    absl-py
++    etils
++    importlib-resources
++    jax
++    jaxlib
++    mujoco
++    scipy
++    trimesh
++  ] ++ etils.optional-dependencies.epath;
++
++  pythonImportsCheck = [ "mujoco.mjx" ];
++
++  meta = {
++    description = "MuJoCo XLA (MJX)";
++    inherit (mujoco.meta) homepage changelog license;
++    maintainers = with lib.maintainers; [ nim65s ];
++  };
++}
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 01db0f0e07f123..704825453925e2 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -10123,6 +10123,8 @@ self: super: with self; {
+ 
+   mujoco = callPackage ../development/python-modules/mujoco { inherit (pkgs) mujoco; };
+ 
++  mujoco-mjx = callPackage ../development/python-modules/mujoco-mjx { mujoco-main = pkgs.mujoco; };
++
+   mujson = callPackage ../development/python-modules/mujson { };
+ 
+   mullvad-api = callPackage ../development/python-modules/mullvad-api { };
+
+From 555d7ca7db059977b7a8150a8950752a2cdaeead Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 26 Mar 2025 12:36:00 +0100
+Subject: [PATCH 3/4] python3Packages.brax: init at 0.12.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Co-authored-by: Gaétan Lepage <33058747+GaetanLepage@users.noreply.github.com>
+---
+ .../python-modules/brax/default.nix           | 113 ++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |   2 +
+ 2 files changed, 115 insertions(+)
+ create mode 100644 pkgs/development/python-modules/brax/default.nix
+
+diff --git a/pkgs/development/python-modules/brax/default.nix b/pkgs/development/python-modules/brax/default.nix
+new file mode 100644
+index 00000000000000..5610ee08f322f5
+--- /dev/null
++++ b/pkgs/development/python-modules/brax/default.nix
+@@ -0,0 +1,113 @@
++{
++  lib,
++  buildPythonPackage,
++  fetchFromGitHub,
++  stdenv,
++
++  # build-system
++  setuptools,
++
++  # dependencies
++  absl-py,
++  dm-env,
++  etils,
++  flask,
++  flask-cors,
++  flax,
++  grpcio,
++  gym,
++  jax,
++  jaxlib,
++  jaxopt,
++  jinja2,
++  ml-collections,
++  mujoco,
++  mujoco-mjx,
++  numpy,
++  optax,
++  orbax-checkpoint,
++  pillow,
++  pytinyrenderer,
++  scipy,
++  tensorboardx,
++  trimesh,
++
++  # tests
++  pytestCheckHook,
++  pytest-xdist,
++  transforms3d,
++}:
++
++buildPythonPackage rec {
++  pname = "brax";
++  version = "0.12.1";
++  pyproject = true;
++
++  src = fetchFromGitHub {
++    owner = "google";
++    repo = "brax";
++    tag = "v${version}";
++    hash = "sha256-whkkqTTy5CY6soyS5D7hWtBZuVHc6si1ArqwLgzHDkw=";
++  };
++
++  build-system = [
++    setuptools
++  ];
++
++  dependencies = [
++    absl-py
++    # TODO: remove dm_env after dropping legacy v1 code
++    dm-env
++    etils
++    flask
++    flask-cors
++    flax
++    # TODO: remove grpcio and gym after dropping legacy v1 code
++    grpcio
++    gym
++    jax
++    jaxlib
++    jaxopt
++    jinja2
++    ml-collections
++    mujoco
++    mujoco-mjx
++    numpy
++    optax
++    orbax-checkpoint
++    pillow
++    # TODO: remove pytinyrenderer after dropping legacy v1 code
++    pytinyrenderer
++    scipy
++    tensorboardx
++    trimesh
++  ];
++
++  nativeCheckInputs = [
++    pytestCheckHook
++    pytest-xdist
++    transforms3d
++  ];
++
++  disabledTests = lib.optionals stdenv.hostPlatform.isAarch64 [
++    # Flaky:
++    # AssertionError: Array(-0.00135638, dtype=float32) != 0.0 within 0.001 delta (Array(0.00135638, dtype=float32) difference)
++    "test_pendulum_period2"
++  ];
++
++  disabledTestPaths = [
++    # ValueError: matmul: Input operand 1 has a mismatch in its core dimension
++    "brax/generalized/constraint_test.py"
++  ];
++
++  pythonImportsCheck = [
++    "brax"
++  ];
++
++  meta = {
++    description = "Massively parallel rigidbody physics simulation on accelerator hardware";
++    homepage = "https://github.com/google/brax";
++    license = lib.licenses.asl20;
++    maintainers = with lib.maintainers; [ nim65s ];
++  };
++}
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 704825453925e2..d09c74ea223f58 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -2010,6 +2010,8 @@ self: super: with self; {
+ 
+   bravia-tv = callPackage ../development/python-modules/bravia-tv { };
+ 
++  brax = callPackage ../development/python-modules/brax { };
++
+   breathe = callPackage ../development/python-modules/breathe { };
+ 
+   breezy = callPackage ../development/python-modules/breezy { };
+
+From 95a8624fab3afe16c73eaf7602ef29cc3f2d2104 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 9 Apr 2025 17:06:14 +0200
+Subject: [PATCH 4/4] mujoco: passthru test python3Packages.mujoco-mjx
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Co-authored-by: Gaétan Lepage <33058747+GaetanLepage@users.noreply.github.com>
+---
+ pkgs/by-name/mu/mujoco/package.nix | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/pkgs/by-name/mu/mujoco/package.nix b/pkgs/by-name/mu/mujoco/package.nix
+index c0bea6fdd2406a..50bf731bdeaef3 100644
+--- a/pkgs/by-name/mu/mujoco/package.nix
++++ b/pkgs/by-name/mu/mujoco/package.nix
+@@ -184,6 +184,7 @@ stdenv.mkDerivation (finalAttrs: {
+     };
+     tests = {
+       pythonMujoco = python3Packages.mujoco;
++      pythonMujocoMjx = python3Packages.mujoco-mjx;
+     };
+   };
+ 
