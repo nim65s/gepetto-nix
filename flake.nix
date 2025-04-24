@@ -241,7 +241,6 @@
               packages = [
                 (pkgs.rosPackages.jazzy.python3.withPackages (p: [
                   p.bloom
-                  p.catkin-pkg
                   p.rosdep
                 ]))
               ];
