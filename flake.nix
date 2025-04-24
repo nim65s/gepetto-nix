@@ -236,6 +236,16 @@
                 # keep-sorted end
               ];
             };
+            gs = pkgs.mkShell {
+              name = "Dev Shell for Guilhem";
+              packages = [
+                (pkgs.rosPackages.jazzy.python3.withPackages (p: [
+                  p.bloom
+                  p.catkin-pkg
+                  p.rosdep
+                ]))
+              ];
+            };
             ms = pkgs.mkShell {
               name = "Dev Shell for Maxime";
               inputsFrom = [ pkgs.python3Packages.crocoddyl ];
