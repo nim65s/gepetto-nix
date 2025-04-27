@@ -155,11 +155,11 @@
     "src-agimus-msgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1745163193,
-        "narHash": "sha256-xSslm8OtO9pAvOp0eJ0Y0Oob9pKOjUq18Xdtf3Lw5ac=",
+        "lastModified": 1745397033,
+        "narHash": "sha256-2kMOwRwSDkL4n6w5Nj6S7S0bJn2IzRFVqvQq24icycU=",
         "owner": "agimus-project",
         "repo": "agimus_msgs",
-        "rev": "28461294e2a5f317412261b299afdbcdb21d8574",
+        "rev": "216ed5f857388fdd13ff17c1671c14d7a4fe5910",
         "type": "github"
       },
       "original": {
@@ -171,11 +171,11 @@
     "src-colmpc": {
       "flake": false,
       "locked": {
-        "lastModified": 1745258258,
-        "narHash": "sha256-TV6m5fHlXaxxeDuk8oRNIb4ysIeVXWPmNKNOWG3ZgII=",
+        "lastModified": 1745431360,
+        "narHash": "sha256-/gTWAmhV9YDU0CwAu8VlqxGbe2SI138AdvEuMDbVZ5s=",
         "owner": "agimus-project",
         "repo": "colmpc",
-        "rev": "a4d9f33b98835c05fd373b44e685186c06c018dd",
+        "rev": "8e4482145721a3eea4bc1a6cd0b13f1dd3f7388b",
         "type": "github"
       },
       "original": {
@@ -219,11 +219,11 @@
     "src-gepetto-viewer": {
       "flake": false,
       "locked": {
-        "lastModified": 1742217943,
-        "narHash": "sha256-mGprgqEivYEPdPmJXodk29T1/MxkYVpBLjgC7a2LXPA=",
+        "lastModified": 1745404179,
+        "narHash": "sha256-mxWRXw0Lh3PpuX8u72ytWVWPPt2Qb8eNJdBf9twweUQ=",
         "owner": "Gepetto",
         "repo": "gepetto-viewer",
-        "rev": "13e7520169ffe68c4ed935c5b3ba19bab99a48df",
+        "rev": "c23c86ea979b7591c38100f8667d3c3398626273",
         "type": "github"
       },
       "original": {
