@@ -26,6 +26,10 @@
       url = "https://github.com/NixOS/nixpkgs/pull/397664.patch";
       flake = false;
     };
+    src-agimus-controller = {
+      url = "github:agimus-project/agimus_controller";
+      flake = false;
+    };
     src-agimus-msgs = {
       url = "github:agimus-project/agimus_msgs";
       flake = false;
@@ -98,6 +102,7 @@
               {
                 inherit (inputs)
                   # keep-sorted start
+                  src-agimus-controller
                   src-example-parallel-robots
                   src-toolbox-parallel-robots
                   # keep-sorted end
@@ -141,6 +146,7 @@
               {
                 inherit (inputs)
                   # keep-sorted start
+                  src-agimus-controller
                   src-agimus-msgs
                   # keep-sorted end
                   ;
@@ -160,6 +166,7 @@
               {
                 inherit (inputs)
                   # keep-sorted start
+                  src-agimus-controller
                   src-agimus-msgs
                   # keep-sorted end
                   ;
@@ -279,6 +286,8 @@
             {
               python = pkgs.python3.withPackages (p: [
                 # keep-sorted start
+                p.agimus-controller
+                p.agimus-controller-examples
                 p.crocoddyl
                 p.gepetto-gui
                 p.hpp-corba
@@ -380,6 +389,7 @@
             // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
               inherit (pkgs.rosPackages.humble)
                 # keep-sorted start
+                agimus-controller-ros
                 agimus-msgs
                 franka-description
                 linear-feedback-controller
@@ -390,6 +400,7 @@
             // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
               inherit (pkgs.rosPackages.jazzy)
                 # keep-sorted start
+                agimus-controller-ros
                 agimus-msgs
                 linear-feedback-controller
                 linear-feedback-controller-msgs

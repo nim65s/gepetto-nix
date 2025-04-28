@@ -142,6 +142,7 @@
         ],
         "patch-hpp": "patch-hpp",
         "patch-mim-solvers": "patch-mim-solvers",
+        "src-agimus-controller": "src-agimus-controller",
         "src-agimus-msgs": "src-agimus-msgs",
         "src-colmpc": "src-colmpc",
         "src-example-parallel-robots": "src-example-parallel-robots",
@@ -150,6 +151,22 @@
         "src-toolbox-parallel-robots": "src-toolbox-parallel-robots",
         "system-manager": "system-manager",
         "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "src-agimus-controller": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1745505708,
+        "narHash": "sha256-z1Pguea2gho2VF7b8SkvkBd7R7kzdmewOjOSW6o+HSY=",
+        "owner": "agimus-project",
+        "repo": "agimus_controller",
+        "rev": "675be1aafb001bada88250bc6094f9b9a8e17d49",
+        "type": "github"
+      },
+      "original": {
+        "owner": "agimus-project",
+        "repo": "agimus_controller",
+        "type": "github"
       }
     },
     "src-agimus-msgs": {
