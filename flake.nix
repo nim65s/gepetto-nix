@@ -268,6 +268,8 @@
                   p.pandas
                   p.proxsuite
                   p.quadprog
+                  p.seaborn
+                  p.scikit-learn
                   # keep-sorted end
                 ]))
               ];
