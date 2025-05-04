@@ -22,10 +22,6 @@
       url = "https://github.com/nim65s/nixpkgs/pull/3.patch";
       flake = false;
     };
-    patch-mim-solvers = {
-      url = "https://github.com/NixOS/nixpkgs/pull/397664.patch";
-      flake = false;
-    };
     src-agimus-controller = {
       url = "github:agimus-project/agimus_controller";
       flake = false;
@@ -64,16 +60,8 @@
       pkgsForPatching = inputs.nixpkgs.legacyPackages.x86_64-linux;
       patches = [
         # keep-sorted start
-        ./patches/0-391300.patch
-        ./patches/1-390922.patch
-        ./patches/2-386846.patch
-        ./patches/3-383990.patch
-        ./patches/374657.patch
-        ./patches/384430.patch
-        ./patches/391930.patch
-        ./patches/393394.patch
+        ./patches/397664.patch
         inputs.patch-hpp
-        inputs.patch-mim-solvers
         # keep-sorted end
       ];
       patchedNixpkgs = (
