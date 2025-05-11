@@ -159,11 +159,11 @@
     "src-agimus-msgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1745397033,
-        "narHash": "sha256-2kMOwRwSDkL4n6w5Nj6S7S0bJn2IzRFVqvQq24icycU=",
+        "lastModified": 1746775023,
+        "narHash": "sha256-/M8VdlVrztxMGBZlalOUQj0ovrds49ewI+nh6lKX7R8=",
         "owner": "agimus-project",
         "repo": "agimus_msgs",
-        "rev": "216ed5f857388fdd13ff17c1671c14d7a4fe5910",
+        "rev": "e87653733699bc13884f3eb6b016f514ce368867",
         "type": "github"
       },
       "original": {
@@ -175,11 +175,11 @@
     "src-colmpc": {
       "flake": false,
       "locked": {
-        "lastModified": 1745900091,
-        "narHash": "sha256-p6kdC1UC2uEkgfEvKbmxSmKavhGT832n7JwC/Wd2WB8=",
+        "lastModified": 1746332198,
+        "narHash": "sha256-GOhyF7JDdpT4pQQOe8llR8K1H8FJEzPTUrkU3hHtcjw=",
         "owner": "agimus-project",
         "repo": "colmpc",
-        "rev": "8692ab99132d8a43ddf67fa5b6e2303e80fb95e2",
+        "rev": "ca69e0c13cdcf52dcccbcaf178d81154f977c0f2",
         "type": "github"
       },
       "original": {
@@ -191,11 +191,11 @@
     "src-example-parallel-robots": {
       "flake": false,
       "locked": {
-        "lastModified": 1745872117,
-        "narHash": "sha256-q5Xioalgb0CfHSqSrhNUNKpJcILEaZQeCwQVJqD7Bp0=",
+        "lastModified": 1746477898,
+        "narHash": "sha256-VQM92gt62kLPn9c27I4wMYBi22Qw7gqnG4dt8y0sAbw=",
         "owner": "gepetto",
         "repo": "example-parallel-robots",
-        "rev": "1578efcc446639c8b592d6a8b892e936e961ee43",
+        "rev": "10b088f2386171e6430899c75c8a7b2fe4010f80",
         "type": "github"
       },
       "original": {
@@ -240,11 +240,11 @@
     "src-toolbox-parallel-robots": {
       "flake": false,
       "locked": {
-        "lastModified": 1745872205,
-        "narHash": "sha256-paeODsNj8LSMXGa+5MzRFuCcLxZL5PwCjEHWs8aIhw0=",
+        "lastModified": 1746478029,
+        "narHash": "sha256-8FF4/8zgrCNHhLL3WbyhoRzKRFZH/pgqTgJcIC5Q+y0=",
         "owner": "gepetto",
         "repo": "toolbox-parallel-robots",
-        "rev": "af4c8b705ebbc0efec5fae92e67ccf2436830a9c",
+        "rev": "5b58db61191db1fefe64f881398a956a15ca60ff",
         "type": "github"
       },
       "original": {
