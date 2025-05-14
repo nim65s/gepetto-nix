@@ -95,7 +95,7 @@
           {
             _module.args.pkgs =
               let
-                pkgsForPatching = inputs.nixpkgs.legacyPackages.x86_64-linux;
+                pkgsForPatching = inputs'.nixpkgs.legacyPackages;
                 patchedNixpkgs = (
                   pkgsForPatching.applyPatches {
                     inherit (self) patches;
