@@ -54,7 +54,7 @@
   outputs =
     inputs:
     let
-      flakeModule = import ./flake-module.nix;
+      flakeModule = import ./module.nix;
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import inputs.systems;
