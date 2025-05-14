@@ -1,0 +1,2277 @@
+From 6811ad43fbbe81f1d355301c3aa251af85e5188c Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Tue, 2 Jul 2024 15:46:48 +0200
+Subject: [PATCH 01/28] hpp-centroidal-dynamics: init at 6.0.0
+
+---
+ .../hp/hpp-centroidal-dynamics/package.nix    | 86 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 ++
+ 2 files changed, 93 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-centroidal-dynamics/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-centroidal-dynamics/package.nix b/pkgs/by-name/hp/hpp-centroidal-dynamics/package.nix
+new file mode 100644
+index 00000000000000..1bb096b9f4d5e4
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-centroidal-dynamics/package.nix
+@@ -0,0 +1,86 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  pythonSupport ? false,
++  python3Packages,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # buildInputs
++  cddlib,
++  clp,
++  qpoases,
++
++  # propagatedBuildInputs
++  boost,
++  eigen,
++  jrl-cmakemodules,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-centroidal-dynamics";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-centroidal-dynamics";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-DfxIyz7lylh+z38BrJhRwyBYQ9nvBW/3CI7dieJ/g+o=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs =
++    [
++      cmake
++      doxygen
++      pkg-config
++    ]
++    ++ lib.optionals pythonSupport [
++      python3Packages.python
++      python3Packages.pythonImportsCheckHook
++    ];
++  buildInputs = [
++    cddlib
++    clp
++    qpoases
++  ];
++  propagatedBuildInputs =
++    [
++      eigen
++      jrl-cmakemodules
++    ]
++    ++ lib.optionals pythonSupport [
++      python3Packages.boost
++      python3Packages.eigenpy
++    ]
++    ++ lib.optional (!pythonSupport) boost;
++
++  cmakeFlags = [
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++    (lib.cmakeBool "BUILD_WITH_CLP" true)
++  ];
++
++  doCheck = true;
++
++  pythonImportsCheck = [ "hpp_centroidal_dynamics" ];
++
++  meta = {
++    description = "Utility classes to check the (robust) equilibrium of a system in contact with the environment.";
++    homepage = "https://github.com/humanoid-path-planner/hpp-centroidal-dynamics";
++    changelog = "https://github.com/humanoid-path-planner/hpp-centroidal-dynamics/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 9abac7174fad67..2be7d21fff545d 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6270,6 +6270,13 @@ self: super: with self; {
+ 
+   hpccm = callPackage ../development/python-modules/hpccm { };
+ 
++  hpp-centroidal-dynamics = toPythonModule (
++    pkgs.hpp-centroidal-dynamics.override {
++      pythonSupport = true;
++      python3Packages = self;
++    }
++  );
++
+   hs-dbus-signature = callPackage ../development/python-modules/hs-dbus-signature { };
+ 
+   hsaudiotag3k = callPackage ../development/python-modules/hsaudiotag3k { };
+
+From 97273e5ef3c0a511a937ca76bc037221edee8f41 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 13:20:57 +0200
+Subject: [PATCH 02/28] hpp-environments: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-environments/package.nix | 74 ++++++++++++++++++++
+ pkgs/top-level/python-packages.nix           |  7 ++
+ 2 files changed, 81 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-environments/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-environments/package.nix b/pkgs/by-name/hp/hpp-environments/package.nix
+new file mode 100644
+index 00000000000000..5d426033628990
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-environments/package.nix
+@@ -0,0 +1,74 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  python3Packages,
++  pythonSupport ? false,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  boost,
++  example-robot-data,
++  jrl-cmakemodules,
++  pinocchio,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-environments";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-environments";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-GCyrt1SkBrfoT2VXrZOoOlysxH4gS2+n5pNYSuAbAs8=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ] ++ lib.optional pythonSupport python3Packages.python;
++  propagatedBuildInputs =
++    [
++      jrl-cmakemodules
++    ]
++    ++ lib.optionals pythonSupport [
++      python3Packages.boost
++      python3Packages.eigenpy
++      python3Packages.pinocchio
++      python3Packages.example-robot-data
++    ]
++    ++ lib.optionals (!pythonSupport) [
++      boost
++      pinocchio
++      example-robot-data
++    ];
++
++  cmakeFlags = [
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Environments and robot descriptions for HPP";
++    homepage = "https://github.com/humanoid-path-planner/hpp-environments";
++    changelog = "https://github.com/humanoid-path-planner/hpp-environments/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 2be7d21fff545d..558b420694ae24 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6277,6 +6277,13 @@ self: super: with self; {
+     }
+   );
+ 
++  hpp-environments = toPythonModule (
++    pkgs.hpp-environments.override {
++      pythonSupport = true;
++      python3Packages = self;
++    }
++  );
++
+   hs-dbus-signature = callPackage ../development/python-modules/hs-dbus-signature { };
+ 
+   hsaudiotag3k = callPackage ../development/python-modules/hsaudiotag3k { };
+
+From 7e83ecb586c0d1c86057b2e9db589cf176eb9a7e Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 13:22:50 +0200
+Subject: [PATCH 03/28] hpp-util: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-util/package.nix | 61 ++++++++++++++++++++++++++++
+ 1 file changed, 61 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-util/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-util/package.nix b/pkgs/by-name/hp/hpp-util/package.nix
+new file mode 100644
+index 00000000000000..aa473b6ff6e6c8
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-util/package.nix
+@@ -0,0 +1,61 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInput
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  boost,
++  jrl-cmakemodules,
++  tinyxml-2,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-util";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-util";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-Op7bCaDOoKppEzj0wWNs52QhtdPTvMp+qEwW4ZA446M=";
++  };
++
++  prePatch = ''
++    substituteInPlace tests/run_debug.sh.in \
++      --replace-fail /bin/bash ${stdenv.shell}
++  '';
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [
++    boost
++    jrl-cmakemodules
++    tinyxml-2
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Debugging tools for the HPP project";
++    homepage = "https://github.com/humanoid-path-planner/hpp-util";
++    changelog = "https://github.com/humanoid-path-planner/hpp-util/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 1157f7be65920bb0b3c33d86504daca7d47a3370 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 13:24:28 +0200
+Subject: [PATCH 04/28] hpp-pinocchio: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-pinocchio/package.nix | 53 +++++++++++++++++++++++
+ 1 file changed, 53 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-pinocchio/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-pinocchio/package.nix b/pkgs/by-name/hp/hpp-pinocchio/package.nix
+new file mode 100644
+index 00000000000000..5e7f864a36ca15
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-pinocchio/package.nix
+@@ -0,0 +1,53 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  example-robot-data,
++  hpp-environments,
++  hpp-util,
++  pinocchio,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-pinocchio";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-pinocchio";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-SDH129hkDTfLBkKBHkqxGng9G3Wd7dbLCarHJhOFryc=";
++  };
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [
++    example-robot-data
++    hpp-environments
++    hpp-util
++    pinocchio
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Wrapping of Pinocchio library into HPP";
++    homepage = "https://github.com/humanoid-path-planner/hpp-pinocchio";
++    changelog = "https://github.com/humanoid-path-planner/hpp-pinocchio/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 63bb3babdefbbb949b7028ce3292c6f0bb118104 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 13:39:31 +0200
+Subject: [PATCH 05/28] hpp-statistics: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-statistics/package.nix | 50 ++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-statistics/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-statistics/package.nix b/pkgs/by-name/hp/hpp-statistics/package.nix
+new file mode 100644
+index 00000000000000..1816338e8f37a0
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-statistics/package.nix
+@@ -0,0 +1,50 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  hpp-util,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-statistics";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-statistics";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-qo8BynQvboucgLMVwVafwF7eMfwcbEDksxGUzi3f/vY=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [ hpp-util ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Classes for doing statistics";
++    homepage = "https://github.com/humanoid-path-planner/hpp-statistics";
++    changelog = "https://github.com/humanoid-path-planner/hpp-statistics/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 1c010eee4d6b87e6887ac125cdaf10a2a5172e3d Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 13:49:26 +0200
+Subject: [PATCH 06/28] hpp-bezier-com-traj: init at 6.0.0
+
+---
+ .../hp/hpp-bezier-com-traj/package.nix        | 88 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 ++
+ 2 files changed, 95 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-bezier-com-traj/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-bezier-com-traj/package.nix b/pkgs/by-name/hp/hpp-bezier-com-traj/package.nix
+new file mode 100644
+index 00000000000000..2ebcfce55dd468
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-bezier-com-traj/package.nix
+@@ -0,0 +1,88 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  pythonSupport ? false,
++  python3Packages,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  cddlib,
++  clp,
++  glpk,
++  hpp-centroidal-dynamics,
++  ndcurves,
++  qpoases,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-bezier-com-traj";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-bezier-com-traj";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-5G7FD/LNfygFHNk5btx0PrkUqWWdSpJwazb1I+CJhy4=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs =
++    [
++      cmake
++      doxygen
++      pkg-config
++    ]
++    ++ lib.optionals pythonSupport [
++      python3Packages.python
++      python3Packages.pythonImportsCheckHook
++    ];
++  propagatedBuildInputs =
++    [
++      cddlib
++      clp
++      glpk
++      qpoases
++    ]
++    ++ lib.optionals pythonSupport [
++      python3Packages.hpp-centroidal-dynamics
++      python3Packages.ndcurves
++    ]
++    ++ lib.optionals (!pythonSupport) [
++      hpp-centroidal-dynamics
++      ndcurves
++    ];
++
++  cmakeFlags =
++    [
++      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++      (lib.cmakeBool "USE_GLPK" true)
++    ]
++    ++ lib.optionals stdenv.targetPlatform.isDarwin [
++      (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
++    ];
++
++  doCheck = true;
++
++  pythonImportsCheck = [ "hpp_bezier_com_traj" ];
++
++  meta = {
++    description = "Multi contact trajectory generation for the COM using Bezier curves";
++    homepage = "https://github.com/humanoid-path-planner/hpp-bezier-com-traj";
++    changelog = "https://github.com/humanoid-path-planner/hpp-bezier-com-traj/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 558b420694ae24..7e8a9d5d60f76f 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6270,6 +6270,13 @@ self: super: with self; {
+ 
+   hpccm = callPackage ../development/python-modules/hpccm { };
+ 
++  hpp-bezier-com-traj = toPythonModule (
++    pkgs.hpp-bezier-com-traj.override {
++      pythonSupport = true;
++      python3Packages = self;
++    }
++  );
++
+   hpp-centroidal-dynamics = toPythonModule (
+     pkgs.hpp-centroidal-dynamics.override {
+       pythonSupport = true;
+
+From 07580199e20cecb56b8b98e13c63b2108b4ed093 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 13:57:42 +0200
+Subject: [PATCH 07/28] hpp-constraints: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-constraints/package.nix | 60 +++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-constraints/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-constraints/package.nix b/pkgs/by-name/hp/hpp-constraints/package.nix
+new file mode 100644
+index 00000000000000..f07da4a468e4de
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-constraints/package.nix
+@@ -0,0 +1,60 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  hpp-pinocchio,
++  hpp-statistics,
++  qpoases,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-constraints";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-constraints";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-5x5PvuxNP1iaXmwQJhg0UWlo7kPCzF3xgbUwenZ1xqk=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [
++    hpp-pinocchio
++    hpp-statistics
++    qpoases
++  ];
++
++  doCheck = true;
++
++  cmakeFlags = lib.optionals stdenv.hostPlatform.isDarwin [
++    "-DCMAKE_CTEST_ARGUMENTS=--exclude-regex;'test-jacobians|solver-by-substitution'"
++  ];
++
++  meta = {
++    description = "Definition of basic geometric constraints for motion planning";
++    homepage = "https://github.com/humanoid-path-planner/hpp-constraints";
++    changelog = "https://github.com/humanoid-path-planner/hpp-constraints/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 2efd593bb5d05c397dc505a1060487bd8480a53d Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 14:00:38 +0200
+Subject: [PATCH 08/28] hpp-baxter: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-baxter/package.nix | 61 ++++++++++++++++++++++++++
+ pkgs/top-level/python-packages.nix     |  7 +++
+ 2 files changed, 68 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-baxter/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-baxter/package.nix b/pkgs/by-name/hp/hpp-baxter/package.nix
+new file mode 100644
+index 00000000000000..164e0d9edc98bf
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-baxter/package.nix
+@@ -0,0 +1,61 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  pythonSupport ? false,
++  python3Packages,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  example-robot-data,
++  jrl-cmakemodules,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-baxter";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-baxter";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-AdEmaDGlmlbHF+pUD9FbVZU3wwxBSKNfsknLKxuuf/c=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ] ++ lib.optional pythonSupport python3Packages.python;
++  propagatedBuildInputs = [
++    jrl-cmakemodules
++    example-robot-data
++  ];
++
++  cmakeFlags = [
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Wrappers for Baxter robot in HPP";
++    homepage = "https://github.com/humanoid-path-planner/hpp-baxter";
++    changelog = "https://github.com/humanoid-path-planner/hpp-baxter/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 7e8a9d5d60f76f..d2d2f287e7de5e 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6270,6 +6270,13 @@ self: super: with self; {
+ 
+   hpccm = callPackage ../development/python-modules/hpccm { };
+ 
++  hpp-baxter = toPythonModule (
++    pkgs.hpp-baxter.override {
++      pythonSupport = true;
++      python3Packages = self;
++    }
++  );
++
+   hpp-bezier-com-traj = toPythonModule (
+     pkgs.hpp-bezier-com-traj.override {
+       pythonSupport = true;
+
+From 9be1df679a4cb3f8ad17bfbf15a5e3000d963764 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 3 Jul 2024 14:03:45 +0200
+Subject: [PATCH 09/28] hpp-core: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-core/package.nix | 49 ++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-core/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-core/package.nix b/pkgs/by-name/hp/hpp-core/package.nix
+new file mode 100644
+index 00000000000000..6b42880db39a5c
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-core/package.nix
+@@ -0,0 +1,49 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  hpp-constraints,
++  proxsuite,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-core";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-core";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-W4gUjvzULxUqG51zBV3P9u2XWNM7FQDK4pk/DMuWb2k=";
++  };
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [
++    hpp-constraints
++    proxsuite
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "The core algorithms of the Humanoid Path Planner framework";
++    homepage = "https://github.com/humanoid-path-planner/hpp-core";
++    changelog = "https://github.com/humanoid-path-planner/hpp-core/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 69941ab5c02cf2461864e7be71f507992163c7be Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 18:11:12 +0200
+Subject: [PATCH 10/28] hpp-universal-robot: init at 6.0.0
+
+---
+ .../hp/hpp-universal-robot/package.nix        | 61 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  7 +++
+ 2 files changed, 68 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-universal-robot/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-universal-robot/package.nix b/pkgs/by-name/hp/hpp-universal-robot/package.nix
+new file mode 100644
+index 00000000000000..f1adbbe035ed28
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-universal-robot/package.nix
+@@ -0,0 +1,61 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  pythonSupport ? false,
++  python3Packages,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  example-robot-data,
++  jrl-cmakemodules,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-universal-robot";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-universal-robot";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-4sZPcFV/vDtWDnjaBcGzCpS9SWYa3S0LzgUYdrT9vzM=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ] ++ lib.optional pythonSupport python3Packages.python;
++  propagatedBuildInputs = [
++    jrl-cmakemodules
++    example-robot-data
++  ];
++
++  cmakeFlags = [
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Data specific to robots ur5 and ur10 for hpp-corbaserver";
++    homepage = "https://github.com/humanoid-path-planner/hpp-universal-robot";
++    changelog = "https://github.com/humanoid-path-planner/hpp-universal-robot/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index d2d2f287e7de5e..123fd1ab50db85 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6298,6 +6298,13 @@ self: super: with self; {
+     }
+   );
+ 
++  hpp-universal-robot = toPythonModule (
++    pkgs.hpp-universal-robot.override {
++      pythonSupport = true;
++      python3Packages = self;
++    }
++  );
++
+   hs-dbus-signature = callPackage ../development/python-modules/hs-dbus-signature { };
+ 
+   hsaudiotag3k = callPackage ../development/python-modules/hsaudiotag3k { };
+
+From 4ae3313191797a81679021cc6359af2f94b13c43 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 18:14:32 +0200
+Subject: [PATCH 11/28] hpp-template-corba: init at 6.0.0
+
+---
+ .../by-name/hp/hpp-template-corba/package.nix | 50 +++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-template-corba/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-template-corba/package.nix b/pkgs/by-name/hp/hpp-template-corba/package.nix
+new file mode 100644
+index 00000000000000..b190f6d1d5f1bf
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-template-corba/package.nix
+@@ -0,0 +1,50 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  pkg-config,
++  omniorb,
++
++  # propagatedBuildInputs
++  hpp-util,
++  jrl-cmakemodules,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-template-corba";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-template-corba";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-uDMf2p/9GS62lh7I0ZYYLaPe/d6W++cJhtwBIKf1G+U=";
++  };
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    pkg-config
++    omniorb
++  ];
++  propagatedBuildInputs = [
++    jrl-cmakemodules
++    hpp-util
++    omniorb
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "This package is intended to ease construction of CORBA servers by templating actions that are common to all servers";
++    homepage = "https://github.com/humanoid-path-planner/hpp-template-corba";
++    changelog = "https://github.com/humanoid-path-planner/hpp-template-corba/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd3;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 77472d0358523c7b2267ec4b52a0f287714b3ab7 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:34:07 +0200
+Subject: [PATCH 12/28] hpp-corbaserver: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-corbaserver/package.nix | 87 +++++++++++++++++++++
+ pkgs/top-level/python-packages.nix          |  2 +
+ 2 files changed, 89 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-corbaserver/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-corbaserver/package.nix b/pkgs/by-name/hp/hpp-corbaserver/package.nix
+new file mode 100644
+index 00000000000000..9b7bc0ac2a0e79
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-corbaserver/package.nix
+@@ -0,0 +1,87 @@
++{
++  lib,
++  fetchFromGitHub,
++  runCommand,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  omniorb,
++  pkg-config,
++  python3Packages,
++
++  # propagatedBuildInputs
++  hpp-core,
++  hpp-template-corba,
++  makeWrapper,
++
++  # checkInputs
++  psmisc,
++}:
++
++let
++  hpp-corbaserver = stdenv.mkDerivation (finalAttrs: {
++    pname = "hpp-corbaserver";
++    version = "6.0.0";
++
++    src = fetchFromGitHub {
++      owner = "humanoid-path-planner";
++      repo = "hpp-corbaserver";
++      tag = "v${finalAttrs.version}";
++      hash = "sha256-1snnRFRgg+5LWtDBBmtqPE3YBqjDIct+2mfEIKd6ow8=";
++    };
++
++    prePatch = ''
++      substituteInPlace tests/hppcorbaserver.sh \
++        --replace-fail /bin/bash ${stdenv.shell}
++    '';
++
++    outputs = [
++      "out"
++      "doc"
++    ];
++
++    nativeBuildInputs = [
++      cmake
++      doxygen
++      omniorb
++      pkg-config
++      python3Packages.pythonImportsCheckHook
++    ];
++    propagatedBuildInputs = [
++      hpp-core
++      hpp-template-corba
++      python3Packages.omniorbpy
++      python3Packages.numpy
++    ];
++    checkInputs = [
++      psmisc
++    ];
++
++    enableParallelBuilding = false;
++
++    # psmisc is only available on linux
++    doCheck = stdenv.isLinux;
++
++    pythonImportsCheck = [ "hpp.corbaserver" ];
++
++    passthru.withPlugins =
++      plugins:
++      runCommand "hppcorbaserver" { nativeBuildInputs = [ makeWrapper ]; } ''
++        makeWrapper ${lib.getExe hpp-corbaserver} $out/bin/hppcorbaserver \
++          --set HPP_PLUGIN_DIRS ${lib.makeLibraryPath plugins}
++      '';
++
++    meta = {
++      description = "Corba server for Humanoid Path Planner applications";
++      homepage = "https://github.com/humanoid-path-planner/hpp-corbaserver";
++      changelog = "https://github.com/humanoid-path-planner/hpp-corbaserver/releases/tag/${finalAttrs.src.tag}";
++      license = lib.licenses.bsd2;
++      maintainers = [ lib.maintainers.nim65s ];
++      mainProgram = "hppcorbaserver";
++      platforms = lib.platforms.unix;
++    };
++  });
++in
++hpp-corbaserver
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 123fd1ab50db85..af288fd7a93dd5 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6291,6 +6291,8 @@ self: super: with self; {
+     }
+   );
+ 
++  hpp-corbaserver = toPythonModule (pkgs.hpp-corbaserver.override { python3Packages = self; });
++
+   hpp-environments = toPythonModule (
+     pkgs.hpp-environments.override {
+       pythonSupport = true;
+
+From 4b1c173d76a56fbed23970debf8445f2ea77cafe Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:38:12 +0200
+Subject: [PATCH 13/28] hpp-romeo: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-romeo/package.nix | 63 +++++++++++++++++++++++++++
+ pkgs/top-level/python-packages.nix    |  7 +++
+ 2 files changed, 70 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-romeo/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-romeo/package.nix b/pkgs/by-name/hp/hpp-romeo/package.nix
+new file mode 100644
+index 00000000000000..8ce6fa5d36e8b8
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-romeo/package.nix
+@@ -0,0 +1,63 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  pythonSupport ? false,
++  python3Packages,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++  jrl-cmakemodules,
++
++  # propagatedBuildInputs
++  hpp-corbaserver,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-romeo";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp_romeo";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-cGt+tL1BgrB4DtPswLI5nAyRfzq0yYlZw1eucY2OA5c=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ] ++ lib.optional pythonSupport python3Packages.python;
++  propagatedBuildInputs =
++    [
++      jrl-cmakemodules
++    ]
++    ++ lib.optional pythonSupport python3Packages.hpp-corbaserver
++    ++ lib.optional (!pythonSupport) hpp-corbaserver;
++
++  cmakeFlags = [
++    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Python and ros launch files for Romeo robot in hpp";
++    homepage = "https://github.com/humanoid-path-planner/hpp_romeo";
++    changelog = "https://github.com/humanoid-path-planner/hpp_romeo/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index af288fd7a93dd5..3bccd6406babe2 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6300,6 +6300,13 @@ self: super: with self; {
+     }
+   );
+ 
++  hpp-romeo = toPythonModule (
++    pkgs.hpp-romeo.override {
++      pythonSupport = true;
++      python3Packages = self;
++    }
++  );
++
+   hpp-universal-robot = toPythonModule (
+     pkgs.hpp-universal-robot.override {
+       pythonSupport = true;
+
+From 2427c5cbc8b4cd57cbb6fb2b7556d27ccf3b002b Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:41:09 +0200
+Subject: [PATCH 14/28] hpp-gepetto-viewer: init at 6.0.0
+
+---
+ .../by-name/hp/hpp-gepetto-viewer/package.nix | 54 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  2 +
+ 2 files changed, 56 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-gepetto-viewer/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-gepetto-viewer/package.nix b/pkgs/by-name/hp/hpp-gepetto-viewer/package.nix
+new file mode 100644
+index 00000000000000..be48de8ba02f5d
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-gepetto-viewer/package.nix
+@@ -0,0 +1,54 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  cmake,
++  doxygen,
++  libsForQt5,
++  pkg-config,
++  python3Packages,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-gepetto-viewer";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-gepetto-viewer";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-tWPyeEc8mpC5nE+z4Wb7BRTEXfQxhzshl8nBx8AXHAo=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    libsForQt5.wrapQtAppsHook
++    pkg-config
++    python3Packages.python
++  ];
++  buildInputs = [ libsForQt5.qtbase ];
++  propagatedBuildInputs = [
++    python3Packages.gepetto-viewer-corba
++    python3Packages.hpp-corbaserver
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Display of hpp robots and obstacles in gepetto-viewer";
++    homepage = "https://github.com/humanoid-path-planner/hpp-gepetto-viewer";
++    changelog = "https://github.com/humanoid-path-planner/hpp-gepetto-viewer/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 3bccd6406babe2..114dd6a477a7fb 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6300,6 +6300,8 @@ self: super: with self; {
+     }
+   );
+ 
++  hpp-gepetto-viewer = toPythonModule (pkgs.hpp-gepetto-viewer.override { python3Packages = self; });
++
+   hpp-romeo = toPythonModule (
+     pkgs.hpp-romeo.override {
+       pythonSupport = true;
+
+From 1e2e5c9fead7e1c0ea779735613218c6c03a4002 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:43:11 +0200
+Subject: [PATCH 15/28] hpp-manipulation: init at 6.0
+
+---
+ pkgs/by-name/hp/hpp-manipulation/package.nix | 54 ++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-manipulation/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-manipulation/package.nix b/pkgs/by-name/hp/hpp-manipulation/package.nix
+new file mode 100644
+index 00000000000000..781105f96dc2a2
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-manipulation/package.nix
+@@ -0,0 +1,54 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  hpp-core,
++  hpp-universal-robot,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-manipulation";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-manipulation";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-O8eUPabhuVpNEG66scfiX49LIuZzNWNK6WEHL5cK+tQ=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [
++    hpp-core
++    hpp-universal-robot
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Classes for manipulation planning";
++    homepage = "https://github.com/humanoid-path-planner/hpp-manipulation";
++    changelog = "https://github.com/humanoid-path-planner/hpp-manipulation/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 0643c639412a1a9143ce243cc36e85d37c6e6829 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:44:27 +0200
+Subject: [PATCH 16/28] hpp-manipulation-urdf: init at 6.0.0
+
+---
+ .../hp/hpp-manipulation-urdf/package.nix      | 57 +++++++++++++++++++
+ 1 file changed, 57 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-manipulation-urdf/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-manipulation-urdf/package.nix b/pkgs/by-name/hp/hpp-manipulation-urdf/package.nix
+new file mode 100644
+index 00000000000000..9ac07bce85a8ed
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-manipulation-urdf/package.nix
+@@ -0,0 +1,57 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  hpp-manipulation,
++
++  # checkInputs
++  example-robot-data,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-manipulation-urdf";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-manipulation-urdf";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-t62zULwKR5MSoEcsWt/NYr8ojS1Ca0tSXlR9NYwtSLY=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [ hpp-manipulation ];
++  checkInputs = [ example-robot-data ];
++  doCheck = true;
++
++  preCheck = ''
++    export ROS_PACKAGE_PATH=${example-robot-data}/share
++  '';
++
++  meta = {
++    description = "Implementation of a parser for hpp-manipulation";
++    homepage = "https://github.com/humanoid-path-planner/hpp-manipulation-urdf";
++    changelog = "https://github.com/humanoid-path-planner/hpp-manipulation-urdf/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From 92121a0a17359a09973be1a3a297d9430cb9f966 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:45:46 +0200
+Subject: [PATCH 17/28] hpp-manipulation-corba: init at 6.0.0
+
+---
+ .../hp/hpp-manipulation-corba/package.nix     | 60 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  4 ++
+ 2 files changed, 64 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-manipulation-corba/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-manipulation-corba/package.nix b/pkgs/by-name/hp/hpp-manipulation-corba/package.nix
+new file mode 100644
+index 00000000000000..c40705bed5724d
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-manipulation-corba/package.nix
+@@ -0,0 +1,60 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  omniorb,
++  pkg-config,
++  python3Packages,
++
++  # propagatedBuildInputs
++  hpp-manipulation-urdf,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-manipulation-corba";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-manipulation-corba";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-WG2CqkC0Jhwi10hQ9kjtGM5bQiuqeNj0JIKYQwOoCEQ=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    omniorb
++    pkg-config
++    python3Packages.python
++  ];
++  propagatedBuildInputs = [
++    hpp-manipulation-urdf
++    python3Packages.hpp-corbaserver
++    python3Packages.omniorbpy
++  ];
++
++  enableParallelBuilding = false;
++
++  doCheck = true;
++
++  meta = {
++    description = "Corba server for manipulation planning";
++    homepage = "https://github.com/humanoid-path-planner/hpp-manipulation-corba";
++    changelog = "https://github.com/humanoid-path-planner/hpp-manipulation-corba/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 114dd6a477a7fb..7bd987bb51ab2c 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6302,6 +6302,10 @@ self: super: with self; {
+ 
+   hpp-gepetto-viewer = toPythonModule (pkgs.hpp-gepetto-viewer.override { python3Packages = self; });
+ 
++  hpp-manipulation-corba = toPythonModule (
++    pkgs.hpp-manipulation-corba.override { python3Packages = self; }
++  );
++
+   hpp-romeo = toPythonModule (
+     pkgs.hpp-romeo.override {
+       pythonSupport = true;
+
+From f195aa01e5cbeff5426e5b41e2a2a3945d2e8bed Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:47:45 +0200
+Subject: [PATCH 18/28] hpp-plot: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-plot/package.nix | 54 ++++++++++++++++++++++++++++
+ pkgs/top-level/python-packages.nix   |  2 ++
+ 2 files changed, 56 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-plot/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-plot/package.nix b/pkgs/by-name/hp/hpp-plot/package.nix
+new file mode 100644
+index 00000000000000..dbc270c870d031
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-plot/package.nix
+@@ -0,0 +1,54 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  cmake,
++  doxygen,
++  libsForQt5,
++  pkg-config,
++  python3Packages,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-plot";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-plot";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-0nrIfap+nATODcHH9/iJseqB+veMGO8eS+50df+lm6k=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    libsForQt5.wrapQtAppsHook
++    pkg-config
++    python3Packages.python
++  ];
++  buildInputs = [ libsForQt5.qtbase ];
++  propagatedBuildInputs = [
++    python3Packages.gepetto-viewer-corba
++    python3Packages.hpp-manipulation-corba
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Graphical utilities for constraint graphs in hpp-manipulation";
++    homepage = "https://github.com/humanoid-path-planner/hpp-plot";
++    changelog = "https://github.com/humanoid-path-planner/hpp-plot/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 7bd987bb51ab2c..4af17fe533e127 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6306,6 +6306,8 @@ self: super: with self; {
+     pkgs.hpp-manipulation-corba.override { python3Packages = self; }
+   );
+ 
++  hpp-plot = toPythonModule (pkgs.hpp-plot.override { python3Packages = self; });
++
+   hpp-romeo = toPythonModule (
+     pkgs.hpp-romeo.override {
+       pythonSupport = true;
+
+From b8f1ce85367b11ad660e4f78bb45ec466d48d456 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:51:35 +0200
+Subject: [PATCH 19/28] hpp-gui: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-gui/package.nix | 54 +++++++++++++++++++++++++++++
+ pkgs/top-level/python-packages.nix  |  2 ++
+ 2 files changed, 56 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-gui/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-gui/package.nix b/pkgs/by-name/hp/hpp-gui/package.nix
+new file mode 100644
+index 00000000000000..05031e6a9ca0bf
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-gui/package.nix
+@@ -0,0 +1,54 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  cmake,
++  doxygen,
++  libsForQt5,
++  pkg-config,
++  python3Packages,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-gui";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-gui";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-PNHwfNOGHSYIkttAMX8vUV9T3f4Sd+Tnu4N5O+5h2fk=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    libsForQt5.wrapQtAppsHook
++    pkg-config
++    python3Packages.python
++  ];
++  buildInputs = [ libsForQt5.qtbase ];
++  propagatedBuildInputs = [
++    python3Packages.gepetto-viewer-corba
++    python3Packages.hpp-manipulation-corba
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Qt based GUI for HPP project";
++    homepage = "https://github.com/humanoid-path-planner/hpp-gui";
++    changelog = "https://github.com/humanoid-path-planner/hpp-gui/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 4af17fe533e127..a879c7f782e5f9 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6302,6 +6302,8 @@ self: super: with self; {
+ 
+   hpp-gepetto-viewer = toPythonModule (pkgs.hpp-gepetto-viewer.override { python3Packages = self; });
+ 
++  hpp-gui = toPythonModule (pkgs.hpp-gui.override { python3Packages = self; });
++
+   hpp-manipulation-corba = toPythonModule (
+     pkgs.hpp-manipulation-corba.override { python3Packages = self; }
+   );
+
+From 3ca3e2edc224aa0523698b59d8374678c9141413 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:51:42 +0200
+Subject: [PATCH 20/28] hpp-tutorial: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-tutorial/package.nix | 54 ++++++++++++++++++++++++
+ pkgs/top-level/python-packages.nix       |  2 +
+ 2 files changed, 56 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-tutorial/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-tutorial/package.nix b/pkgs/by-name/hp/hpp-tutorial/package.nix
+new file mode 100644
+index 00000000000000..2948f1ee4289da
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-tutorial/package.nix
+@@ -0,0 +1,54 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  cmake,
++  doxygen,
++  libsForQt5,
++  pkg-config,
++  python3Packages,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-tutorial";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp_tutorial";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-mo9+IYlEDMSOi7fDyA6yb8ZdACBBy2uNCzR//icMCmg=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    libsForQt5.wrapQtAppsHook
++    pkg-config
++    python3Packages.python
++  ];
++  buildInputs = [ libsForQt5.qtbase ];
++  propagatedBuildInputs = [
++    python3Packages.hpp-gepetto-viewer
++    python3Packages.hpp-manipulation-corba
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Tutorial for humanoid path planner platform";
++    homepage = "https://github.com/humanoid-path-planner/hpp_tutorial";
++    changelog = "https://github.com/humanoid-path-planner/hpp_tutorial/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index a879c7f782e5f9..0804e6aa8514c3 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6317,6 +6317,8 @@ self: super: with self; {
+     }
+   );
+ 
++  hpp-tutorial = toPythonModule (pkgs.hpp-tutorial.override { python3Packages = self; });
++
+   hpp-universal-robot = toPythonModule (
+     pkgs.hpp-universal-robot.override {
+       pythonSupport = true;
+
+From 8d970567eb0746f00b55d14c41f39170afea5632 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:53:23 +0200
+Subject: [PATCH 21/28] hpp-practicals: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-practicals/package.nix | 55 ++++++++++++++++++++++
+ pkgs/top-level/python-packages.nix         |  2 +
+ 2 files changed, 57 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-practicals/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-practicals/package.nix b/pkgs/by-name/hp/hpp-practicals/package.nix
+new file mode 100644
+index 00000000000000..2a6f2d12802ada
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-practicals/package.nix
+@@ -0,0 +1,55 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  cmake,
++  doxygen,
++  libsForQt5,
++  pkg-config,
++  python3Packages,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-practicals";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-practicals";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-boa0B5eGyLHum5ncIBB2nCI3Ru92avdbBGwd+AeIQ3o=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    libsForQt5.wrapQtAppsHook
++    pkg-config
++    python3Packages.python
++  ];
++  buildInputs = [ libsForQt5.qtbase ];
++  propagatedBuildInputs = [
++    python3Packages.hpp-gepetto-viewer
++    python3Packages.hpp-gui
++    python3Packages.hpp-plot
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Practicals for Humanoid Path Planner software";
++    homepage = "https://github.com/humanoid-path-planner/hpp-practicals";
++    changelog = "https://github.com/humanoid-path-planner/hpp-practicals/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 0804e6aa8514c3..4566ab04eeae6f 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6310,6 +6310,8 @@ self: super: with self; {
+ 
+   hpp-plot = toPythonModule (pkgs.hpp-plot.override { python3Packages = self; });
+ 
++  hpp-practicals = toPythonModule (pkgs.hpp-practicals.override { python3Packages = self; });
++
+   hpp-romeo = toPythonModule (
+     pkgs.hpp-romeo.override {
+       pythonSupport = true;
+
+From a99c61e6b01517adf6cfda46ea3a9220b336a66b Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 29 Jul 2024 19:54:43 +0200
+Subject: [PATCH 22/28] hpp-doc: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-doc/package.nix | 60 +++++++++++++++++++++++++++++
+ pkgs/top-level/python-packages.nix  |  2 +
+ 2 files changed, 62 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-doc/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-doc/package.nix b/pkgs/by-name/hp/hpp-doc/package.nix
+new file mode 100644
+index 00000000000000..3e6d7d77455dc4
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-doc/package.nix
+@@ -0,0 +1,60 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  cmake,
++  doxygen,
++  libsForQt5,
++  pkg-config,
++  python3Packages,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-doc";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-doc";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-GEseaoFwOE7ztqRf3X+Dztcnk9JSxnzpgoQpxLZXhBQ=";
++  };
++
++  prePatch = ''
++    substituteInPlace scripts/packageDep --replace-fail \
++      "/usr/bin/env python3" \
++      ${python3Packages.python.interpreter}
++  '';
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    libsForQt5.wrapQtAppsHook
++    pkg-config
++    python3Packages.python
++  ];
++  buildInputs = [ libsForQt5.qtbase ];
++  propagatedBuildInputs = [
++    python3Packages.hpp-practicals
++    python3Packages.hpp-tutorial
++  ];
++
++  doCheck = true;
++
++  meta = {
++    description = "Documentation for project Humanoid Path Planner";
++    homepage = "https://github.com/humanoid-path-planner/hpp-doc";
++    changelog = "https://github.com/humanoid-path-planner/hpp-doc/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 4566ab04eeae6f..ea4e0655d7e2d0 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6293,6 +6293,8 @@ self: super: with self; {
+ 
+   hpp-corbaserver = toPythonModule (pkgs.hpp-corbaserver.override { python3Packages = self; });
+ 
++  hpp-doc = toPythonModule (pkgs.hpp-doc.override { python3Packages = self; });
++
+   hpp-environments = toPythonModule (
+     pkgs.hpp-environments.override {
+       pythonSupport = true;
+
+From bb3577a11efdc03568fe0baf4ccd694adaaf0eef Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 7 Oct 2024 14:06:49 +0200
+Subject: [PATCH 23/28] hpp-affordance: init at 6.0.0
+
+---
+ pkgs/by-name/hp/hpp-affordance/package.nix | 52 ++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-affordance/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-affordance/package.nix b/pkgs/by-name/hp/hpp-affordance/package.nix
+new file mode 100644
+index 00000000000000..5382e41a5289f8
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-affordance/package.nix
+@@ -0,0 +1,52 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++
++  # propagatedBuildInputs
++  coal,
++  jrl-cmakemodules,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-affordance";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-affordance";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-UuhoYfSOY6QoENjuhA8uTARiDwPF2BoJ3gHvPOP5Qng=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++  ];
++  propagatedBuildInputs = [
++    coal
++    jrl-cmakemodules
++  ];
++
++  meta = {
++    description = "Implements affordance extraction for multi-contact planning";
++    homepage = "https://github.com/humanoid-path-planner/hpp-affordance";
++    changelog = "https://github.com/humanoid-path-planner/hpp-affordance/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+
+From e1a220f43e875eb57d27e3fe85d009b148e8f2c9 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 7 Oct 2024 16:37:39 +0200
+Subject: [PATCH 24/28] hpp-affordance-corba: init at 6.0.0
+
+---
+ .../hp/hpp-affordance-corba/package.nix       | 62 +++++++++++++++++++
+ pkgs/top-level/python-packages.nix            |  4 ++
+ 2 files changed, 66 insertions(+)
+ create mode 100644 pkgs/by-name/hp/hpp-affordance-corba/package.nix
+
+diff --git a/pkgs/by-name/hp/hpp-affordance-corba/package.nix b/pkgs/by-name/hp/hpp-affordance-corba/package.nix
+new file mode 100644
+index 00000000000000..2a7253b4627f83
+--- /dev/null
++++ b/pkgs/by-name/hp/hpp-affordance-corba/package.nix
+@@ -0,0 +1,62 @@
++{
++  lib,
++  fetchFromGitHub,
++  stdenv,
++
++  # nativeBuildInputs
++  cmake,
++  doxygen,
++  pkg-config,
++  python3Packages,
++
++  # propagatedBuildInputs
++  hpp-affordance,
++}:
++
++stdenv.mkDerivation (finalAttrs: {
++  pname = "hpp-affordance-corba";
++  version = "6.0.0";
++
++  src = fetchFromGitHub {
++    owner = "humanoid-path-planner";
++    repo = "hpp-affordance-corba";
++    tag = "v${finalAttrs.version}";
++    hash = "sha256-5NR9EenpqGUNHG2ZeizUafxq4znXWZFPPMgHo3cjVfI=";
++  };
++
++  outputs = [
++    "out"
++    "doc"
++  ];
++
++  strictDeps = true;
++
++  nativeBuildInputs = [
++    cmake
++    doxygen
++    pkg-config
++    python3Packages.omniorb
++    python3Packages.python
++  ];
++  buildInputs = [
++    python3Packages.boost
++  ];
++  propagatedBuildInputs = [
++    hpp-affordance
++    python3Packages.hpp-corbaserver
++    python3Packages.omniorbpy
++  ];
++
++  enableParallelBuilding = false;
++
++  doCheck = true;
++
++  meta = {
++    description = "corbaserver to provide affordance utilities in python";
++    homepage = "https://github.com/humanoid-path-planner/hpp-affordance-corba";
++    changelog = "https://github.com/humanoid-path-planner/hpp-affordance-corba/releases/tag/${finalAttrs.src.tag}";
++    license = lib.licenses.bsd2;
++    maintainers = [ lib.maintainers.nim65s ];
++    platforms = lib.platforms.unix;
++  };
++})
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index ea4e0655d7e2d0..ea9e1b6f46a4fc 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6270,6 +6270,10 @@ self: super: with self; {
+ 
+   hpccm = callPackage ../development/python-modules/hpccm { };
+ 
++  hpp-affordance-corba = toPythonModule (
++    pkgs.hpp-affordance-corba.override { python3Packages = self; }
++  );
++
+   hpp-baxter = toPythonModule (
+     pkgs.hpp-baxter.override {
+       pythonSupport = true;
+
+From 194358f4eca3d01ca3f23b2d20d4c3d110df1968 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 9 Dec 2024 12:55:50 +0100
+Subject: [PATCH 25/28] python3Packages.hpp-corba: init at 6.0.0
+
+---
+ pkgs/top-level/python-packages.nix | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index ea9e1b6f46a4fc..8ffb7bbdcc01f2 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -6295,6 +6295,28 @@ self: super: with self; {
+     }
+   );
+ 
++  hpp-corba = toPythonModule (
++    pkgs.symlinkJoin {
++      name = "hpp";
++      paths = with self; [
++        hpp-affordance-corba
++        hpp-baxter
++        hpp-bezier-com-traj
++        hpp-centroidal-dynamics
++        hpp-corbaserver
++        hpp-environments
++        hpp-gepetto-viewer
++        hpp-gui
++        hpp-manipulation-corba
++        hpp-plot
++        hpp-practicals
++        hpp-romeo
++        hpp-tutorial
++        hpp-universal-robot
++      ];
++    }
++  );
++
+   hpp-corbaserver = toPythonModule (pkgs.hpp-corbaserver.override { python3Packages = self; });
+ 
+   hpp-doc = toPythonModule (pkgs.hpp-doc.override { python3Packages = self; });
+
+From 63e041161c914ac0309d53b6b21329e19a3d37d0 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Tue, 3 Sep 2024 12:38:00 +0200
+Subject: [PATCH 26/28] gepetto-viewer: add hpp plugins
+
+---
+ pkgs/top-level/python-packages.nix | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/pkgs/top-level/python-packages.nix b/pkgs/top-level/python-packages.nix
+index 8ffb7bbdcc01f2..6580e2ec1a1064 100644
+--- a/pkgs/top-level/python-packages.nix
++++ b/pkgs/top-level/python-packages.nix
+@@ -5439,7 +5439,13 @@ self: super: with self; {
+ 
+   georss-wa-dfes-client = callPackage ../development/python-modules/georss-wa-dfes-client { };
+ 
+-  gepetto-gui = toPythonModule (gepetto-viewer.withPlugins [ gepetto-viewer-corba ]);
++  gepetto-gui = toPythonModule (
++    gepetto-viewer.withPlugins [
++      gepetto-viewer-corba
++      hpp-gepetto-viewer
++      hpp-gui
++    ]
++  );
+ 
+   gepetto-viewer = toPythonModule (pkgs.gepetto-viewer.override { python3Packages = self; });
+ 
+
+From 85dde6b3a1e4f31e1301a21793fbd53f9c340648 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 9 Apr 2025 13:01:05 +0200
+Subject: [PATCH 27/28] hpp-pinocchio: patch for pinocchio v3.5.0
+
+---
+ pkgs/by-name/hp/hpp-pinocchio/package.nix | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/pkgs/by-name/hp/hpp-pinocchio/package.nix b/pkgs/by-name/hp/hpp-pinocchio/package.nix
+index 5e7f864a36ca15..dc483747109d9a 100644
+--- a/pkgs/by-name/hp/hpp-pinocchio/package.nix
++++ b/pkgs/by-name/hp/hpp-pinocchio/package.nix
+@@ -1,6 +1,7 @@
+ {
+   lib,
+   fetchFromGitHub,
++  fetchpatch,
+   stdenv,
+ 
+   # nativeBuildInputs
+@@ -26,6 +27,28 @@ stdenv.mkDerivation (finalAttrs: {
+     hash = "sha256-SDH129hkDTfLBkKBHkqxGng9G3Wd7dbLCarHJhOFryc=";
+   };
+ 
++  # Update for pinocchio v3.5.0
++  # ref. https://github.com/humanoid-path-planner/hpp-pinocchio/pull/234
++  # These were merged upstream and can be removed on next release
++  patches = [
++    (fetchpatch {
++      url = "https://github.com/humanoid-path-planner/hpp-pinocchio/commit/e542606c5a0f4f7b3080c2d12b70b37301efade4.patch";
++      hash = "sha256-HC+Vd+ip+zq7ogFXfYLmKDHJyPwFHr5uIH4KAI2HMFE=";
++    })
++    (fetchpatch {
++      url = "https://github.com/humanoid-path-planner/hpp-pinocchio/commit/26f5e996f2be210da47111af5f5a24681313d94b.patch";
++      hash = "sha256-npsr3bNsSzqmZ32xmUJh2G8jnlH8Jzkqvtt3v1u9EuA=";
++    })
++    (fetchpatch {
++      url = "https://github.com/humanoid-path-planner/hpp-pinocchio/commit/acccdc88414966ce6284792212cf3b4262a3dc8c.patch";
++      hash = "sha256-/oVxJlIBc1nRdsEkWVSehiEOmoz1QusiYXT2Uc40m0w=";
++    })
++    (fetchpatch {
++      url = "https://github.com/humanoid-path-planner/hpp-pinocchio/commit/eae6838a3802533ae82529a0308c59237d17737b.patch";
++      hash = "sha256-i+i5k+CJUCHOfHmD7edmBZtykTrg7iq1/b1evYGrC+A=";
++    })
++  ];
++
+   strictDeps = true;
+ 
+   nativeBuildInputs = [
+
+From cb0d835e09504f1c357fe72bfb7d871d6663a999 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Wed, 9 Apr 2025 13:26:39 +0200
+Subject: [PATCH 28/28] hpp-core: patch for pinocchio v3.5.0
+
+---
+ pkgs/by-name/hp/hpp-core/package.nix | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/pkgs/by-name/hp/hpp-core/package.nix b/pkgs/by-name/hp/hpp-core/package.nix
+index 6b42880db39a5c..9226f8d0d3c4ea 100644
+--- a/pkgs/by-name/hp/hpp-core/package.nix
++++ b/pkgs/by-name/hp/hpp-core/package.nix
+@@ -1,6 +1,7 @@
+ {
+   lib,
+   fetchFromGitHub,
++  fetchpatch,
+   stdenv,
+ 
+   # nativeBuildInputs
+@@ -24,6 +25,21 @@ stdenv.mkDerivation (finalAttrs: {
+     hash = "sha256-W4gUjvzULxUqG51zBV3P9u2XWNM7FQDK4pk/DMuWb2k=";
+   };
+ 
++  # Fix for pinocchio v3.5.0
++  # ref. https://github.com/humanoid-path-planner/hpp-core/pull/364
++  # and https://github.com/humanoid-path-planner/hpp-core/pull/378
++  # this was merged upstream and can be removed on next release
++  patches = [
++    (fetchpatch {
++      url = "https://github.com/humanoid-path-planner/hpp-core/commit/919353e3b6a10261a0e520d4db4760553062f17f.patch";
++      hash = "sha256-pHaPUK+asOocGeltENeyEwx93TTKJPX0UCWWhMcFUFc=";
++    })
++    (fetchpatch {
++      url = "https://github.com/humanoid-path-planner/hpp-core/commit/5a518ce3bc7419f30499a9e6af3391261c0b6ac2.patch";
++      hash = "sha256-ixxVhovj74LpAn6Yms338agLgdyOg1aRZcsiY9KpKYE=";
++    })
++  ];
++
+   strictDeps = true;
+ 
+   nativeBuildInputs = [
