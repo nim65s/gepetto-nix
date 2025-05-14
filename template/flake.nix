@@ -14,10 +14,7 @@
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import inputs.systems;
-      imports = [
-        inputs.gepetto.flakeModule
-        inputs.treefmt-nix.flakeModule
-      ];
+      imports = [ inputs.gepetto.flakeModule ];
       perSystem =
         {
           lib,

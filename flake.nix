@@ -58,10 +58,7 @@
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import inputs.systems;
-      imports = [
-        inputs.treefmt-nix.flakeModule
-        flakeModule
-      ];
+      imports = [ flakeModule ];
       flake = {
         inherit flakeModule;
         systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
