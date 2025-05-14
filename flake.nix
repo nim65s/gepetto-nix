@@ -52,262 +52,238 @@
   };
   outputs =
     inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
-      { self, lib, ... }:
-      {
-        systems = [
-          "x86_64-linux"
-          "aarch64-darwin"
-        ];
-        imports = [ inputs.treefmt-nix.flakeModule ];
-        flake = {
-          overlays.default = import ./overlay.nix { inherit inputs; };
-          patches = lib.fileset.toList (lib.fileset.fileFilter (f: f.hasExt "patch") ./patches/NixOS/nixpkgs);
-          systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
-            modules = [
-              inputs.nix-system-graphics.systemModules.default
-              {
-                config = {
-                  nixpkgs.hostPlatform = "x86_64-linux";
-                  system-graphics.enable = true;
-                };
-              }
-            ];
-          };
-          templates.default = {
-            path = ./template;
-            description = "A template for use with gepetto/nix";
-          };
+    let
+      flakeModule = import ./flake-module.nix;
+    in
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
+      imports = [
+        inputs.treefmt-nix.flakeModule
+        flakeModule
+      ];
+      flake = {
+        inherit flakeModule;
+        systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
+          modules = [
+            inputs.nix-system-graphics.systemModules.default
+            {
+              config = {
+                nixpkgs.hostPlatform = "x86_64-linux";
+                system-graphics.enable = true;
+              };
+            }
+          ];
         };
-        perSystem =
-          {
-            inputs',
-            pkgs,
-            self',
-            system,
-            ...
-          }:
-          {
-            _module.args.pkgs =
-              let
-                pkgsForPatching = inputs'.nixpkgs.legacyPackages;
-                patchedNixpkgs = (
-                  pkgsForPatching.applyPatches {
-                    inherit (self) patches;
-                    name = "patched nixpkgs";
-                    src = inputs.nixpkgs;
-                  }
-                );
-              in
-              import patchedNixpkgs {
-                inherit system;
-                overlays = [
-                  inputs.nix-ros-overlay.overlays.default
-                  self.overlays.default
-                ];
-              };
-            checks =
-              let
-                devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
-                packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
-              in
-              lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (devShells // packages);
-            devShells = {
-              default = pkgs.mkShell {
-                name = "Gepetto Main Dev Shell";
-                packages = [
-                  # keep-sorted start
-                  pkgs.colcon
-                  self'.packages.python
-                  self'.packages.ros
-                  # keep-sorted end
-                ];
-              };
-              gs = pkgs.mkShell {
-                name = "Dev Shell for Guilhem";
-                packages = [
-                  (pkgs.rosPackages.jazzy.python3.withPackages (p: [
-                    p.bloom
-                    p.rosdep
-                  ]))
-                ];
-              };
-              ms = pkgs.mkShell {
-                name = "Dev Shell for Maxime";
-                inputsFrom = [ pkgs.python3Packages.crocoddyl ];
-                packages = [
-                  (pkgs.python3.withPackages (p: [
-                    # keep-sorted start
-                    p.example-parallel-robots
-                    p.fatrop
-                    p.gepetto-gui
-                    p.ipython
-                    p.matplotlib
-                    p.mim-solvers
-                    p.opencv4
-                    p.pandas
-                    p.proxsuite
-                    p.quadprog
-                    p.scikit-learn
-                    p.seaborn
-                    # keep-sorted end
-                  ]))
-                ];
-                shellHook = ''
-                  export PYTHONPATH=${
-                    lib.concatStringsSep ":" [
-                      "$PWD/src/cobotmpc"
-                      "$PWD/install/${pkgs.python3.sitePackages}"
-                      "$PYTHONPATH"
-                    ]
-                  }
-                '';
-              };
+        templates.default = {
+          path = ./template;
+          description = "A template for use with gepetto/nix";
+        };
+      };
+      perSystem =
+        {
+          inputs',
+          lib,
+          pkgs,
+          self',
+          system,
+          ...
+        }:
+        {
+
+          devShells = {
+            default = pkgs.mkShell {
+              name = "Gepetto Main Dev Shell";
+              packages = [
+                # keep-sorted start
+                pkgs.colcon
+                self'.packages.python
+                self'.packages.ros
+                # keep-sorted end
+              ];
             };
-            packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
-              {
-                python = pkgs.python3.withPackages (p: [
+            gs = pkgs.mkShell {
+              name = "Dev Shell for Guilhem";
+              packages = [
+                (pkgs.rosPackages.jazzy.python3.withPackages (p: [
+                  p.bloom
+                  p.rosdep
+                ]))
+              ];
+            };
+            ms = pkgs.mkShell {
+              name = "Dev Shell for Maxime";
+              inputsFrom = [ pkgs.python3Packages.crocoddyl ];
+              packages = [
+                (pkgs.python3.withPackages (p: [
                   # keep-sorted start
-                  p.agimus-controller
-                  p.agimus-controller-examples
-                  p.crocoddyl
+                  p.example-parallel-robots
+                  p.fatrop
                   p.gepetto-gui
-                  p.hpp-corba
                   p.ipython
                   p.matplotlib
+                  p.mim-solvers
+                  p.opencv4
+                  p.pandas
+                  p.proxsuite
+                  p.quadprog
+                  p.scikit-learn
+                  p.seaborn
                   # keep-sorted end
-                ]);
-                ros =
-                  with pkgs.rosPackages.humble;
-                  buildEnv {
-                    paths = [
-                      # keep-sorted start
-                      pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
-                      pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
-                      ros-core
-                      turtlesim
-                      # keep-sorted end
-                    ];
-                  };
-              }
-              // lib.optionalAttrs (system == "x86_64-linux") {
-                inherit (inputs'.system-manager.packages) system-manager;
-              }
-              // {
-                inherit (pkgs)
-                  # keep-sorted start
-                  aligator
-                  colmpc
-                  crocoddyl
-                  example-robot-data
-                  gepetto-viewer
-                  hpp-affordance
-                  hpp-affordance-corba
-                  hpp-baxter
-                  hpp-bezier-com-traj
-                  hpp-centroidal-dynamics
-                  hpp-constraints
-                  hpp-corbaserver
-                  hpp-core
-                  hpp-doc
-                  hpp-environments
-                  hpp-gepetto-viewer
-                  hpp-gui
-                  hpp-manipulation
-                  hpp-manipulation-corba
-                  hpp-manipulation-urdf
-                  hpp-pinocchio
-                  hpp-plot
-                  hpp-practicals
-                  hpp-romeo
-                  hpp-statistics
-                  hpp-template-corba
-                  hpp-tutorial
-                  hpp-universal-robot
-                  hpp-util
-                  mim-solvers
-                  pinocchio
-                  # keep-sorted end
-                  ;
-              }
-              // lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
-                inherit (pkgs.python3Packages)
-                  # keep-sorted start
-                  aligator
-                  brax
-                  colmpc
-                  crocoddyl
-                  example-parallel-robots
-                  example-robot-data
-                  gepetto-gui
-                  hpp-corba
-                  hpp-corbaserver
-                  hpp-doc
-                  hpp-environments
-                  hpp-gepetto-viewer
-                  hpp-gui
-                  hpp-manipulation-corba
-                  hpp-plot
-                  hpp-practicals
-                  hpp-romeo
-                  hpp-tutorial
-                  hpp-universal-robot
-                  mim-solvers
-                  pinocchio
-                  toolbox-parallel-robots
-                  # keep-sorted end
-                  ;
-              }
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-noetic-${n}") (
-                lib.optionalAttrs (system == "x86_64-linux") {
-                  inherit (pkgs.rosPackages.noetic)
-                    # keep-sorted start
-                    rosbag
-                    rospy
-                    # keep-sorted end
-                    ;
-                }
-              )
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
-                inherit (pkgs.rosPackages.humble)
-                  # keep-sorted start
-                  agimus-controller-ros
-                  agimus-msgs
-                  franka-description
-                  linear-feedback-controller
-                  linear-feedback-controller-msgs
-                  # keep-sorted end
-                  ;
-              }
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
-                inherit (pkgs.rosPackages.jazzy)
-                  # keep-sorted start
-                  agimus-controller-ros
-                  agimus-msgs
-                  linear-feedback-controller
-                  linear-feedback-controller-msgs
-                  # keep-sorted end
-                  ;
-              }
-            );
-            treefmt = {
-              settings.global.excludes = [
-                ".envrc"
-                ".git-blame-ignore-revs"
-                "LICENSE"
+                ]))
               ];
-              pkgs = inputs'.nixpkgs.legacyPackages;
-              programs = {
-                # keep-sorted start
-                deadnix.enable = true;
-                keep-sorted.enable = true;
-                mdformat.enable = true;
-                nixfmt.enable = true;
-                yamlfmt.enable = true;
-                # keep-sorted end
-              };
+              shellHook = ''
+                export PYTHONPATH=${
+                  lib.concatStringsSep ":" [
+                    "$PWD/src/cobotmpc"
+                    "$PWD/install/${pkgs.python3.sitePackages}"
+                    "$PYTHONPATH"
+                  ]
+                }
+              '';
             };
           };
-      }
-    );
+          packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
+            {
+              python = pkgs.python3.withPackages (p: [
+                # keep-sorted start
+                p.agimus-controller
+                p.agimus-controller-examples
+                p.crocoddyl
+                p.gepetto-gui
+                p.hpp-corba
+                p.ipython
+                p.matplotlib
+                # keep-sorted end
+              ]);
+              ros =
+                with pkgs.rosPackages.humble;
+                buildEnv {
+                  paths = [
+                    # keep-sorted start
+                    pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
+                    pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
+                    ros-core
+                    turtlesim
+                    # keep-sorted end
+                  ];
+                };
+            }
+            // lib.optionalAttrs (system == "x86_64-linux") {
+              inherit (inputs'.system-manager.packages) system-manager;
+            }
+            // {
+              inherit (pkgs)
+                # keep-sorted start
+                aligator
+                colmpc
+                crocoddyl
+                example-robot-data
+                gepetto-viewer
+                hpp-affordance
+                hpp-affordance-corba
+                hpp-baxter
+                hpp-bezier-com-traj
+                hpp-centroidal-dynamics
+                hpp-constraints
+                hpp-corbaserver
+                hpp-core
+                hpp-doc
+                hpp-environments
+                hpp-gepetto-viewer
+                hpp-gui
+                hpp-manipulation
+                hpp-manipulation-corba
+                hpp-manipulation-urdf
+                hpp-pinocchio
+                hpp-plot
+                hpp-practicals
+                hpp-romeo
+                hpp-statistics
+                hpp-template-corba
+                hpp-tutorial
+                hpp-universal-robot
+                hpp-util
+                mim-solvers
+                pinocchio
+                # keep-sorted end
+                ;
+            }
+            // lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
+              inherit (pkgs.python3Packages)
+                # keep-sorted start
+                aligator
+                brax
+                colmpc
+                crocoddyl
+                example-parallel-robots
+                example-robot-data
+                gepetto-gui
+                hpp-corba
+                hpp-corbaserver
+                hpp-doc
+                hpp-environments
+                hpp-gepetto-viewer
+                hpp-gui
+                hpp-manipulation-corba
+                hpp-plot
+                hpp-practicals
+                hpp-romeo
+                hpp-tutorial
+                hpp-universal-robot
+                mim-solvers
+                pinocchio
+                toolbox-parallel-robots
+                # keep-sorted end
+                ;
+            }
+            // lib.mapAttrs' (n: lib.nameValuePair "ros-noetic-${n}") (
+              lib.optionalAttrs (system == "x86_64-linux") {
+                inherit (pkgs.rosPackages.noetic)
+                  # keep-sorted start
+                  rosbag
+                  rospy
+                  # keep-sorted end
+                  ;
+              }
+            )
+            // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
+              inherit (pkgs.rosPackages.humble)
+                # keep-sorted start
+                agimus-controller-ros
+                agimus-msgs
+                franka-description
+                linear-feedback-controller
+                linear-feedback-controller-msgs
+                # keep-sorted end
+                ;
+            }
+            // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
+              inherit (pkgs.rosPackages.jazzy)
+                # keep-sorted start
+                agimus-controller-ros
+                agimus-msgs
+                linear-feedback-controller
+                linear-feedback-controller-msgs
+                # keep-sorted end
+                ;
+            }
+          );
+          treefmt = {
+            settings.global.excludes = [
+              ".envrc"
+              ".git-blame-ignore-revs"
+              "LICENSE"
+            ];
+            programs = {
+              # keep-sorted start
+              mdformat.enable = true;
+              yamlfmt.enable = true;
+              # keep-sorted end
+            };
+          };
+        };
+    };
 }

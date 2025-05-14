@@ -12,25 +12,22 @@
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" ];
-      imports = [ inputs.treefmt-nix.flakeModule ];
+      imports = [
+        inputs.gepetto.flakeModule
+        inputs.treefmt-nix.flakeModule
+      ];
+      systems = [
+        "aarch64-darwin"
+        "x86_64-linux"
+      ];
       perSystem =
         {
           lib,
           pkgs,
-          system,
           self',
           ...
         }:
         {
-          _module.args.pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = [
-              inputs.nix-ros-overlay.overlays.default
-              inputs.gepetto.overlays.default
-            ];
-          };
-          checks = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
           packages = {
             default = self'.packages.TODO;
             TODO = pkgs.TODO.overrideAttrs {
@@ -41,10 +38,6 @@
                 ];
               };
             };
-          };
-          treefmt.programs = {
-            deadnix.enable = true;
-            nixfmt.enable = true;
           };
         };
     };
