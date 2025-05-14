@@ -18,10 +18,6 @@
 
     # keep-sorted start block=yes
 
-    patch-hpp = {
-      url = "https://github.com/nim65s/nixpkgs/pull/3.patch";
-      flake = false;
-    };
     src-agimus-controller = {
       url = "github:agimus-project/agimus_controller";
       flake = false;
@@ -60,8 +56,8 @@
       pkgsForPatching = inputs.nixpkgs.legacyPackages.x86_64-linux;
       patches = [
         # keep-sorted start
-        ./patches/397664.patch
-        inputs.patch-hpp
+        patches/NixOS/nixpkgs/362956_humanoid-path-planner-init-at-600.patch
+        patches/NixOS/nixpkgs/397664_mim-solvers-exclude-flaky-test.patch
         # keep-sorted end
       ];
       patchedNixpkgs = (
