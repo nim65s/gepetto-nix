@@ -296,6 +296,7 @@
                 ".git-blame-ignore-revs"
                 "LICENSE"
               ];
+              pkgs = inputs'.nixpkgs.legacyPackages;
               programs = {
                 # keep-sorted start
                 deadnix.enable = true;
