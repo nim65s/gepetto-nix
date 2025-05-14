@@ -62,12 +62,7 @@
         imports = [ inputs.treefmt-nix.flakeModule ];
         flake = {
           overlays.default = import ./overlay.nix { inherit inputs; };
-          patches = [
-            # keep-sorted start
-            patches/NixOS/nixpkgs/362956_humanoid-path-planner-init-at-600.patch
-            patches/NixOS/nixpkgs/397664_mim-solvers-exclude-flaky-test.patch
-            # keep-sorted end
-          ];
+          patches = lib.fileset.toList (lib.fileset.fileFilter (f: f.hasExt "patch") ./patches/NixOS/nixpkgs);
           systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
             modules = [
               inputs.nix-system-graphics.systemModules.default
