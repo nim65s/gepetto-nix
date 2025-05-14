@@ -6,19 +6,17 @@
     flake-parts.follows = "gepetto/flake-parts";
     nixpkgs.follows = "gepetto/nixpkgs";
     nix-ros-overlay.follows = "gepetto/nix-ros-overlay";
+    systems.follows = "gepetto/systems";
     treefmt-nix.follows = "gepetto/treefmt-nix";
   };
 
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = import inputs.systems;
       imports = [
         inputs.gepetto.flakeModule
         inputs.treefmt-nix.flakeModule
-      ];
-      systems = [
-        "aarch64-darwin"
-        "x86_64-linux"
       ];
       perSystem =
         {

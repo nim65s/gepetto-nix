@@ -11,6 +11,7 @@
       url = "github:numtide/system-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    systems.follows = "nix-ros-overlay/flake-utils/systems";
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -56,10 +57,7 @@
       flakeModule = import ./flake-module.nix;
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [
-        "x86_64-linux"
-        "aarch64-darwin"
-      ];
+      systems = import inputs.systems;
       imports = [
         inputs.treefmt-nix.flakeModule
         flakeModule
