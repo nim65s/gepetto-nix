@@ -1,5 +1,5 @@
 {
-  description = "TODO";
+  description = "CHANGEME";
 
   inputs = {
     # TODO: drop `/module` after https://github.com/Gepetto/nix/pull/54
@@ -25,12 +25,12 @@
         }:
         {
           packages = {
-            default = self'.packages.TODO;
-            TODO = pkgs.TODO.overrideAttrs {
+            default = self'.packages.CHANGEME;
+            CHANGEME = pkgs.CHANGEME.overrideAttrs {
               src = lib.fileset.toSource {
                 root = ./.;
                 fileset = lib.fileset.unions [
-                  ./TODO
+                  ./CHANGEME
                 ];
               };
             };
