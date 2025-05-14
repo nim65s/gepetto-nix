@@ -50,12 +50,7 @@
           # has https://github.com/ros/rosconsole/pull/58.patch
           # but github somehow raises HTTP 429
           rosconsole = noetic-prev.rosconsole.overrideAttrs {
-            patches = [
-              (final.fetchpatch {
-                url = "https://patch-diff.githubusercontent.com/raw/ros/rosconsole/pull/58.patch";
-                hash = "sha256-Rg+WCPak5sxBqdQ/QR9eboyX921PZTjk3/PuH5mz96U=";
-              })
-            ];
+            patches = [ ./patches/ros/rosconsole/58_compatibility-fix-for-liblog4cxx-v011-013.patch ];
           };
         }
       );
