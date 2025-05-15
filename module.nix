@@ -1,3 +1,4 @@
+{ localFlake }:
 {
   config,
   inputs,
@@ -37,7 +38,7 @@
             inherit system;
             overlays = [
               inputs.nix-ros-overlay.overlays.default
-              (import ./overlay.nix { inherit inputs; })
+              (import ./overlay.nix { inherit (localFlake) inputs; })
             ] ++ config.gepetto-pkgs.overlays;
           };
         checks =
