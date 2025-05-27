@@ -128,42 +128,46 @@
                 CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
                 CMAKE_C_COMPILER_LAUNCHER = "ccache";
                 name = "dev shell for HPP";
-                packages = with pkgs; [
-                  assimp
-                  ccache
-                  cddlib
-                  clp
-                  cmake
-                  console-bridge
-                  doxygen
-                  eigen
-                  glpk
-                  graphviz
-                  jrl-cmakemodules
-                  libGL
-                  libsForQt5.full
-                  octomap
-                  openscenegraph
-                  osgqt
-                  pkg-config
-                  psmisc
-                  (python3.withPackages (
-                    p: with p; [
-                      lxml
-                      numpy
-                      omniorb
-                      omniorbpy
-                      python-qt
-                    ]
-                  ))
-                  python3Packages.boost
-                  python3Packages.scipy
-                  qhull
-                  qpoases
-                  tinyxml-2
-                  urdfdom
-                  zlib
-                ];
+                packages =
+                  with pkgs;
+                  [
+                    assimp
+                    ccache
+                    cddlib
+                    clp
+                    cmake
+                    console-bridge
+                    doxygen
+                    eigen
+                    glpk
+                    graphviz
+                    jrl-cmakemodules
+                    libGL
+                    libsForQt5.full
+                    octomap
+                    openscenegraph
+                    osgqt
+                    pkg-config
+                    (python3.withPackages (
+                      p: with p; [
+                        lxml
+                        numpy
+                        omniorb
+                        omniorbpy
+                        python-qt
+                      ]
+                    ))
+                    python3Packages.boost
+                    python3Packages.scipy
+                    qhull
+                    qpoases
+                    tinyxml-2
+                    urdfdom
+                    zlib
+                  ]
+                  ++ lib.optionals stdenv.isLinux [
+                    psmisc
+                  ];
               };
               gs = pkgs.mkShell {
                 name = "Dev Shell for Guilhem";
