@@ -166,6 +166,7 @@
                         omniorbpy
                         python-qt
                         scipy
+                        (toPythonModule rosPackages.rolling.xacro)
                       ]
                     ))
                     python3Packages.boost
