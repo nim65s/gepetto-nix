@@ -124,10 +124,20 @@
                 ];
               };
               hpp = pkgs.mkShell {
-                ROS_PACKAGE_PATH = "${pkgs.example-robot-data}/share";
-                CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
-                CMAKE_C_COMPILER_LAUNCHER = "ccache";
                 name = "dev shell for HPP";
+                CMAKE_C_COMPILER_LAUNCHER = "ccache";
+                CMAKE_CXX_COMPILER_LAUNCHER = "ccache";
+                CMAKE_GENERATOR = "Unix Makefiles";
+                ROS_PACKAGE_PATH = "${pkgs.example-robot-data}/share";
+                shellHook = ''
+                  export DEVEL_HPP_DIR=$(pwd -P)
+                  export INSTALL_HPP_DIR=$DEVEL_HPP_DIR/install
+                  export PATH=$INSTALL_HPP_DIR/bin:$PATH
+                  export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
+                  export PYTHONPATH=$INSTALL_HPP_DIR/${pkgs.python3.sitePackages}
+                  export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
+                  export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
+                '';
                 packages =
                   with pkgs;
                   [
@@ -155,10 +165,11 @@
                         omniorb
                         omniorbpy
                         python-qt
+                        scipy
+                        (toPythonModule rosPackages.rolling.xacro)
                       ]
                     ))
                     python3Packages.boost
-                    python3Packages.scipy
                     qhull
                     qpoases
                     tinyxml-2
