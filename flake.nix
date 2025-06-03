@@ -66,9 +66,14 @@
           systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
             modules = [
               inputs.nix-system-graphics.systemModules.default
+              ./modules/system-manager/direnv.nix
               {
                 config = {
                   nixpkgs.hostPlatform = "x86_64-linux";
+                  programs.direnv = {
+                    enable = true;
+                    nix-direnv.enable = true;
+                  };
                   system-graphics.enable = true;
                 };
               }
