@@ -316,6 +316,7 @@
                   hpp-universal-robot
                   mim-solvers
                   pinocchio
+                  sensitivity
                   toolbox-parallel-robots
                   # keep-sorted end
                   ;
