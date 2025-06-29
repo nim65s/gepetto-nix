@@ -137,11 +137,11 @@
     "src-agimus-controller": {
       "flake": false,
       "locked": {
-        "lastModified": 1750407651,
-        "narHash": "sha256-8vrtZpi0TamtsXPGFxc6hjFvidkloI2gt46G7Vz4SZk=",
+        "lastModified": 1751024079,
+        "narHash": "sha256-WQd2UercKJ6SLlsZfgbEtUXGZeLpc9MlctQHHHwCqow=",
         "owner": "agimus-project",
         "repo": "agimus_controller",
-        "rev": "0ba32dbfd4cf7c5b2c2b65799baacd315ce9f1b8",
+        "rev": "a1a9d2aeb9e0c459baec7d349ffbccafe01c3d19",
         "type": "github"
       },
       "original": {
@@ -153,11 +153,11 @@
     "src-agimus-msgs": {
       "flake": false,
       "locked": {
-        "lastModified": 1750320872,
-        "narHash": "sha256-Ua5LnKImbGCt/kyf4eBenjcl9+Sum50bZUogddgTA+w=",
+        "lastModified": 1750753943,
+        "narHash": "sha256-TBpAZBCNtq/L+yts9py6waovo98SoXyvIelZ52l9SGs=",
         "owner": "agimus-project",
         "repo": "agimus_msgs",
-        "rev": "dac341cf486321d634f12493ee2b8b52b8478037",
+        "rev": "42fb10694476de65ad0cc8512adf9fadd3fd57f1",
         "type": "github"
       },
       "original": {
@@ -169,11 +169,11 @@
     "src-colmpc": {
       "flake": false,
       "locked": {
-        "lastModified": 1750096412,
-        "narHash": "sha256-Jv2Wi0Q/KuROSutSYrJCf9bxanSGzpOILBOdlom2Db4=",
+        "lastModified": 1750702237,
+        "narHash": "sha256-GmmZKhqtcBcwT34ylu5cYKgoudNC/anYMxlFU9cYVzU=",
         "owner": "agimus-project",
         "repo": "colmpc",
-        "rev": "b0a412e1ce3bbb43253d442509329fcf0d486e18",
+        "rev": "9d9e3d3eb58dc3ac0fe009d22e817eb9034e5dbd",
         "type": "github"
       },
       "original": {
@@ -201,11 +201,11 @@
     "src-franka-description": {
       "flake": false,
       "locked": {
-        "lastModified": 1749645759,
-        "narHash": "sha256-d65XknAdPQKrZUtXSNmv3e/AK3wVxjkzJ+9U/FJLIdQ=",
+        "lastModified": 1750931117,
+        "narHash": "sha256-gzCwwjBcCj/TlF5kdn48ffaDsEocXcNohPddTy1GZL0=",
         "owner": "agimus-project",
         "repo": "franka_description",
-        "rev": "029aec1704aebc400a0fcd95207fbd283bd2008c",
+        "rev": "e9870ab14bb0d0b2ef6dd71c1c29bad1fe8fa076",
         "type": "github"
       },
       "original": {
@@ -323,11 +323,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749194973,
-        "narHash": "sha256-eEy8cuS0mZ2j/r/FE0/LYBSBcIs/MKOIVakwHVuqTfk=",
+        "lastModified": 1750931469,
+        "narHash": "sha256-0IEdQB1nS+uViQw4k3VGUXntjkDp7aAlqcxdewb/hAc=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "a05be418a1af1198ca0f63facb13c985db4cb3c5",
+        "rev": "ac8e6f32e11e9c7f153823abc3ab007f2a65d3e1",
         "type": "github"
       },
       "original": {
