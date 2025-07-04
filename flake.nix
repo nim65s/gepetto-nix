@@ -309,6 +309,7 @@
                   platypus
                   sensitivity
                   toolbox-parallel-robots
+                  viser
                   # keep-sorted end
                   ;
               }
