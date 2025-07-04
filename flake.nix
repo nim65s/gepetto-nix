@@ -300,6 +300,7 @@
                   hpp-manipulation-corba
                   hpp-plot
                   hpp-practicals
+                  hpp-python
                   hpp-romeo
                   hpp-tutorial
                   hpp-universal-robot
