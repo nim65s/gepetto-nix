@@ -86,6 +86,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/humanoid-path-planner/hpp-python/";
     license = lib.licenses.gpl3Only;
     maintainers = with lib.maintainers; [ nim65s ];
-    platforms = lib.platforms.unix;
+    platforms = lib.platforms.linux; # TODO: macos
   };
 }
