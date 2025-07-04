@@ -151,7 +151,9 @@
                     osgqt
                     pkg-config
                     (python3.withPackages (
-                      p: with p; [
+                      p:
+                      with p;
+                      [
                         lxml
                         numpy
                         omniorb
@@ -160,12 +162,16 @@
                         scipy
                         (toPythonModule rosPackages.rolling.xacro)
                       ]
+                      ++ viser.dependencies
+                      ++ viser.optional-dependencies.dev
+                      ++ viser.optional-dependencies.examples
                     ))
                     python3Packages.boost
                     qhull
                     qpoases
                     tinyxml-2
                     urdfdom
+                    yarn
                     zlib
                   ]
                   ++ lib.optionals stdenv.isLinux [
