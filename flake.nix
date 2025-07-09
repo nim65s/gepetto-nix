@@ -123,6 +123,7 @@
                 ROS_PACKAGE_PATH = "${pkgs.example-robot-data}/share";
                 shellHook = ''
                   export DEVEL_HPP_DIR=$(pwd -P)
+                  mkdir -p $DEVEL_HPP_DIR/{src,install}
                   export INSTALL_HPP_DIR=$DEVEL_HPP_DIR/install
                   export PATH=$INSTALL_HPP_DIR/bin:$PATH
                   export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
