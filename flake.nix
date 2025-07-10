@@ -173,6 +173,14 @@
                     psmisc
                   ];
               };
+              hpp-bin = pkgs.mkShell {
+                packages = [
+                  (pkgs.python3.withPackages (p: [
+                    p.gepetto-gui
+                    p.hpp-corba
+                  ]))
+                ];
+              };
               gs = pkgs.mkShell {
                 name = "Dev Shell for Guilhem";
                 packages = [
@@ -292,6 +300,7 @@
                   example-parallel-robots
                   example-robot-data
                   gepetto-gui
+                  hpp-affordance-corba
                   hpp-corba
                   hpp-corbaserver
                   hpp-doc
