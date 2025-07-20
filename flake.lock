@@ -169,11 +169,11 @@
     "src-colmpc": {
       "flake": false,
       "locked": {
-        "lastModified": 1751912330,
-        "narHash": "sha256-Rby2tQ3kzRX1RqiXrxt7Qcjo3LhAeox+xWteN30hycA=",
+        "lastModified": 1752516424,
+        "narHash": "sha256-OlwAr8MjoUokWr4y5EUuiDaA6SfhP9IR01ElyIWpH3Q=",
         "owner": "agimus-project",
         "repo": "colmpc",
-        "rev": "14cdbd6dde2c7e426ae26658d9a9622eff295e94",
+        "rev": "408b88796b58616c2fff7edf3bcb73bbf2f26185",
         "type": "github"
       },
       "original": {
@@ -323,11 +323,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752055615,
-        "narHash": "sha256-19m7P4O/Aw/6+CzncWMAJu89JaKeMh3aMle1CNQSIwM=",
+        "lastModified": 1752909129,
+        "narHash": "sha256-Eh8FkMvGRaY71BU/oyZTTzt9RsBIq2E6j0r3eLZ/2kY=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "c9d477b5d5bd7f26adddd3f96cfd6a904768d4f9",
+        "rev": "0043b95d80b5bf6d61e84d237e2007727f4dd38d",
         "type": "github"
       },
       "original": {
