@@ -7,6 +7,7 @@
   # nativeBuildInputs
   cmake,
   eigen,
+  jrl-cmakemodules,
   python3Packages,
   ament-cmake,
   ament-cmake-cppcheck,
@@ -35,6 +36,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     eigen
+    jrl-cmakemodules
     python3Packages.python
     ament-cmake
     ament-cmake-cppcheck
