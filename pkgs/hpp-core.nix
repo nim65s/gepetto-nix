@@ -25,11 +25,11 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-W4gUjvzULxUqG51zBV3P9u2XWNM7FQDK4pk/DMuWb2k=";
   };
 
-  # Fix for pinocchio v3.5.0
-  # ref. https://github.com/humanoid-path-planner/hpp-core/pull/364
-  # and https://github.com/humanoid-path-planner/hpp-core/pull/378
-  # this was merged upstream and can be removed on next release
   patches = [
+    # Fix for pinocchio v3.5.0
+    # ref. https://github.com/humanoid-path-planner/hpp-core/pull/364
+    # and https://github.com/humanoid-path-planner/hpp-core/pull/378
+    # this was merged upstream and can be removed on next release
     (fetchpatch {
       url = "https://github.com/humanoid-path-planner/hpp-core/commit/919353e3b6a10261a0e520d4db4760553062f17f.patch";
       hash = "sha256-pHaPUK+asOocGeltENeyEwx93TTKJPX0UCWWhMcFUFc=";
@@ -37,6 +37,12 @@ stdenv.mkDerivation (finalAttrs: {
     (fetchpatch {
       url = "https://github.com/humanoid-path-planner/hpp-core/commit/5a518ce3bc7419f30499a9e6af3391261c0b6ac2.patch";
       hash = "sha256-ixxVhovj74LpAn6Yms338agLgdyOg1aRZcsiY9KpKYE=";
+    })
+    # https://github.com/humanoid-path-planner/hpp-core/pull/373
+    # required for hpp-corbaserver devel
+    (fetchpatch {
+      url = "https://github.com/humanoid-path-planner/hpp-core/pull/373/commits/d9f6f008e6a43b53fc257315c1ab9b9b43d83d7e.patch";
+      hash = "sha256-NMLUkAY0mrr9ktn42iUGbAvZ8bGi9y39w5gQZiofmtA=";
     })
   ];
 

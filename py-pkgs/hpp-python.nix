@@ -17,6 +17,8 @@
   hpp-constraints,
   hpp-core,
   hpp-corbaserver,
+  hpp-manipulation,
+  hpp-manipulation-urdf,
 
   # dependencies
   lxml,
@@ -63,6 +65,8 @@ buildPythonPackage rec {
     hpp-constraints
     hpp-core
     hpp-corbaserver
+    hpp-manipulation
+    hpp-manipulation-urdf
   ];
 
   dependencies = [
