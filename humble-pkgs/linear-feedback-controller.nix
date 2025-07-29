@@ -24,6 +24,9 @@
   parameter-traits,
   realtime-tools,
   rclcpp-lifecycle,
+
+  # checkInputs
+  gtest,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "linear-feedback-controller";
@@ -60,6 +63,10 @@ stdenv.mkDerivation (finalAttrs: {
     parameter-traits
     realtime-tools
     rclcpp-lifecycle
+  ];
+
+  checkInputs = [
+    gtest
   ];
 
   # revert https://github.com/lopsided98/nix-ros-overlay/blob/develop/distros/rosidl-generator-py-setup-hook.sh
