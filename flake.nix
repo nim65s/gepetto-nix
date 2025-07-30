@@ -45,6 +45,11 @@
       url = "github:agimus-project/franka_description";
       flake = false;
     };
+    src-franka-ros2 = {
+      # url = "github:agimus-project/franka_ros2";
+      url = "github:nim65s/franka_ros2/harmonic";
+      flake = false;
+    };
     # gepetto-viewer has a fix to understand AMENT_PREFIX_PATH in #239/devel
     src-gepetto-viewer = {
       url = "github:Gepetto/gepetto-viewer/devel";
@@ -344,7 +349,18 @@
                   # keep-sorted start
                   agimus-controller-ros
                   agimus-msgs
+                  franka-bringup
                   franka-description
+                  franka-example-controllers
+                  franka-fr3-moveit-config
+                  franka-gazebo-bringup
+                  franka-gripper
+                  franka-hardware
+                  franka-ign-ros2-control
+                  franka-msgs
+                  franka-robot-state-broadcaster
+                  franka-ros2
+                  franka-semantic-components
                   linear-feedback-controller
                   linear-feedback-controller-msgs
                   # keep-sorted end
