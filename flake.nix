@@ -1,6 +1,12 @@
 {
   inputs = {
     flake-parts.url = "github:hercules-ci/flake-parts";
+    gazebo-sim-overlay = {
+      url = "github:muellerbernd/gazebo-sim-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixgl.follows = "nixpkgs"; # We just dont need that
+      inputs.systems.follows = "systems";
+    };
     nix-ros-overlay.url = "github:lopsided98/nix-ros-overlay/develop";
     nix-system-graphics = {
       url = "github:soupglasses/nix-system-graphics";
@@ -259,6 +265,7 @@
                   crocoddyl
                   example-robot-data
                   gepetto-viewer
+                  gz-harmonic
                   hpp-affordance
                   hpp-affordance-corba
                   hpp-baxter

@@ -15,6 +15,21 @@
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
+    gz-harmonic = prev.gz-harmonic.overrideAttrs {
+      meta.platforms = final.lib.platforms.linux;
+    };
+    ignition = prev.ignition // {
+      sim8 = prev.ignition.sim8.overrideAttrs (super: {
+        meta.platforms = final.lib.platforms.linux;
+        # add missing include
+        patches = (super.patches or [ ]) ++ [
+          (final.fetchpatch {
+            url = "https://github.com/gazebosim/gz-sim/pull/2414.patch";
+            hash = "sha256-zxPN34bA88344h1jrJa9h8NVorlv+hkc+lYEWjhzJCE=";
+          })
+        ];
+      });
+    };
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
       (
