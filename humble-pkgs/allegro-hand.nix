@@ -4,17 +4,17 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  catkin, 
+  catkin,
 
   # propagatedBuildInputs
-  allegro-hand-controllers, 
-  allegro-hand-description, 
-  allegro-hand-driver, 
-  allegro-hand-keyboard, 
-  rospy, 
-  rostest, 
+  allegro-hand-controllers,
+  allegro-hand-description,
+  allegro-hand-driver,
+  allegro-hand-keyboard,
+  rospy,
+  rostest,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-allegro-hand";
@@ -45,7 +45,7 @@ buildRosPackage {
 
   meta = {
     description = "ROS interface to the allegro hand.";
-    license = with lib.licenses; [ unfree  ];
+    license = with lib.licenses; [ unfree ];
     homepage = "https://github.com/felixduvallet/allegro-hand-ros";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

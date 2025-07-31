@@ -4,14 +4,14 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake, 
+  ament-cmake,
 
   # propagatedBuildInputs
-  tiago-pro-head-bringup, 
-  tiago-pro-head-controller-configuration, 
-  tiago-pro-head-description, 
+  tiago-pro-head-bringup,
+  tiago-pro-head-controller-configuration,
+  tiago-pro-head-description,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-tiago-pro-head-robot";
@@ -39,7 +39,7 @@ buildRosPackage {
 
   meta = {
     description = "The tiago_pro_head_robot package";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/tiago_pro_head_robot";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

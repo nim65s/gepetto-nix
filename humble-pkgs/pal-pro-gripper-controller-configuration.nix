@@ -4,19 +4,19 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake-auto, 
+  ament-cmake-auto,
 
   # propagatedBuildInputs
-  controller-manager, 
-  joint-state-broadcaster, 
-  joint-trajectory-controller, 
-  launch, 
-  launch-pal, 
-  launch-ros, 
+  controller-manager,
+  joint-state-broadcaster,
+  joint-trajectory-controller,
+  launch,
+  launch-pal,
+  launch-ros,
 
   # checkInputs
-  ament-lint-auto, 
-  ament-lint-common, 
+  ament-lint-auto,
+  ament-lint-common,
 }:
 buildRosPackage {
   pname = "ros-humble-pal-pro-gripper-controller-configuration";
@@ -49,7 +49,7 @@ buildRosPackage {
 
   meta = {
     description = "The pal_pro_gripper_controller_configuration package";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/pal_pro_gripper";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

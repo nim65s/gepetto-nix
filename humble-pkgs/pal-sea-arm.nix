@@ -4,14 +4,14 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake, 
+  ament-cmake,
 
   # propagatedBuildInputs
-  pal-sea-arm-controller-configuration, 
-  pal-sea-arm-description, 
-  pal-sea-arm-bringup, 
+  pal-sea-arm-controller-configuration,
+  pal-sea-arm-description,
+  pal-sea-arm-bringup,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-pal-sea-arm";
@@ -39,7 +39,7 @@ buildRosPackage {
 
   meta = {
     description = "The pal_sea_arm package";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/pal_sea_arm";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

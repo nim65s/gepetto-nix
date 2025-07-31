@@ -4,13 +4,13 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake, 
+  ament-cmake,
 
   # propagatedBuildInputs
-  pal-pro-gripper-description, 
-  pal-pro-gripper-controller-configuration, 
+  pal-pro-gripper-description,
+  pal-pro-gripper-controller-configuration,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-pal-pro-gripper";
@@ -37,7 +37,7 @@ buildRosPackage {
 
   meta = {
     description = "The pal_pro_gripper package";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/pal_pro_gripper";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

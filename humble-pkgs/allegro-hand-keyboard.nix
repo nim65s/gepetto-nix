@@ -4,14 +4,14 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  catkin, 
+  catkin,
 
   # propagatedBuildInputs
-  roscpp, 
-  sensor-msgs, 
-  std-msgs, 
+  roscpp,
+  sensor-msgs,
+  std-msgs,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-allegro-hand-keyboard";
@@ -39,7 +39,7 @@ buildRosPackage {
 
   meta = {
     description = "The allegro_hand_keyboard package";
-    license = with lib.licenses; [ unfree  ];
+    license = with lib.licenses; [ unfree ];
     homepage = "https://github.com/felixduvallet/allegro-hand-ros";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

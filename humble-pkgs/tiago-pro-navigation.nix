@@ -4,14 +4,14 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake-auto, 
+  ament-cmake-auto,
 
   # propagatedBuildInputs
-  tiago-pro-laser-sensors, 
-  tiago-pro-2dnav, 
-  tiago-pro-rgbd-sensors, 
+  tiago-pro-laser-sensors,
+  tiago-pro-2dnav,
+  tiago-pro-rgbd-sensors,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-tiago-pro-navigation";
@@ -39,7 +39,7 @@ buildRosPackage {
 
   meta = {
     description = "The tiago_pro Navigation metapackage";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/tiago_pro_navigation";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

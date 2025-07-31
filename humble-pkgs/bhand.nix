@@ -4,11 +4,11 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  catkin, 
+  catkin,
 
-  # propagatedBuildInputs
+# propagatedBuildInputs
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-bhand";
@@ -33,7 +33,7 @@ buildRosPackage {
 
   meta = {
     description = "Computing grasp configurations.";
-    license = with lib.licenses; [ unfree  ];
+    license = with lib.licenses; [ unfree ];
     homepage = "https://github.com/felixduvallet/allegro-hand-ros";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

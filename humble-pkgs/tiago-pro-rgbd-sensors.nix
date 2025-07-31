@@ -4,19 +4,19 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake-auto, 
+  ament-cmake-auto,
 
   # propagatedBuildInputs
-  ament-index-python, 
-  diagnostic-updater, 
-  ros2launch, 
-  rclcpp-components, 
-  realsense2-camera, 
-  realsense-camera-cfg, 
+  ament-index-python,
+  diagnostic-updater,
+  ros2launch,
+  rclcpp-components,
+  realsense2-camera,
+  realsense-camera-cfg,
 
   # checkInputs
-  ament-lint-auto, 
-  ament-lint-common, 
+  ament-lint-auto,
+  ament-lint-common,
 }:
 buildRosPackage {
   pname = "ros-humble-tiago-pro-rgbd-sensors";
@@ -49,7 +49,7 @@ buildRosPackage {
 
   meta = {
     description = "tiago_pro-specific rgbd sensors launch and config files.";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/tiago_pro_navigation";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

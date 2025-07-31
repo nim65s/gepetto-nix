@@ -4,14 +4,14 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake-auto, 
+  ament-cmake-auto,
 
   # propagatedBuildInputs
-  omni-base-2dnav, 
+  omni-base-2dnav,
 
   # checkInputs
-  ament-lint-auto, 
-  ament-lint-common, 
+  ament-lint-auto,
+  ament-lint-common,
 }:
 buildRosPackage {
   pname = "ros-humble-tiago-pro-2dnav";
@@ -39,7 +39,7 @@ buildRosPackage {
 
   meta = {
     description = "tiago pro-specific launch files needed to run navigation on the tiago_pro robot.";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/tiago_pro_navigation";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

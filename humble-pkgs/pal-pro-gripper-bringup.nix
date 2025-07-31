@@ -4,17 +4,17 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake-auto, 
+  ament-cmake-auto,
 
   # propagatedBuildInputs
-  pal-pro-gripper-controller-configuration, 
-  pal-pro-gripper-description, 
-  joint-trajectory-controller, 
-  joint-state-broadcaster, 
+  pal-pro-gripper-controller-configuration,
+  pal-pro-gripper-description,
+  joint-trajectory-controller,
+  joint-state-broadcaster,
 
   # checkInputs
-  ament-lint-auto, 
-  ament-lint-common, 
+  ament-lint-auto,
+  ament-lint-common,
 }:
 buildRosPackage {
   pname = "ros-humble-pal-pro-gripper-bringup";
@@ -45,7 +45,7 @@ buildRosPackage {
 
   meta = {
     description = "Launch files to upload the robot description and start the controllers";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/pal_pro_gripper";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

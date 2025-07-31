@@ -4,12 +4,12 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  catkin, 
+  catkin,
 
   # propagatedBuildInputs
-  allegro-hand, 
+  allegro-hand,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-epfl-allegro-launchers";
@@ -36,7 +36,7 @@ buildRosPackage {
   meta = {
     description = "Launch files with default settings for EPFL allegro
   hand.";
-    license = with lib.licenses; [ unfree  ];
+    license = with lib.licenses; [ unfree ];
     homepage = "https://github.com/felixduvallet/allegro-hand-ros";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

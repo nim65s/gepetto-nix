@@ -4,15 +4,15 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake-auto, 
+  ament-cmake-auto,
 
   # propagatedBuildInputs
-  xacro, 
-  realsense-gazebo-plugin, 
+  xacro,
+  realsense-gazebo-plugin,
 
   # checkInputs
-  ament-lint-auto, 
-  ament-lint-common, 
+  ament-lint-auto,
+  ament-lint-common,
 }:
 buildRosPackage {
   pname = "ros-humble-realsense-simulation";
@@ -41,7 +41,7 @@ buildRosPackage {
 
   meta = {
     description = "RealSense Camera description package for simulation";
-    license = with lib.licenses; [ unfree  ];
+    license = with lib.licenses; [ unfree ];
     homepage = "https://github.com/pal-robotics/realsense_simulation";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

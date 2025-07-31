@@ -4,12 +4,12 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake, 
+  ament-cmake,
 
   # propagatedBuildInputs
-  pal-sea-arm-gazebo, 
+  pal-sea-arm-gazebo,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-pal-sea-arm-simulation";
@@ -35,7 +35,7 @@ buildRosPackage {
 
   meta = {
     description = "The pal_sea_arm_simulation package";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/pal_sea_arm_simulation";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

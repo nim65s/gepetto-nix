@@ -4,12 +4,12 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake, 
+  ament-cmake,
 
   # propagatedBuildInputs
-  tiago-pro-gazebo, 
+  tiago-pro-gazebo,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-tiago-pro-simulation";
@@ -35,7 +35,7 @@ buildRosPackage {
 
   meta = {
     description = "The tiago_pro_simulation package";
-    license = with lib.licenses; [ asl20  ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/pal-robotics/tiago_pro_simulation";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];

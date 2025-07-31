@@ -4,15 +4,15 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  catkin, 
+  catkin,
 
   # propagatedBuildInputs
-  roscpp, 
-  libpcan, 
-  std-msgs, 
-  message-runtime, 
+  roscpp,
+  libpcan,
+  std-msgs,
+  message-runtime,
 
-  # checkInputs
+# checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-allegro-hand-driver";
@@ -41,7 +41,7 @@ buildRosPackage {
 
   meta = {
     description = "ROS stack for SimLab's Allegro Hand.";
-    license = with lib.licenses; [ unfree  ];
+    license = with lib.licenses; [ unfree ];
     homepage = "https://github.com/felixduvallet/allegro-hand-ros";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];
