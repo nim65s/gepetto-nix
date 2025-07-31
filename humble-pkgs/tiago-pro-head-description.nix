@@ -23,13 +23,14 @@
   urdf-test,
   ament-cmake-pytest,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-head-description";
   version = "1.5.0";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_head_robot";
+    tag = version;
   };
 
   buildType = "ament_cmake";

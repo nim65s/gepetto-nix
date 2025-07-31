@@ -18,13 +18,14 @@
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-realsense-gazebo-plugin";
   version = "3.2.0";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "realsense_gazebo_plugin";
+    tag = version;
   };
 
   buildType = "ament_cmake";
@@ -55,3 +56,4 @@ buildRosPackage {
     maintainers = [ lib.maintainers.nim65s ];
   };
 }
+

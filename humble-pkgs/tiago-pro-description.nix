@@ -12,7 +12,7 @@
   omni-base-description,
   tiago-pro-head-description,
   pal-sea-arm-description,
-  allegro-hand-description,
+  # allegro-hand-description,
   pal-urdf-utils,
   xacro,
   #hector-gazebo-plugins,
@@ -27,13 +27,14 @@
   launch-testing-ament-cmake,
   urdf-test,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-description";
   version = "1.29.4";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_robot";
+    tag = version;
   };
 
   buildType = "ament_cmake";
@@ -47,7 +48,7 @@ buildRosPackage {
     omni-base-description
     tiago-pro-head-description
     pal-sea-arm-description
-    allegro-hand-description
+    # allegro-hand-description
     pal-urdf-utils
     xacro
     #hector-gazebo-plugins

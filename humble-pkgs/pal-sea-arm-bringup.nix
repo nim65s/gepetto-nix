@@ -7,14 +7,14 @@
   ament-cmake-auto,
 
   # propagatedBuildInputs
-  pal-sea-arm-controller-configuration,
-  pal-sea-arm-description,
+  joint-state-broadcaster,
+  joint-trajectory-controller,
   joy,
   joy-teleop,
   launch-pal,
+  pal-sea-arm-controller-configuration,
+  pal-sea-arm-description,
   play-motion2,
-  joint-trajectory-controller,
-  joint-state-broadcaster,
 
   # checkInputs
   ament-lint-auto,
@@ -35,14 +35,14 @@ buildRosPackage {
     ament-cmake-auto
   ];
   propagatedBuidInputs = [
-    pal-sea-arm-controller-configuration
-    pal-sea-arm-description
+    joint-state-broadcaster
+    joint-trajectory-controller
     joy
     joy-teleop
     launch-pal
+    pal-sea-arm-controller-configuration
+    pal-sea-arm-description
     play-motion2
-    joint-trajectory-controller
-    joint-state-broadcaster
   ];
   checkInputs = [
     ament-lint-auto

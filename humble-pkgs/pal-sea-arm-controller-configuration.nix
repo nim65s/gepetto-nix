@@ -7,13 +7,13 @@
   ament-cmake-auto,
 
   # propagatedBuildInputs
-  inertia-shaping-effort-control,
   controller-manager,
+  inertia-shaping-effort-control,
   joint-trajectory-controller,
-  sea-state-broadcaster,
-  pal-pro-gripper-controller-configuration,
   launch,
   launch-pal,
+  pal-pro-gripper-controller-configuration,
+  sea-state-broadcaster,
 
   # checkInputs
   ament-lint-auto,
@@ -34,13 +34,13 @@ buildRosPackage {
     ament-cmake-auto
   ];
   propagatedBuidInputs = [
-    inertia-shaping-effort-control
     controller-manager
+    inertia-shaping-effort-control
     joint-trajectory-controller
-    sea-state-broadcaster
-    pal-pro-gripper-controller-configuration
     launch
     launch-pal
+    pal-pro-gripper-controller-configuration
+    sea-state-broadcaster
   ];
   checkInputs = [
     ament-lint-auto

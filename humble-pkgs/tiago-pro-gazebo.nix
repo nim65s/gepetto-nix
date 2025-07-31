@@ -13,7 +13,7 @@
   pal-maps,
   tiago-pro-bringup,
   pal-pro-gripper-description,
-  allegro-hand-description,
+  # allegro-hand-description,
   tiago-pro-head-description,
   omni-base-description,
   tiago-pro-description,
@@ -54,7 +54,7 @@ buildRosPackage {
     pal-maps
     tiago-pro-bringup
     pal-pro-gripper-description
-    allegro-hand-description
+    # allegro-hand-description
     tiago-pro-head-description
     omni-base-description
     tiago-pro-description

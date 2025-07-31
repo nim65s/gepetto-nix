@@ -14,13 +14,14 @@
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-realsense-simulation";
   version = "2.1.1";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "realsense_simulation";
+    tag = version;
   };
 
   buildType = "ament_cmake";

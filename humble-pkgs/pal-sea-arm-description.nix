@@ -8,28 +8,26 @@
   ament-cmake-python,
 
   # propagatedBuildInputs
-  xacro,
-  pal-urdf-utils,
-  pal-pro-gripper-description,
-  allegro-hand-system,
-  allegro-hand-description,
+  # allegro-hand-description,
+  # allegro-hand-system,
   joint-state-publisher-gui,
   launch,
-  launch-ros,
   launch-pal,
   launch-param-builder,
+  launch-ros,
+  pal-pro-gripper-description,
   pal-sea-arm-controller-configuration,
+  pal-urdf-utils,
   robot-state-publisher,
-  sea-transmissions,
+  # sea-transmissions,
+  xacro,
 
   # checkInputs
+  ament-cmake-pytest,
   ament-lint-auto,
   ament-lint-common,
   launch-testing-ament-cmake,
   urdf-test,
-  ament-cmake-pytest,
-  ament-lint-auto,
-  ament-lint-common,
 }:
 buildRosPackage {
   pname = "ros-humble-pal-sea-arm-description";
@@ -47,28 +45,26 @@ buildRosPackage {
     ament-cmake-python
   ];
   propagatedBuidInputs = [
-    xacro
-    pal-urdf-utils
-    pal-pro-gripper-description
-    allegro-hand-system
-    allegro-hand-description
+    # allegro-hand-description
+    # allegro-hand-system
     joint-state-publisher-gui
     launch
-    launch-ros
     launch-pal
     launch-param-builder
+    launch-ros
+    pal-pro-gripper-description
     pal-sea-arm-controller-configuration
+    pal-urdf-utils
     robot-state-publisher
-    sea-transmissions
+    # sea-transmissions
+    xacro
   ];
   checkInputs = [
+    ament-cmake-pytest
     ament-lint-auto
     ament-lint-common
     launch-testing-ament-cmake
     urdf-test
-    ament-cmake-pytest
-    ament-lint-auto
-    ament-lint-common
   ];
 
   doCheck = true;

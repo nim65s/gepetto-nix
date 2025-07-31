@@ -7,11 +7,11 @@
   ament-cmake,
 
   # propagatedBuildInputs
+  pal-sea-arm-bringup,
   pal-sea-arm-controller-configuration,
   pal-sea-arm-description,
-  pal-sea-arm-bringup,
 
-# checkInputs
+  # checkInputs
 }:
 buildRosPackage {
   pname = "ros-humble-pal-sea-arm";
@@ -28,9 +28,9 @@ buildRosPackage {
     ament-cmake
   ];
   propagatedBuidInputs = [
+    pal-sea-arm-bringup
     pal-sea-arm-controller-configuration
     pal-sea-arm-description
-    pal-sea-arm-bringup
   ];
   checkInputs = [
   ];

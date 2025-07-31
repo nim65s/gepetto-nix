@@ -9,7 +9,7 @@
   # propagatedBuildInputs
   omni-drive-controller,
   pal-pro-gripper-controller-configuration,
-  allegro-hand-controller-configuration,
+  #allegro-hand-controller-configuration,
   pal-sea-arm-controller-configuration,
   omni-base-controller-configuration,
   tiago-pro-head-controller-configuration,
@@ -42,7 +42,7 @@ buildRosPackage {
   propagatedBuidInputs = [
     omni-drive-controller
     pal-pro-gripper-controller-configuration
-    allegro-hand-controller-configuration
+    #allegro-hand-controller-configuration
     pal-sea-arm-controller-configuration
     omni-base-controller-configuration
     tiago-pro-head-controller-configuration
