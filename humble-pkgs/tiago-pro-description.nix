@@ -15,7 +15,7 @@
   allegro-hand-description, 
   pal-urdf-utils, 
   xacro, 
-  hector-gazebo-plugins, 
+  #hector-gazebo-plugins, 
   tiago-pro-controller-configuration, 
   realsense2-description, 
   realsense-simulation, 
@@ -50,7 +50,7 @@ buildRosPackage {
     allegro-hand-description
     pal-urdf-utils
     xacro
-    hector-gazebo-plugins
+    #hector-gazebo-plugins
     tiago-pro-controller-configuration
     realsense2-description
     realsense-simulation
