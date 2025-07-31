@@ -18,7 +18,9 @@
     gz-harmonic = prev.gz-harmonic.overrideAttrs {
       meta.platforms = final.lib.platforms.linux;
     };
+    gazebo_11 = prev.gazebo_11.override { ffmpeg_5 = final.ffmpeg_6; };
     ignition = prev.ignition // {
+      common3 = prev.ignition.common3.override { ffmpeg_5 = final.ffmpeg_6; };
       sim8 = prev.ignition.sim8.overrideAttrs (super: {
         meta.platforms = final.lib.platforms.linux;
         # add missing include
