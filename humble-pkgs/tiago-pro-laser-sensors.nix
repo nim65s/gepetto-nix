@@ -1,0 +1,47 @@
+{
+  lib,
+  buildRosPackage,
+  fetchFromGitHub,
+
+  # nativeBuildInputs
+  ament-cmake-auto, 
+
+  # propagatedBuildInputs
+  omni-base-laser-sensors, 
+
+  # checkInputs
+  ament-lint-auto, 
+  ament-lint-common, 
+}:
+buildRosPackage {
+  pname = "ros-humble-tiago-pro-laser-sensors";
+  version = "2.13.0";
+
+  src = fetchFromGitHub {
+    owner = "pal-robotics";
+    repo = "tiago_pro_navigation";
+  };
+
+  buildType = "ament_cmake";
+
+  nativeBuidInputs = [
+    ament-cmake-auto
+  ];
+  propagatedBuidInputs = [
+    omni-base-laser-sensors
+  ];
+  checkInputs = [
+    ament-lint-auto
+    ament-lint-common
+  ];
+
+  doCheck = true;
+
+  meta = {
+    description = "tiago_pro-specific laser sensors launch and config files.";
+    license = with lib.licenses; [ asl20  ];
+    homepage = "https://github.com/pal-robotics/tiago_pro_navigation";
+    platforms = lib.platforms.linux;
+    maintainers = [ lib.maintainers.nim65s ];
+  };
+}
