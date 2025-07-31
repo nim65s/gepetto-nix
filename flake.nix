@@ -299,6 +299,7 @@
                   odri-control-interface
                   odri-masterboard-sdk
                   pinocchio
+                  ros2nix
                   # keep-sorted end
                   ;
               }
