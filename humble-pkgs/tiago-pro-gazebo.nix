@@ -23,7 +23,7 @@
   pal-urdf-utils, 
   gazebo-ros2-control, 
   gazebo-ros, 
-  robot-info-publisher, 
+  #robot-info-publisher, 
   launch, 
   launch-pal, 
   launch-ros, 
@@ -64,7 +64,7 @@ buildRosPackage {
     pal-urdf-utils
     gazebo-ros2-control
     gazebo-ros
-    robot-info-publisher
+    #robot-info-publisher
     launch
     launch-pal
     launch-ros
