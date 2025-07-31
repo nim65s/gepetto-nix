@@ -25,14 +25,14 @@ TEMPLATE = """{
   buildRosPackage,
   fetchFromGitHub,
 
-  # nativeBuildInputs{% for dep in pkg.buildtool_depends %}
-  {{ dep.name|kebab }},{% endfor %}
+  # nativeBuildInputs{% for dep in native %}
+  {{ dep }},{% endfor %}
 
-  # propagatedBuildInputs{% for dep in pkg.exec_depends %}
-  {{ dep.name|kebab }},{% endfor %}
+  # propagatedBuildInputs{% for dep in propagated %}
+  {{ dep }},{% endfor %}
 
-  # checkInputs{% for dep in pkg.test_depends %}
-  {{ dep.name|kebab }},{% endfor %}
+  # checkInputs{% for dep in check %}
+  {{ dep }},{% endfor %}
 }:
 buildRosPackage {
   pname = "ros-{{ distro }}-{{ pkg.name|kebab }}";
@@ -45,14 +45,14 @@ buildRosPackage {
 
   buildType = "{{ pkg.get_build_type() }}";
 
-  nativeBuidInputs = [{% for dep in pkg.buildtool_depends %}
-    {{ dep.name|kebab }}{% endfor %}
+  nativeBuidInputs = [{% for dep in native %}
+    {{ dep }}{% endfor %}
   ];
-  propagatedBuidInputs = [{% for dep in pkg.exec_depends %}
-    {{ dep.name|kebab }}{% endfor %}
+  propagatedBuidInputs = [{% for dep in propagated %}
+    {{ dep }}{% endfor %}
   ];
-  checkInputs = [{% for dep in pkg.test_depends %}
-    {{ dep.name|kebab }}{% endfor %}
+  checkInputs = [{% for dep in check %}
+    {{ dep }}{% endfor %}
   ];
 
   doCheck = true;
@@ -153,7 +153,17 @@ class Package:
                 logger.warning("Unknown license: %s", lic)
                 licenses.append("unfree")
 
-        package = template.render(pkg=pkg, licenses=licenses, repo=repo.repo)
+        def sort_deps(deps):
+            return sorted({kebabcase(dep.name) for dep in deps})
+
+        package = template.render(
+            pkg=pkg,
+            licenses=licenses,
+            repo=repo.repo,
+            native=sort_deps(pkg.buildtool_depends),
+            propagated=sort_deps(pkg.exec_depends),
+            check=sort_deps(pkg.test_depends),
+        )
         (repo.path / f"{kebabcase(pkg.name)}.nix").write_text(package)
 
 
