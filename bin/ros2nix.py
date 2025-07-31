@@ -115,6 +115,7 @@ class Repo:
         logger.info("Branch: %s", branch)
         if distro is None:
             self.distro = branch.split("-")[0]
+        self.distro = distro
         logger.info("Distro: %s", self.distro)
 
         self.path = Path(f"{self.distro}-pkgs")
