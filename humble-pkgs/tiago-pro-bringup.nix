@@ -21,13 +21,15 @@
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-bringup";
   version = "1.29.4";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_robot";
+    tag = version;
+    hash = "sha256-XImT4kzzPwfFTYqn9nn9uBIpmVVtAds1l/nKdhKcgR4=";
   };
 
   buildType = "ament_cmake";

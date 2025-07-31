@@ -23,13 +23,14 @@
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-pal-sea-arm-moveit-config";
   version = "1.0.5";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "pal_sea_arm_moveit_config";
+    tag = version;
   };
 
   buildType = "ament_cmake";

@@ -11,15 +11,16 @@
   pal-sea-arm-controller-configuration,
   pal-sea-arm-description,
 
-  # checkInputs
+# checkInputs
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-pal-sea-arm";
   version = "1.18.6";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "pal_sea_arm";
+    tag = version;
   };
 
   buildType = "ament_cmake";
@@ -45,3 +46,4 @@ buildRosPackage {
     maintainers = [ lib.maintainers.nim65s ];
   };
 }
+

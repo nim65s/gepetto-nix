@@ -18,13 +18,14 @@
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-pal-pro-gripper-controller-configuration";
   version = "1.5.2";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "pal_pro_gripper";
+    tag = version;
   };
 
   buildType = "ament_cmake";

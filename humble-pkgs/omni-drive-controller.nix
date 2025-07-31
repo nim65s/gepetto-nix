@@ -4,34 +4,30 @@
   fetchFromGitHub,
 
   # nativeBuildInputs
-  ament-cmake-auto,
+  ament-cmake,
 
   # propagatedBuildInputs
-  xacro,
-  pal-urdf-utils,
 
   # checkInputs
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage rec {
-  pname = "ros-humble-pal-pro-gripper-description";
-  version = "1.5.2";
+buildRosPackage {
+  pname = "ros-humble-omni-drive-controller";
+  version = "0.0.0";
 
   src = fetchFromGitHub {
-    owner = "pal-robotics";
-    repo = "pal_pro_gripper";
-    tag = version;
+    owner = "jpgtzg";
+    repo = "omni_drive_controller";
+    rev = "842b49a9562433ca14ecb02c83eecded0fb9047a";
   };
 
   buildType = "ament_cmake";
 
   nativeBuidInputs = [
-    ament-cmake-auto
+    ament-cmake
   ];
   propagatedBuidInputs = [
-    xacro
-    pal-urdf-utils
   ];
   checkInputs = [
     ament-lint-auto
@@ -41,10 +37,11 @@ buildRosPackage rec {
   doCheck = true;
 
   meta = {
-    description = "The pal_pro_gripper_description package";
-    license = with lib.licenses; [ asl20 ];
-    homepage = "https://github.com/pal-robotics/pal_pro_gripper";
+    description = "TODO: Package description";
+    license = with lib.licenses; [ unfree ];
+    homepage = "https://github.com/jpgtzg/omni_drive_controller";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];
   };
 }
+

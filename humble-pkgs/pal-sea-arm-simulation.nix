@@ -11,13 +11,14 @@
 
 # checkInputs
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-pal-sea-arm-simulation";
   version = "1.0.4";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "pal_sea_arm_simulation";
+    tag = version;
   };
 
   buildType = "ament_cmake";

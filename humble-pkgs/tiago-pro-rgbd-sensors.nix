@@ -18,13 +18,14 @@
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-rgbd-sensors";
   version = "2.13.0";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_navigation";
+    tag = version;
   };
 
   buildType = "ament_cmake";

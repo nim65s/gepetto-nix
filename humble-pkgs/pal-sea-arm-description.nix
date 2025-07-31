@@ -29,13 +29,14 @@
   launch-testing-ament-cmake,
   urdf-test,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-pal-sea-arm-description";
   version = "1.18.6";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "pal_sea_arm";
+    tag = version;
   };
 
   buildType = "ament_cmake";

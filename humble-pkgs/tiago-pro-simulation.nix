@@ -11,13 +11,14 @@
 
 # checkInputs
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-simulation";
   version = "1.10.1";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_simulation";
+    tag = version;
   };
 
   buildType = "ament_cmake";
