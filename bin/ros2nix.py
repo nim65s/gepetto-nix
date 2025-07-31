@@ -26,13 +26,13 @@ TEMPLATE = """{
   fetchFromGitHub,
 
   # nativeBuildInputs{% for dep in pkg.buildtool_depends %}
-  {{ dep.name|kebab }}, {% endfor %}
+  {{ dep.name|kebab }},{% endfor %}
 
   # propagatedBuildInputs{% for dep in pkg.exec_depends %}
-  {{ dep.name|kebab }}, {% endfor %}
+  {{ dep.name|kebab }},{% endfor %}
 
   # checkInputs{% for dep in pkg.test_depends %}
-  {{ dep.name|kebab }}, {% endfor %}
+  {{ dep.name|kebab }},{% endfor %}
 }:
 buildRosPackage {
   pname = "ros-{{ distro }}-{{ pkg.name|kebab }}";
@@ -59,13 +59,12 @@ buildRosPackage {
 
   meta = {
     description = "{{ pkg.description }}";
-    license = with lib.licenses; [ {% for lic in licenses %}{{ lic }} {% endfor %} ];
+    license = with lib.licenses; [ {% for lic in licenses %}{{ lic }} {% endfor %}];
     homepage = "{{ repo.html_url }}";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];
   };
-}
-"""
+}"""
 
 logger = getLogger("ros2nix")
 
