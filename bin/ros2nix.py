@@ -114,7 +114,7 @@ class Repo:
             branch = self.repo.default_branch
         logger.info("Branch: %s", branch)
         if distro is None:
-            self.distro = branch.split("-")[0]
+            distro = branch.split("-")[0]
         self.distro = distro
         logger.info("Distro: %s", self.distro)
 
