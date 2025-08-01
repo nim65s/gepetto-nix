@@ -169,6 +169,7 @@ class Package:
             rev = f'rev = "{repo.branch.commit.sha}"'
             hash_url = f"https://github.com/{repo.repo.owner.login}/{repo.repo.name}/archive/{repo.branch.commit.sha}.tar.gz"
 
+        logger.info("Prefetch %s", hash_url)
         hash = check_output(["nix-prefetch-url", hash_url], text=True).strip()
         hash = check_output(
             ["nix", "hash", "to-base64", "--type", "sha256", hash], text=True
