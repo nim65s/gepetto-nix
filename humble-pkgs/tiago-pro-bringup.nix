@@ -8,7 +8,7 @@
 
   # propagatedBuildInputs
   ament-index-python,
-  collision-aware-joint-trajectory-wrapper,
+  # collision-aware-joint-trajectory-wrapper,
   diagnostic-aggregator,
   joy-linux,
   joy-teleop,
@@ -40,7 +40,7 @@ buildRosPackage rec {
   ];
   propagatedBuildInputs = [
     ament-index-python
-    collision-aware-joint-trajectory-wrapper
+    # collision-aware-joint-trajectory-wrapper
     diagnostic-aggregator
     joy-linux
     joy-teleop

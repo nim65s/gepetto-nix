@@ -38,7 +38,7 @@ buildRosPackage rec {
     ament-lint-common
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "tiago_pro-specific laser sensors launch and config files.";

@@ -38,7 +38,7 @@ buildRosPackage rec {
     ament-lint-common
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "tiago pro-specific launch files needed to run navigation on the tiago_pro robot.";

@@ -12,22 +12,40 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
-    gazebo_11 =
-      (prev.gazebo_11.override {
-        ffmpeg_5 = final.ffmpeg_6; # ffmpeg 5 no longer available in nixpkgs
-        boost = final.boost186; # asio break stuff in 1.87
-      }).overrideAttrs
-        (rec {
-          # 11.14.0 does not compile
-          version = "11.15.1";
-          src = final.fetchFromGitHub {
-            owner = "gazebosim";
-            repo = "gazebo-classic";
-            tag = "gazebo11_${version}";
-            hash = "sha256-EieBsedwxelKY9LfFUzxuO189OvziSNXoKX2hYDoxMQ=";
-          };
-          patches = [ ]; # already applied
-        });
+    gazebo_11 = (prev.gazebo_11.override { ffmpeg_5 = final.ffmpeg_6; }).overrideAttrs (rec {
+      # 11.14.0 does not compile
+      version = "11.15.1";
+      src = final.fetchFromGitHub {
+        owner = "gazebosim";
+        repo = "gazebo-classic";
+        tag = "gazebo11_${version}";
+        hash = "sha256-EieBsedwxelKY9LfFUzxuO189OvziSNXoKX2hYDoxMQ=";
+      };
+      # fix build for boost >= 1.87
+      # I'm lazy, so this break runtime. If you want a working gazebo 11, override boost = boost186
+      # But also you may need to recompile opencv with that too
+      patches = [ ./patches/gz11.patch ];
+      postPatch = ''
+        sed  -i '1i #include <boost/asio.hpp>' gazebo/transport/Connection.cc gazebo/transport/Connection.hh
+        substituteInPlace gazebo/transport/IOManager.* \
+          --replace-fail  "io_service" "io_context" 
+        substituteInPlace gazebo/transport/IOManager.cc \
+          --replace-fail \
+            "boost::asio::io_context::work *work = nullptr;" \
+            "std::optional<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> work;" \
+          --replace-fail \
+            "this->dataPtr->work = new boost::asio::io_context::work(" \
+            "this->dataPtr->work.emplace(boost::asio::make_work_guard(*this->dataPtr->io_context));" \
+          --replace-fail "*this->dataPtr->io_context);"  "" \
+          --replace-fail "delete this->dataPtr->work;" "this->dataPtr->work.reset();" \
+          --replace-fail "this->dataPtr->work = nullptr;" "" \
+          --replace-fail "this->dataPtr->io_context->reset();" ""
+        substituteInPlace gazebo/transport/Connection.hh \
+          --replace-fail \
+            "boost::asio::ip::tcp::resolver::iterator" \
+            "boost::asio::ip::tcp::resolver::results_type"
+      '';
+    });
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
