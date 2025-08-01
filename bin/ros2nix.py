@@ -12,7 +12,7 @@ from argparse import ArgumentParser
 from logging import basicConfig, getLogger
 from os import environ
 from pathlib import Path
-from subprocess import check_output
+from subprocess import check_call, check_output
 
 from caseconverter import kebabcase
 from catkin_pkg.package import parse_package_string
@@ -42,7 +42,7 @@ buildRosPackage rec {
     owner = "{{ repo.owner.login }}";
     repo = "{{ repo.name }}";
     {{ rev }};
-    hash = "{{ hash }}";
+    hash = "sha256-{{ hash }}";
   };
 
   buildType = "{{ pkg.get_build_type() }}";
@@ -165,14 +165,12 @@ class Package:
                 break
         else:
             rev = f'rev = "{repo.branch.commit.sha}"'
-            hash_url = (
-                f"https://github.com/{repo.repo.owner.login}/{repo.repo.name}/archive/{repo.branch.commit.sha}.gz",
-            )
+            hash_url = f"https://github.com/{repo.repo.owner.login}/{repo.repo.name}/archive/{repo.branch.commit.sha}.tar.gz"
 
-        hash = check_output(["nix-prefetch-url", hash_url], text=True)
+        hash = check_output(["nix-prefetch-url", hash_url], text=True).strip()
         hash = check_output(
             ["nix", "hash", "to-base64", "--type", "sha256", hash], text=True
-        )
+        ).strip()
 
         package = template.render(
             pkg=pkg,
@@ -184,8 +182,10 @@ class Package:
             propagated=sort_deps(pkg.exec_depends),
             check=sort_deps(pkg.test_depends),
         )
-        breakpoint()
-        (repo.path / f"{kebabcase(pkg.name)}.nix").write_text(package)
+        path = repo.path / f"{kebabcase(pkg.name)}.nix"
+        path.write_text(package)
+        check_call(["deadnix", path])
+        check_call(["nixfmt", path])
 
 
 def main():
