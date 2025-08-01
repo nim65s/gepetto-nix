@@ -30,7 +30,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "pal_sea_arm_moveit_config";
     tag = version;
-    hash = "sha256-vsGv8RdkMYOdGF27n8CimWSiGxqo77tbiVvrgNxKP5Y=";
+    hash = "sha256-dD6KRaZUgtGatI4NrdF9hrYoZvccYjCl7xVWQKHsPJM=";
   };
 
   buildType = "ament_cmake";

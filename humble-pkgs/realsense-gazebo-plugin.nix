@@ -26,7 +26,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "realsense_gazebo_plugin";
     tag = version;
-    hash = "sha256-QDOAvWlrfVCU/loQI/KABEW2T6LFhF+Knh+eBSqX7eM=";
+    hash = "sha256-fPamt8z31RC9VudRpdF7Q2iaHvIsV3/g6dA+EnIp7Tc=";
   };
 
   buildType = "ament_cmake";

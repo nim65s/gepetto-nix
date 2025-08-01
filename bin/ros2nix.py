@@ -139,6 +139,8 @@ class Repo:
         env.filters["kebab"] = kebabcase
         template = env.from_string(TEMPLATE, {"distro": self.distro})
 
+        self.hashes = {}
+
         for package in self.packages:
             Package(repo=self, package=package, template=template)
 
@@ -170,8 +172,12 @@ class Package:
             rev = f'rev = "{repo.branch.commit.sha}"'
             hash_url = f"{hash_url}/{repo.branch.commit.sha}.tar.gz"
 
-        logger.info("Prefetch %s", hash_url)
-        hash = check_output(["nurl", "-H", hash_url], text=True).strip()
+        if hash_url in repo.hashes:
+            hash = repo.hashes[hash_url]
+        else:
+            logger.info("Prefetch %s", hash_url)
+            hash = check_output(["nurl", "-H", hash_url], text=True).strip()
+            repo.hashes[hash_url] = hash
 
         package = template.render(
             pkg=pkg,

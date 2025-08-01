@@ -16,7 +16,7 @@
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-pal-pro-gripper-bringup";
   version = "1.5.2";
 
@@ -24,7 +24,7 @@ buildRosPackage {
     owner = "pal-robotics";
     repo = "pal_pro_gripper";
     tag = version;
-    hash = "sha256-WqEB6SiAbu/01YkaoLXlgWjGNsTE9MkSxxKN3SHK7JM=";
+    hash = "sha256-deUnO6/sOAZFS/6FceuwfGG+R/vfF9WbpgvwV6M4ddA=";
   };
 
   buildType = "ament_cmake";

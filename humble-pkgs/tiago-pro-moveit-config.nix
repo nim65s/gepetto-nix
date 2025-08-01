@@ -31,7 +31,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "tiago_pro_moveit_config";
     tag = version;
-    hash = "sha256-Oo7yecASbgaLQHOeqh5cSUA0cenO6ZdGvbRw05VF/EQ=";
+    hash = "sha256-kAtHiwv3qTwCfgpbMa+t3zdhg9toohNWnyZ6mdgDWcs=";
   };
 
   buildType = "ament_cmake";
