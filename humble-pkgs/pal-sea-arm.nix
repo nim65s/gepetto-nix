@@ -23,13 +23,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-yHWWjqeugJ10cE4T6E3OKYuyQplNZtVJSpXg3GTOIFA=";
   };
+  sourceRoot = "source/pal_sea_arm";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     pal-sea-arm-bringup
     pal-sea-arm-controller-configuration
     pal-sea-arm-description

@@ -25,13 +25,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-XEUlNiuaDBIBSGRbaEB6WTf7YgCcEp2RBp3XjO2uUPE=";
   };
+  sourceRoot = "source/tiago_pro_head_bringup";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     play-motion2
     tiago-pro-head-controller-configuration
     tiago-pro-head-description

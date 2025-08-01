@@ -27,13 +27,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-XEUlNiuaDBIBSGRbaEB6WTf7YgCcEp2RBp3XjO2uUPE=";
   };
+  sourceRoot = "source/tiago_pro_head_controller_configuration";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     joint-state-broadcaster
     joint-trajectory-controller
     launch

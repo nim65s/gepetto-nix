@@ -23,13 +23,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-FT8uHhhBC7Zi+nT1NGA7Lmi36ddRRR9AujXs01PyNco=";
   };
+  sourceRoot = "source/tiago_pro_2dnav";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     omni-base-2dnav
   ];
   checkInputs = [

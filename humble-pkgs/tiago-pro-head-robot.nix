@@ -23,13 +23,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-XEUlNiuaDBIBSGRbaEB6WTf7YgCcEp2RBp3XjO2uUPE=";
   };
+  sourceRoot = "source/tiago_pro_head_robot";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     tiago-pro-head-bringup
     tiago-pro-head-controller-configuration
     tiago-pro-head-description

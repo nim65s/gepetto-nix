@@ -23,13 +23,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-FT8uHhhBC7Zi+nT1NGA7Lmi36ddRRR9AujXs01PyNco=";
   };
+  sourceRoot = "source/tiago_pro_navigation";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     tiago-pro-2dnav
     tiago-pro-laser-sensors
     tiago-pro-rgbd-sensors

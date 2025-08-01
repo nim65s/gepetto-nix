@@ -21,13 +21,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-0UPWs4TLLf9rffQAbk0wEoDDyRJUPCOkMxCTQ42Kd+E=";
   };
+  sourceRoot = "source/pal_sea_arm_simulation";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     pal-sea-arm-gazebo
   ];
   checkInputs = [

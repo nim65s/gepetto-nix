@@ -29,13 +29,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-yHWWjqeugJ10cE4T6E3OKYuyQplNZtVJSpXg3GTOIFA=";
   };
+  sourceRoot = "source/pal_sea_arm_controller_configuration";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     controller-manager
     # inertia-shaping-effort-control
     joint-trajectory-controller

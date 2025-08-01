@@ -32,13 +32,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-OnLR2e/XkSxiMvgKrOj9tr1bGnYN1Ozz1GVe7IISouQ=";
   };
+  sourceRoot = "source/tiago_pro_head_gazebo";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     gazebo-plugins
     gazebo-ros
     gazebo-ros2-control

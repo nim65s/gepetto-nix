@@ -33,14 +33,15 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-XEUlNiuaDBIBSGRbaEB6WTf7YgCcEp2RBp3XjO2uUPE=";
   };
+  sourceRoot = "source/tiago_pro_head_description";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
     ament-cmake-python
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     launch-param-builder
     pal-urdf-utils
     realsense-simulation

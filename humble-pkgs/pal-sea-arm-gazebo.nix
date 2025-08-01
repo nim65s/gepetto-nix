@@ -35,13 +35,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-0UPWs4TLLf9rffQAbk0wEoDDyRJUPCOkMxCTQ42Kd+E=";
   };
+  sourceRoot = "source/pal_sea_arm_gazebo";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     gazebo-plugins
     gazebo-ros
     gazebo-ros2-control

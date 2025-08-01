@@ -28,13 +28,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-FT8uHhhBC7Zi+nT1NGA7Lmi36ddRRR9AujXs01PyNco=";
   };
+  sourceRoot = "source/tiago_pro_rgbd_sensors";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     ament-index-python
     diagnostic-updater
     rclcpp-components

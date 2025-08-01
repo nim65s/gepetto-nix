@@ -23,13 +23,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-OnLR2e/XkSxiMvgKrOj9tr1bGnYN1Ozz1GVe7IISouQ=";
   };
+  sourceRoot = "source/tiago_pro_head_simulation";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     tiago-pro-head-gazebo
   ];
   checkInputs = [

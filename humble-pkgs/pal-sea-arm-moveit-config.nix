@@ -32,13 +32,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-dD6KRaZUgtGatI4NrdF9hrYoZvccYjCl7xVWQKHsPJM=";
   };
+  sourceRoot = "source/";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     launch-pal
     moveit-configs-utils
     moveit-kinematics

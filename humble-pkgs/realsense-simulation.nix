@@ -24,13 +24,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-Ug5VZLKR+eGfkwJDQa26+REj0IuURQ5l7U9NZJTnpOY=";
   };
+  sourceRoot = "source/";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     realsense-gazebo-plugin
     xacro
   ];

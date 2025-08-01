@@ -26,15 +26,16 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "realsense_gazebo_plugin";
     tag = version;
-    hash = "sha256-fPamt8z31RC9VudRpdF7Q2iaHvIsV3/g6dA+EnIp7Tc=";
+    hash = "sha256-CPXmGao8reIUi1dH5PY5VFFXqHNzZSKyZ4Mo+jjbCuY=";
   };
+  sourceRoot = "source/";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     camera-info-manager
     gazebo-ros
     image-transport

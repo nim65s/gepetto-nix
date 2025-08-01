@@ -37,14 +37,15 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-O9/Afe9hkoqUVHaxqnw1lNVmgcPsbBqVx4ZIgij10FI=";
   };
+  sourceRoot = "source/tiago_pro_description";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
     ament-cmake-python
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     # allegro-hand-description
     # hector-gazebo-plugins
     omni-base-description

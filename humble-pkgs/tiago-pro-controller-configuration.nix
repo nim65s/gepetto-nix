@@ -35,13 +35,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-O9/Afe9hkoqUVHaxqnw1lNVmgcPsbBqVx4ZIgij10FI=";
   };
+  sourceRoot = "source/tiago_pro_controller_configuration";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     # allegro-hand-controller-configuration
     # gravity-compensation-controller2
     joint-state-broadcaster

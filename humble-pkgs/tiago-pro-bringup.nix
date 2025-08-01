@@ -31,13 +31,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-O9/Afe9hkoqUVHaxqnw1lNVmgcPsbBqVx4ZIgij10FI=";
   };
+  sourceRoot = "source/tiago_pro_bringup";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     ament-index-python
     collision-aware-joint-trajectory-wrapper
     diagnostic-aggregator

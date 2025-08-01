@@ -26,13 +26,14 @@ buildRosPackage rec {
     tag = version;
     hash = "sha256-deUnO6/sOAZFS/6FceuwfGG+R/vfF9WbpgvwV6M4ddA=";
   };
+  sourceRoot = "source/pal_pro_gripper_bringup";
 
   buildType = "ament_cmake";
 
-  nativeBuidInputs = [
+  nativeBuildInputs = [
     ament-cmake-auto
   ];
-  propagatedBuidInputs = [
+  propagatedBuildInputs = [
     joint-state-broadcaster
     joint-trajectory-controller
     pal-pro-gripper-controller-configuration
