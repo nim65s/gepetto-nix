@@ -34,13 +34,15 @@ TEMPLATE = """{
   # checkInputs{% for dep in check %}
   {{ dep }},{% endfor %}
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-{{ distro }}-{{ pkg.name|kebab }}";
   version = "{{ pkg.version }}";
 
   src = fetchFromGitHub {
     owner = "{{ repo.owner.login }}";
     repo = "{{ repo.name }}";
+    {{ rev }};
+    hash = "{{ hash }}";
   };
 
   buildType = "{{ pkg.get_build_type() }}";
@@ -156,14 +158,33 @@ class Package:
         def sort_deps(deps):
             return sorted({kebabcase(dep.name) for dep in deps})
 
+        for tag in repo.repo.get_tags():
+            if tag.name == pkg.version:
+                rev = "tag = version"
+                hash_url = tag.tarball_url
+                break
+        else:
+            rev = f'rev = "{repo.branch.commit.sha}"'
+            hash_url = (
+                f"https://github.com/{repo.repo.owner.login}/{repo.repo.name}/archive/{repo.branch.commit.sha}.gz",
+            )
+
+        hash = check_output(["nix-prefetch-url", hash_url], text=True)
+        hash = check_output(
+            ["nix", "hash", "to-base64", "--type", "sha256", hash], text=True
+        )
+
         package = template.render(
             pkg=pkg,
+            rev=rev,
+            hash=hash,
             licenses=licenses,
             repo=repo.repo,
             native=sort_deps(pkg.buildtool_depends),
             propagated=sort_deps(pkg.exec_depends),
             check=sort_deps(pkg.test_depends),
         )
+        breakpoint()
         (repo.path / f"{kebabcase(pkg.name)}.nix").write_text(package)
 
 

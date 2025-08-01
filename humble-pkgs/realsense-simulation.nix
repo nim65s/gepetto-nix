@@ -22,6 +22,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "realsense_simulation";
     tag = version;
+    hash = "sha256-Ug5VZLKR+eGfkwJDQa26+REj0IuURQ5l7U9NZJTnpOY=";
   };
 
   buildType = "ament_cmake";

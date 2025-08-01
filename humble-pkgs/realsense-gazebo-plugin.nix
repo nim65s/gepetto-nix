@@ -56,4 +56,3 @@ buildRosPackage rec {
     maintainers = [ lib.maintainers.nim65s ];
   };
 }
-
