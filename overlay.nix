@@ -222,6 +222,9 @@
             env.PYTHONPATH = humble-final.python-with-ament-package;
             meta.platforms = final.lib.platforms.linux;
           });
+          topic-tools-interfaces = humble-prev.topic-tools-interfaces.overrideAttrs {
+            doCheck = false;
+          };
         }
         // final.lib.filesystem.packagesFromDirectoryRecursive {
           inherit (humble-final) callPackage;

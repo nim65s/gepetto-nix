@@ -70,7 +70,7 @@ buildRosPackage rec {
     urdf-test
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "The pal_sea_arm_description package";

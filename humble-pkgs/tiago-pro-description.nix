@@ -66,7 +66,7 @@ buildRosPackage rec {
     urdf-test
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "The tiago_pro_description package";

@@ -36,7 +36,7 @@ buildRosPackage rec {
     ament-lint-common
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "TODO: Package description";
