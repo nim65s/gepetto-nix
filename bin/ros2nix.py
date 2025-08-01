@@ -116,6 +116,8 @@ class Repo:
         logger.info("Branch: %s", branch)
         if distro is None:
             distro = branch.split("-")[0]
+        if distro == "alum":  # PAL specific thing
+            distro = "humble"
         self.distro = distro
         logger.info("Distro: %s", self.distro)
 
