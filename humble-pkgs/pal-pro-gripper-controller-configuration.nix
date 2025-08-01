@@ -26,6 +26,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "pal_pro_gripper";
     tag = version;
+    hash = "sha256-WqEB6SiAbu/01YkaoLXlgWjGNsTE9MkSxxKN3SHK7JM=";
   };
 
   buildType = "ament_cmake";

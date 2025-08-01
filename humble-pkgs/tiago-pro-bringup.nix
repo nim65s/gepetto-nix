@@ -8,14 +8,14 @@
 
   # propagatedBuildInputs
   ament-index-python,
+  collision-aware-joint-trajectory-wrapper,
   diagnostic-aggregator,
-  tiago-pro-controller-configuration,
-  tiago-pro-head-bringup,
   joy-linux,
   joy-teleop,
-  twist-mux,
   play-motion2,
-  collision-aware-joint-trajectory-wrapper,
+  tiago-pro-controller-configuration,
+  tiago-pro-head-bringup,
+  twist-mux,
 
   # checkInputs
   ament-lint-auto,
@@ -29,7 +29,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "tiago_pro_robot";
     tag = version;
-    hash = "sha256-XImT4kzzPwfFTYqn9nn9uBIpmVVtAds1l/nKdhKcgR4=";
+    hash = "sha256-8AwnGnfjTLXGzkkZANmadPMUSq9ZgGiqv5gVZhcSoQI=";
   };
 
   buildType = "ament_cmake";
@@ -39,14 +39,14 @@ buildRosPackage rec {
   ];
   propagatedBuidInputs = [
     ament-index-python
+    collision-aware-joint-trajectory-wrapper
     diagnostic-aggregator
-    tiago-pro-controller-configuration
-    tiago-pro-head-bringup
     joy-linux
     joy-teleop
-    twist-mux
     play-motion2
-    collision-aware-joint-trajectory-wrapper
+    tiago-pro-controller-configuration
+    tiago-pro-head-bringup
+    twist-mux
   ];
   checkInputs = [
     ament-lint-auto

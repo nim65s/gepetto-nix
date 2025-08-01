@@ -7,18 +7,18 @@
   ament-cmake-auto,
 
   # propagatedBuildInputs
-  omni-drive-controller,
-  pal-pro-gripper-controller-configuration,
-  #allegro-hand-controller-configuration,
-  pal-sea-arm-controller-configuration,
-  omni-base-controller-configuration,
-  tiago-pro-head-controller-configuration,
+  # allegro-hand-controller-configuration,
+  # gravity-compensation-controller2,
   joint-state-broadcaster,
   joint-trajectory-controller,
   launch,
   launch-pal,
+  omni-base-controller-configuration,
+  omni-drive-controller,
+  pal-pro-gripper-controller-configuration,
+  pal-sea-arm-controller-configuration,
   ros2controlcli,
-  # gravity-compensation-controller2,
+  tiago-pro-head-controller-configuration,
   # tsid-controllers,
 
   # checkInputs
@@ -33,7 +33,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "tiago_pro_robot";
     tag = version;
-    hash = "sha256-XImT4kzzPwfFTYqn9nn9uBIpmVVtAds1l/nKdhKcgR4=";
+    hash = "sha256-8AwnGnfjTLXGzkkZANmadPMUSq9ZgGiqv5gVZhcSoQI=";
   };
 
   buildType = "ament_cmake";
@@ -42,18 +42,18 @@ buildRosPackage rec {
     ament-cmake-auto
   ];
   propagatedBuidInputs = [
-    omni-drive-controller
-    pal-pro-gripper-controller-configuration
-    #allegro-hand-controller-configuration
-    pal-sea-arm-controller-configuration
-    omni-base-controller-configuration
-    tiago-pro-head-controller-configuration
+    # allegro-hand-controller-configuration
+    # gravity-compensation-controller2
     joint-state-broadcaster
     joint-trajectory-controller
     launch
     launch-pal
+    omni-base-controller-configuration
+    omni-drive-controller
+    pal-pro-gripper-controller-configuration
+    pal-sea-arm-controller-configuration
     ros2controlcli
-    # gravity-compensation-controller2
+    tiago-pro-head-controller-configuration
     # tsid-controllers
   ];
   checkInputs = [

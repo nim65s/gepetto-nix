@@ -7,19 +7,21 @@
   ament-cmake-auto,
 
   # propagatedBuildInputs
-  tiago-pro-laser-sensors,
   tiago-pro-2dnav,
+  tiago-pro-laser-sensors,
   tiago-pro-rgbd-sensors,
 
 # checkInputs
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-navigation";
   version = "2.13.0";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_navigation";
+    tag = version;
+    hash = "sha256-TTX+qJY1GHSJNdfj44G+he2XcqZgHPtT0s782StWsuc=";
   };
 
   buildType = "ament_cmake";
@@ -28,8 +30,8 @@ buildRosPackage {
     ament-cmake-auto
   ];
   propagatedBuidInputs = [
-    tiago-pro-laser-sensors
     tiago-pro-2dnav
+    tiago-pro-laser-sensors
     tiago-pro-rgbd-sensors
   ];
   checkInputs = [

@@ -7,10 +7,10 @@
   ament-cmake-auto,
 
   # propagatedBuildInputs
+  joint-state-broadcaster,
+  joint-trajectory-controller,
   pal-pro-gripper-controller-configuration,
   pal-pro-gripper-description,
-  joint-trajectory-controller,
-  joint-state-broadcaster,
 
   # checkInputs
   ament-lint-auto,
@@ -23,6 +23,8 @@ buildRosPackage {
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "pal_pro_gripper";
+    tag = version;
+    hash = "sha256-WqEB6SiAbu/01YkaoLXlgWjGNsTE9MkSxxKN3SHK7JM=";
   };
 
   buildType = "ament_cmake";
@@ -31,10 +33,10 @@ buildRosPackage {
     ament-cmake-auto
   ];
   propagatedBuidInputs = [
+    joint-state-broadcaster
+    joint-trajectory-controller
     pal-pro-gripper-controller-configuration
     pal-pro-gripper-description
-    joint-trajectory-controller
-    joint-state-broadcaster
   ];
   checkInputs = [
     ament-lint-auto

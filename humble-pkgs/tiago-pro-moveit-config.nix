@@ -7,29 +7,31 @@
   ament-cmake-auto,
 
   # propagatedBuildInputs
-  moveit-kinematics,
-  moveit-planners-ompl,
-  moveit-ros-visualization,
-  moveit-ros-control-interface,
-  moveit-ros-perception,
-  moveit-planners-chomp,
   launch-pal,
   moveit-configs-utils,
+  moveit-kinematics,
+  moveit-planners-chomp,
+  moveit-planners-ompl,
+  moveit-ros-control-interface,
   moveit-ros-move-group,
-  tiago-pro-description,
+  moveit-ros-perception,
+  moveit-ros-visualization,
   pal-sea-arm-moveit-config,
+  tiago-pro-description,
 
   # checkInputs
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-moveit-config";
   version = "1.3.2";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_moveit_config";
+    tag = version;
+    hash = "sha256-Oo7yecASbgaLQHOeqh5cSUA0cenO6ZdGvbRw05VF/EQ=";
   };
 
   buildType = "ament_cmake";
@@ -38,17 +40,17 @@ buildRosPackage {
     ament-cmake-auto
   ];
   propagatedBuidInputs = [
-    moveit-kinematics
-    moveit-planners-ompl
-    moveit-ros-visualization
-    moveit-ros-control-interface
-    moveit-ros-perception
-    moveit-planners-chomp
     launch-pal
     moveit-configs-utils
+    moveit-kinematics
+    moveit-planners-chomp
+    moveit-planners-ompl
+    moveit-ros-control-interface
     moveit-ros-move-group
-    tiago-pro-description
+    moveit-ros-perception
+    moveit-ros-visualization
     pal-sea-arm-moveit-config
+    tiago-pro-description
   ];
   checkInputs = [
     ament-lint-auto

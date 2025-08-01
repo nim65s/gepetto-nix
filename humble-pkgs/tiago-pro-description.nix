@@ -8,22 +8,22 @@
   ament-cmake-python,
 
   # propagatedBuildInputs
-  robot-state-publisher,
-  omni-base-description,
-  tiago-pro-head-description,
-  pal-sea-arm-description,
   # allegro-hand-description,
+  # hector-gazebo-plugins,
+  omni-base-description,
+  pal-sea-arm-description,
   pal-urdf-utils,
-  xacro,
-  #hector-gazebo-plugins,
-  tiago-pro-controller-configuration,
-  realsense2-description,
   realsense-simulation,
+  realsense2-description,
+  robot-state-publisher,
+  tiago-pro-controller-configuration,
+  tiago-pro-head-description,
+  xacro,
 
   # checkInputs
+  ament-cmake-pytest,
   ament-lint-auto,
   ament-lint-common,
-  ament-cmake-pytest,
   launch-testing-ament-cmake,
   urdf-test,
 }:
@@ -35,7 +35,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "tiago_pro_robot";
     tag = version;
-    hash = "sha256-XImT4kzzPwfFTYqn9nn9uBIpmVVtAds1l/nKdhKcgR4=";
+    hash = "sha256-8AwnGnfjTLXGzkkZANmadPMUSq9ZgGiqv5gVZhcSoQI=";
   };
 
   buildType = "ament_cmake";
@@ -45,22 +45,22 @@ buildRosPackage rec {
     ament-cmake-python
   ];
   propagatedBuidInputs = [
-    robot-state-publisher
-    omni-base-description
-    tiago-pro-head-description
-    pal-sea-arm-description
     # allegro-hand-description
+    # hector-gazebo-plugins
+    omni-base-description
+    pal-sea-arm-description
     pal-urdf-utils
-    xacro
-    #hector-gazebo-plugins
-    tiago-pro-controller-configuration
-    realsense2-description
     realsense-simulation
+    realsense2-description
+    robot-state-publisher
+    tiago-pro-controller-configuration
+    tiago-pro-head-description
+    xacro
   ];
   checkInputs = [
+    ament-cmake-pytest
     ament-lint-auto
     ament-lint-common
-    ament-cmake-pytest
     launch-testing-ament-cmake
     urdf-test
   ];

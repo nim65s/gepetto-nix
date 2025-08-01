@@ -9,10 +9,10 @@
   # propagatedBuildInputs
   ament-index-python,
   diagnostic-updater,
-  ros2launch,
   rclcpp-components,
-  realsense2-camera,
   realsense-camera-cfg,
+  realsense2-camera,
+  ros2launch,
 
   # checkInputs
   ament-lint-auto,
@@ -26,6 +26,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "tiago_pro_navigation";
     tag = version;
+    hash = "sha256-TTX+qJY1GHSJNdfj44G+he2XcqZgHPtT0s782StWsuc=";
   };
 
   buildType = "ament_cmake";
@@ -36,10 +37,10 @@ buildRosPackage rec {
   propagatedBuidInputs = [
     ament-index-python
     diagnostic-updater
-    ros2launch
     rclcpp-components
-    realsense2-camera
     realsense-camera-cfg
+    realsense2-camera
+    ros2launch
   ];
   checkInputs = [
     ament-lint-auto

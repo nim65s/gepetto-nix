@@ -20,6 +20,7 @@ buildRosPackage {
     owner = "jpgtzg";
     repo = "omni_drive_controller";
     rev = "842b49a9562433ca14ecb02c83eecded0fb9047a";
+    hash = "sha256-FodEDCvg2dOpPHYNKWKRIp0xXAo2EdfcT4JTuwN8NsQ=";
   };
 
   buildType = "ament_cmake";

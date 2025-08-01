@@ -21,6 +21,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "pal_sea_arm";
     tag = version;
+    hash = "sha256-YcSVEPF/aOP7N50Af3Wj7UMBmzUxT1H1wcU5YlWSjtc=";
   };
 
   buildType = "ament_cmake";

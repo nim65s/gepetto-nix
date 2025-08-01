@@ -8,27 +8,29 @@
 
   # propagatedBuildInputs
   gazebo-plugins,
+  gazebo-ros,
+  gazebo-ros2-control,
+  launch,
+  launch-pal,
+  launch-ros,
   pal-gazebo-plugins,
   pal-gazebo-worlds,
   tiago-pro-head-bringup,
   tiago-pro-head-description,
-  gazebo-ros2-control,
-  gazebo-ros,
-  launch,
-  launch-pal,
-  launch-ros,
 
   # checkInputs
   ament-lint-auto,
   ament-lint-common,
 }:
-buildRosPackage {
+buildRosPackage rec {
   pname = "ros-humble-tiago-pro-head-gazebo";
   version = "1.0.1";
 
   src = fetchFromGitHub {
     owner = "pal-robotics";
     repo = "tiago_pro_head_simulation";
+    tag = version;
+    hash = "sha256-Dgp/k/CTHf5otEpbsxsUh/W2QDp0uCQYR1DhoX8f9M4=";
   };
 
   buildType = "ament_cmake";
@@ -38,15 +40,15 @@ buildRosPackage {
   ];
   propagatedBuidInputs = [
     gazebo-plugins
+    gazebo-ros
+    gazebo-ros2-control
+    launch
+    launch-pal
+    launch-ros
     pal-gazebo-plugins
     pal-gazebo-worlds
     tiago-pro-head-bringup
     tiago-pro-head-description
-    gazebo-ros2-control
-    gazebo-ros
-    launch
-    launch-pal
-    launch-ros
   ];
   checkInputs = [
     ament-lint-auto

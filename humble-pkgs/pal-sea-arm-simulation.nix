@@ -19,6 +19,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "pal_sea_arm_simulation";
     tag = version;
+    hash = "sha256-/Qu+tqAznkD/MZ6f4BSf6xlpslDyuLaFkUX4wUXENlc=";
   };
 
   buildType = "ament_cmake";

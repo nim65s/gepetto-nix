@@ -8,20 +8,20 @@
   ament-cmake-python,
 
   # propagatedBuildInputs
-  robot-state-publisher,
-  xacro,
-  tiago-pro-head-controller-configuration,
-  realsense2-description,
-  realsense-simulation,
-  pal-urdf-utils,
   launch-param-builder,
+  pal-urdf-utils,
+  realsense-simulation,
+  realsense2-description,
+  robot-state-publisher,
+  tiago-pro-head-controller-configuration,
+  xacro,
 
   # checkInputs
+  ament-cmake-pytest,
   ament-lint-auto,
   ament-lint-common,
   launch-testing-ament-cmake,
   urdf-test,
-  ament-cmake-pytest,
 }:
 buildRosPackage rec {
   pname = "ros-humble-tiago-pro-head-description";
@@ -31,7 +31,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "tiago_pro_head_robot";
     tag = version;
-    hash = "sha256-XEUlNiuaDBIBSGRbaEB6WTf7YgCcEp2RBp3XjO2uUPE=";
+    hash = "sha256-9Mw56liRFSgX8+3rvK0x+drQsnWS7KGpUk3/S6x+xvE=";
   };
 
   buildType = "ament_cmake";
@@ -41,20 +41,20 @@ buildRosPackage rec {
     ament-cmake-python
   ];
   propagatedBuidInputs = [
-    robot-state-publisher
-    xacro
-    tiago-pro-head-controller-configuration
-    realsense2-description
-    realsense-simulation
-    pal-urdf-utils
     launch-param-builder
+    pal-urdf-utils
+    realsense-simulation
+    realsense2-description
+    robot-state-publisher
+    tiago-pro-head-controller-configuration
+    xacro
   ];
   checkInputs = [
+    ament-cmake-pytest
     ament-lint-auto
     ament-lint-common
     launch-testing-ament-cmake
     urdf-test
-    ament-cmake-pytest
   ];
 
   doCheck = true;

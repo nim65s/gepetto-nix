@@ -7,12 +7,12 @@
   ament-cmake,
 
   # propagatedBuildInputs
+  camera-info-manager,
   gazebo-ros,
-  rclcpp,
-  sensor-msgs,
   image-transport,
   point-cloud-transport,
-  camera-info-manager,
+  rclcpp,
+  sensor-msgs,
 
   # checkInputs
   ament-lint-auto,
@@ -26,6 +26,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "realsense_gazebo_plugin";
     tag = version;
+    hash = "sha256-QDOAvWlrfVCU/loQI/KABEW2T6LFhF+Knh+eBSqX7eM=";
   };
 
   buildType = "ament_cmake";
@@ -34,12 +35,12 @@ buildRosPackage rec {
     ament-cmake
   ];
   propagatedBuidInputs = [
+    camera-info-manager
     gazebo-ros
-    rclcpp
-    sensor-msgs
     image-transport
     point-cloud-transport
-    camera-info-manager
+    rclcpp
+    sensor-msgs
   ];
   checkInputs = [
     ament-lint-auto

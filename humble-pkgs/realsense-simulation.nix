@@ -7,8 +7,8 @@
   ament-cmake-auto,
 
   # propagatedBuildInputs
-  xacro,
   realsense-gazebo-plugin,
+  xacro,
 
   # checkInputs
   ament-lint-auto,
@@ -22,7 +22,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "realsense_simulation";
     tag = version;
-    hash = "sha256-Ug5VZLKR+eGfkwJDQa26+REj0IuURQ5l7U9NZJTnpOY=";
+    hash = "sha256-1E7KskFyhecim31uTkhM1IsQmw0Aibjj+I84utrJUww=";
   };
 
   buildType = "ament_cmake";
@@ -31,8 +31,8 @@ buildRosPackage rec {
     ament-cmake-auto
   ];
   propagatedBuidInputs = [
-    xacro
     realsense-gazebo-plugin
+    xacro
   ];
   checkInputs = [
     ament-lint-auto

@@ -8,18 +8,18 @@
 
   # propagatedBuildInputs
   gazebo-plugins,
-  pal-gazebo-plugins,
-  pal-gazebo-worlds,
-  pal-sea-arm-description,
-  pal-urdf-utils,
-  pal-sea-arm-bringup,
-  pal-sea-arm-moveit-config,
-  pal-pro-gripper-description,
-  launch-pal,
-  launch-ros,
-  launch,
   gazebo-ros,
   gazebo-ros2-control,
+  launch,
+  launch-pal,
+  launch-ros,
+  pal-gazebo-plugins,
+  pal-gazebo-worlds,
+  pal-pro-gripper-description,
+  pal-sea-arm-bringup,
+  pal-sea-arm-description,
+  pal-sea-arm-moveit-config,
+  pal-urdf-utils,
 
   # checkInputs
   ament-lint-auto,
@@ -33,6 +33,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "pal_sea_arm_simulation";
     tag = version;
+    hash = "sha256-/Qu+tqAznkD/MZ6f4BSf6xlpslDyuLaFkUX4wUXENlc=";
   };
 
   buildType = "ament_cmake";
@@ -42,18 +43,18 @@ buildRosPackage rec {
   ];
   propagatedBuidInputs = [
     gazebo-plugins
-    pal-gazebo-plugins
-    pal-gazebo-worlds
-    pal-sea-arm-description
-    pal-urdf-utils
-    pal-sea-arm-bringup
-    pal-sea-arm-moveit-config
-    pal-pro-gripper-description
-    launch-pal
-    launch-ros
-    launch
     gazebo-ros
     gazebo-ros2-control
+    launch
+    launch-pal
+    launch-ros
+    pal-gazebo-plugins
+    pal-gazebo-worlds
+    pal-pro-gripper-description
+    pal-sea-arm-bringup
+    pal-sea-arm-description
+    pal-sea-arm-moveit-config
+    pal-urdf-utils
   ];
   checkInputs = [
     ament-lint-auto

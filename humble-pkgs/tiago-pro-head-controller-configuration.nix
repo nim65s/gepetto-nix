@@ -25,7 +25,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "tiago_pro_head_robot";
     tag = version;
-    hash = "sha256-XEUlNiuaDBIBSGRbaEB6WTf7YgCcEp2RBp3XjO2uUPE=";
+    hash = "sha256-9Mw56liRFSgX8+3rvK0x+drQsnWS7KGpUk3/S6x+xvE=";
   };
 
   buildType = "ament_cmake";

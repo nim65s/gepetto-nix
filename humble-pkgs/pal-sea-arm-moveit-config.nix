@@ -8,14 +8,13 @@
 
   # propagatedBuildInputs
   launch-pal,
-  moveit-kinematics,
   moveit-configs-utils,
+  moveit-kinematics,
+  moveit-planners-chomp,
+  moveit-planners-ompl,
   moveit-ros-control-interface,
   moveit-ros-move-group,
   moveit-ros-perception,
-  moveit-kinematics,
-  moveit-planners-ompl,
-  moveit-planners-chomp,
   moveit-ros-visualization,
   pal-sea-arm-description,
 
@@ -31,6 +30,7 @@ buildRosPackage rec {
     owner = "pal-robotics";
     repo = "pal_sea_arm_moveit_config";
     tag = version;
+    hash = "sha256-vsGv8RdkMYOdGF27n8CimWSiGxqo77tbiVvrgNxKP5Y=";
   };
 
   buildType = "ament_cmake";
@@ -40,14 +40,13 @@ buildRosPackage rec {
   ];
   propagatedBuidInputs = [
     launch-pal
-    moveit-kinematics
     moveit-configs-utils
+    moveit-kinematics
+    moveit-planners-chomp
+    moveit-planners-ompl
     moveit-ros-control-interface
     moveit-ros-move-group
     moveit-ros-perception
-    moveit-kinematics
-    moveit-planners-ompl
-    moveit-planners-chomp
     moveit-ros-visualization
     pal-sea-arm-description
   ];
