@@ -12,7 +12,22 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
-    gazebo_11 = prev.gazebo_11.override { ffmpeg_5 = final.ffmpeg_6; };
+    gazebo_11 =
+      (prev.gazebo_11.override {
+        ffmpeg_5 = final.ffmpeg_6; # ffmpeg 5 no longer available in nixpkgs
+        boost = final.boost186; # asio break stuff in 1.87
+      }).overrideAttrs
+        (rec {
+          # 11.14.0 does not compile
+          version = "11.15.1";
+          src = final.fetchFromGitHub {
+            owner = "gazebosim";
+            repo = "gazebo-classic";
+            tag = "gazebo11_${version}";
+            hash = "sha256-EieBsedwxelKY9LfFUzxuO189OvziSNXoKX2hYDoxMQ=";
+          };
+          patches = [ ]; # already applied
+        });
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
@@ -20,7 +35,14 @@
       meta.platforms = final.lib.platforms.linux;
     };
     ignition = prev.ignition // {
-      common3 = prev.ignition.common3.override { ffmpeg_5 = final.ffmpeg_6; };
+      common3 = (prev.ignition.common3.override { ffmpeg_5 = final.ffmpeg_6; }).overrideAttrs (super: {
+        # fix for ffmpeg v6
+        postPatch =
+          (super.postPatch or "")
+          + ''
+            sed -i "/AV_CODEC_CAP_TRUNCATED/d;/AV_CODEC_FLAG_TRUNCATED/d" av/src/AudioDecoder.cc av/src/Video.cc
+          '';
+      });
       sim8 = prev.ignition.sim8.overrideAttrs (super: {
         meta.platforms = final.lib.platforms.linux;
         # add missing include
@@ -32,6 +54,15 @@
         ];
       });
     };
+    sdformat_9 = prev.sdformat_9.overrideAttrs (super: {
+      # fix for ruby 3.2
+      patches = (super.patches or [ ]) ++ [
+        (final.fetchpatch {
+          url = "https://github.com/gazebosim/sdformat/pull/1216.patch";
+          hash = "sha256-lPfeU5AoH6Cmu0uiBfrwxo9Oi67SZi7AGL3s4jd2bWU=";
+        })
+      ];
+    });
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
       (
@@ -174,6 +205,9 @@
               humble-final.urdf
             ];
             meta.platforms = final.lib.platforms.linux;
+          });
+          gazebo-ros = humble-prev.gazebo-ros.overrideAttrs (super: {
+            buildInputs = (super.buildInputs or [ ]) ++ [ final.qt5.qtbase ];
           });
           python-with-ament-package =
             let

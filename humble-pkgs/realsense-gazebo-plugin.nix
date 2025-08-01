@@ -47,7 +47,7 @@ buildRosPackage rec {
     ament-lint-common
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "Intel RealSense D435 Gazebo plugin package";

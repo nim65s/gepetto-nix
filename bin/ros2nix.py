@@ -44,13 +44,14 @@ buildRosPackage rec {
     {{ rev }};
     hash = "{{ hash }}";
   };
+  sourceRoot = "source/{{ package }}";
 
   buildType = "{{ pkg.get_build_type() }}";
 
-  nativeBuidInputs = [{% for dep in native %}
+  nativeBuildInputs = [{% for dep in native %}
     {{ dep }}{% endfor %}
   ];
-  propagatedBuidInputs = [{% for dep in propagated %}
+  propagatedBuildInputs = [{% for dep in propagated %}
     {{ dep }}{% endfor %}
   ];
   checkInputs = [{% for dep in check %}
@@ -179,10 +180,11 @@ class Package:
             hash = check_output(["nurl", "-H", hash_url], text=True).strip()
             repo.hashes[hash_url] = hash
 
-        package = template.render(
+        nix = template.render(
             pkg=pkg,
             rev=rev,
             hash=hash,
+            package=package,
             licenses=licenses,
             repo=repo.repo,
             native=sort_deps(pkg.buildtool_depends),
@@ -190,7 +192,7 @@ class Package:
             check=sort_deps(pkg.test_depends),
         )
         path = repo.path / f"{kebabcase(pkg.name)}.nix"
-        path.write_text(package)
+        path.write_text(nix)
         check_call(["deadnix", path])
         check_call(["nixfmt", path])
 

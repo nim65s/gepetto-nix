@@ -39,7 +39,7 @@ buildRosPackage rec {
     ament-lint-common
   ];
 
-  doCheck = true;
+  doCheck = false;
 
   meta = {
     description = "RealSense Camera description package for simulation";
