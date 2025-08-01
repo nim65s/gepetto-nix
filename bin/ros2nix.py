@@ -42,7 +42,7 @@ buildRosPackage rec {
     owner = "{{ repo.owner.login }}";
     repo = "{{ repo.name }}";
     {{ rev }};
-    hash = "sha256-{{ hash }}";
+    hash = "{{ hash }}";
   };
 
   buildType = "{{ pkg.get_build_type() }}";
@@ -160,20 +160,18 @@ class Package:
         def sort_deps(deps):
             return sorted({kebabcase(dep.name) for dep in deps})
 
+        hash_url = f"{repo.repo.html_url}/archive"
         for tag in repo.repo.get_tags():
             if tag.name == pkg.version:
                 rev = "tag = version"
-                hash_url = tag.tarball_url
+                hash_url = f"{hash_url}/refs/tags/{pkg.version}.tar.gz"
                 break
         else:
             rev = f'rev = "{repo.branch.commit.sha}"'
-            hash_url = f"https://github.com/{repo.repo.owner.login}/{repo.repo.name}/archive/{repo.branch.commit.sha}.tar.gz"
+            hash_url = f"{hash_url}/{repo.branch.commit.sha}.tar.gz"
 
         logger.info("Prefetch %s", hash_url)
-        hash = check_output(["nix-prefetch-url", hash_url], text=True).strip()
-        hash = check_output(
-            ["nix", "hash", "to-base64", "--type", "sha256", hash], text=True
-        ).strip()
+        hash = check_output(["nurl", "-H", hash_url], text=True).strip()
 
         package = template.render(
             pkg=pkg,
