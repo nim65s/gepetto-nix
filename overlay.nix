@@ -227,6 +227,32 @@
           gazebo-ros = humble-prev.gazebo-ros.overrideAttrs (super: {
             buildInputs = (super.buildInputs or [ ]) ++ [ final.qt5.qtbase ];
           });
+          play-motion2-msgs = humble-prev.play-motion2-msgs.overrideAttrs (_super: rec {
+            version = "1.6.1";
+            src = final.fetchFromGitHub {
+              owner = "pal-robotics";
+              repo = "play_motion2";
+              tag = version;
+              hash = "sha256-gUlwPuMBpKftCj9lKLuqmXAOFAFQocWmLdgwazUz2ls=";
+            };
+            sourceRoot = "source/play_motion2_msgs";
+          });
+          play-motion2 = humble-prev.play-motion2.overrideAttrs (super: rec {
+            version = "1.6.1";
+            src = final.fetchFromGitHub {
+              owner = "pal-robotics";
+              repo = "play_motion2";
+              tag = version;
+              hash = "sha256-gUlwPuMBpKftCj9lKLuqmXAOFAFQocWmLdgwazUz2ls=";
+            };
+            sourceRoot = "source/play_motion2";
+            # fix for rclcpp < 17.1.0 (#2018). we currently have 16.0.12.
+            postPatch =
+              (super.postPatch or "")
+              + ''
+                sed -i "1i #include <functional>" src/utils/motion_loader.*
+              '';
+          });
           python-with-ament-package =
             let
               # TODO: this make no sense
