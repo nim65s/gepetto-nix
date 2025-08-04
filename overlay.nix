@@ -38,6 +38,10 @@
               python3Packages = python-final;
             }
           );
+          tyro = python-prev.tyro.overrideAttrs (super: {
+            nativeBuildInputs = (super.nativeBuildInputs or [ ]) ++ [ python-final.pythonRelaxDepsHook ];
+            pythonRelaxDeps = true;
+          });
         }
         // final.lib.filesystem.packagesFromDirectoryRecursive {
           inherit (python-final) callPackage;

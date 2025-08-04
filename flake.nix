@@ -160,6 +160,7 @@
                         python-qt
                         scipy
                         (toPythonModule rosPackages.rolling.xacro)
+                        viser
                       ]
                     ))
                     python3Packages.boost
