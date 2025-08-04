@@ -364,6 +364,8 @@
                   franka-semantic-components
                   linear-feedback-controller
                   linear-feedback-controller-msgs
+                  tiago-pro-description
+                  tiago-pro-gazebo
                   # keep-sorted end
                   ;
               }
