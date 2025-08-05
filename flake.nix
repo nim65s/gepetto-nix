@@ -84,21 +84,19 @@
         imports = [ flakeModule ];
         flake = {
           inherit flakeModule;
-          systemConfigs.default = inputs.system-manager.lib.makeSystemConfig {
-            modules = [
-              inputs.nix-system-graphics.systemModules.default
-              ./modules/system-manager/direnv.nix
-              {
-                config = {
-                  nixpkgs.hostPlatform = "x86_64-linux";
-                  programs.direnv = {
-                    enable = true;
-                    nix-direnv.enable = true;
-                  };
-                  system-graphics.enable = true;
-                };
-              }
-            ];
+          systemConfigs = {
+            default = inputs.system-manager.lib.makeSystemConfig {
+              modules = [
+                inputs.nix-system-graphics.systemModules.default
+                ./modules/system-manager/shared.nix
+              ];
+            };
+            nvidia = inputs.system-manager.lib.makeSystemConfig {
+              modules = [
+                inputs.nix-system-graphics.systemModules.default
+                ./modules/system-manager/nvidia.nix
+              ];
+            };
           };
           templates.default = {
             path = ./template;

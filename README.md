@@ -17,4 +17,7 @@ you can define your own `.envrc.local`
 
 ```
 sudo nix run .#system-manager -- switch --flake .
+# OR, if you have a nvidia GPU
+sudo nix run .#system-manager -- switch --flake .#nvidia
 ```
+
