@@ -49,38 +49,6 @@
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
-    gz-harmonic = prev.gz-harmonic.overrideAttrs {
-      meta.platforms = final.lib.platforms.linux;
-    };
-    ignition = prev.ignition // {
-      common3 = (prev.ignition.common3.override { ffmpeg_5 = final.ffmpeg_6; }).overrideAttrs (super: {
-        # fix for ffmpeg v6
-        postPatch =
-          (super.postPatch or "")
-          + ''
-            sed -i "/AV_CODEC_CAP_TRUNCATED/d;/AV_CODEC_FLAG_TRUNCATED/d" av/src/AudioDecoder.cc av/src/Video.cc
-          '';
-      });
-      sim8 = prev.ignition.sim8.overrideAttrs (super: {
-        meta.platforms = final.lib.platforms.linux;
-        # add missing include
-        patches = (super.patches or [ ]) ++ [
-          (final.fetchpatch {
-            url = "https://github.com/gazebosim/gz-sim/pull/2414.patch";
-            hash = "sha256-zxPN34bA88344h1jrJa9h8NVorlv+hkc+lYEWjhzJCE=";
-          })
-        ];
-      });
-    };
-    sdformat_9 = prev.sdformat_9.overrideAttrs (super: {
-      # fix for ruby 3.2
-      patches = (super.patches or [ ]) ++ [
-        (final.fetchpatch {
-          url = "https://github.com/gazebosim/sdformat/pull/1216.patch";
-          hash = "sha256-lPfeU5AoH6Cmu0uiBfrwxo9Oi67SZi7AGL3s4jd2bWU=";
-        })
-      ];
-    });
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
       (

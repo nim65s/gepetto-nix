@@ -43,7 +43,6 @@
             ];
             overlays = [
               inputs.nix-ros-overlay.overlays.default
-              inputs.gazebo-sim-overlay.overlays.default
               (import ./overlay.nix { inherit (localFlake) inputs; })
             ] ++ config.gepetto-pkgs.overlays;
           };

@@ -36,32 +36,6 @@
         "type": "github"
       }
     },
-    "gazebo-sim-overlay": {
-      "inputs": {
-        "nixgl": [
-          "nixpkgs"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "systems": [
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1743400572,
-        "narHash": "sha256-5wA9AbuqVAXNXjno17js2p0S+yrYCUvayco8FERf+u4=",
-        "owner": "muellerbernd",
-        "repo": "gazebo-sim-overlay",
-        "rev": "0f50650605823b391f6e23c9302e7809eafdfc72",
-        "type": "github"
-      },
-      "original": {
-        "owner": "muellerbernd",
-        "repo": "gazebo-sim-overlay",
-        "type": "github"
-      }
-    },
     "nix-ros-overlay": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -136,7 +110,6 @@
     "root": {
       "inputs": {
         "flake-parts": "flake-parts",
-        "gazebo-sim-overlay": "gazebo-sim-overlay",
         "nix-ros-overlay": "nix-ros-overlay",
         "nix-system-graphics": "nix-system-graphics",
         "nixpkgs": [
