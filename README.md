@@ -17,4 +17,6 @@ you can define your own `.envrc.local`
 
 ```
 sudo nix run .#system-manager -- switch --flake .
+# or, without cloning first,
+sudo nix run github:gepetto/nix#system-manager -- switch --flake github:gepetto/nix
 ```
