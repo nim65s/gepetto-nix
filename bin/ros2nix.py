@@ -220,9 +220,12 @@ def main():
 
     basicConfig(level=30 - 10 * args.verbose + 10 * args.quiet)
 
+    with Path(".ros2nix.toml").open("rb") as f:
+        cfg = load(f)
+
     auth = Auth.Token(token)
-    with Github(auth=auth) as gh, Path(".ros2nix.toml").open("rb") as f:
-        for distro, conf in load(f).items():
+    with Github(auth=auth) as gh:
+        for distro, conf in cfg.items():
             for repo, repo_conf in conf.items():
                 if args.repo and repo != args.repo:
                     continue

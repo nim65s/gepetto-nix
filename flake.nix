@@ -252,6 +252,61 @@
                       # keep-sorted end
                     ];
                   };
+                gz-harmonic = pkgs.rosPackages.jazzy.buildEnv {
+                  name = "gz-harmonic";
+                  postBuild = ''
+                    rosWrapperArgs+=(--set QT_QPA_PLATFORM_PLUGIN_PATH ${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms)
+                  '';
+                  paths = with pkgs.gazebo.harmonic; [
+                    # keep-sorted start
+                    pkgs.qt5.wrapQtAppsHook
+                    gz-cmake
+                    gz-common
+                    gz-fuel-tools
+                    gz-gui
+                    gz-launch
+                    gz-math
+                    gz-msgs
+                    gz-physics
+                    gz-plugin
+                    gz-rendering
+                    gz-sensors
+                    gz-sim
+                    gz-tools
+                    gz-transport
+                    gz-utils
+                    sdformat
+                    # keep-sorted end
+                  ];
+                };
+                # TODO: kilted
+                gz-ionic = pkgs.rosPackages.jazzy.buildEnv {
+                  name = "gz-ionic";
+                  postBuild = ''
+                    rosWrapperArgs+=(--set QT_QPA_PLATFORM_PLUGIN_PATH ${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms)
+                  '';
+                  paths = with pkgs.gazebo.ionic; [
+                    # keep-sorted start
+                    pkgs.qt5.wrapQtAppsHook
+                    gz-cmake
+                    gz-common
+                    gz-fuel-tools
+                    gz-gui
+                    gz-launch
+                    gz-math
+                    gz-msgs
+                    gz-physics
+                    gz-plugin
+                    gz-rendering
+                    gz-sensors
+                    gz-sim
+                    gz-tools
+                    gz-transport
+                    gz-utils
+                    sdformat
+                    # keep-sorted end
+                  ];
+                };
               }
               // lib.optionalAttrs (system == "x86_64-linux") {
                 system-manager = inputs'.system-manager.packages.default;
@@ -262,7 +317,9 @@
                   aligator
                   colmpc
                   crocoddyl
+                  dart
                   example-robot-data
+                  gazebo2nix
                   gepetto-viewer
                   # gz-harmonic
                   hpp-affordance
@@ -329,6 +386,72 @@
                   # keep-sorted end
                   ;
               }
+              // lib.mapAttrs' (n: lib.nameValuePair "gz-harmonic-${n}") (
+                lib.optionalAttrs (system == "x86_64-linux") {
+                  inherit (pkgs.gazebo.harmonic)
+                    # keep-sorted start
+                    gz-cmake
+                    gz-cmake3
+                    gz-common
+                    gz-common5
+                    gz-fuel-tools
+                    gz-fuel-tools9
+                    gz-gui
+                    gz-gui8
+                    gz-launch
+                    gz-launch7
+                    gz-math
+                    gz-math7
+                    gz-msgs
+                    gz-msgs10
+                    gz-physics
+                    gz-physics7
+                    gz-plugin
+                    gz-plugin2
+                    gz-rendering
+                    gz-rendering8
+                    gz-sensors
+                    gz-sensors8
+                    gz-sim
+                    gz-sim8
+                    gz-tools
+                    gz-tools2
+                    gz-transport
+                    gz-transport13
+                    gz-utils
+                    gz-utils2
+                    sdformat
+                    sdformat14
+                    # keep-sorted end
+                    ;
+
+                }
+              )
+              // lib.mapAttrs' (n: lib.nameValuePair "gz-ionic-${n}") (
+                lib.optionalAttrs (system == "x86_64-linux") {
+                  inherit (pkgs.gazebo.ionic)
+                    # keep-sorted start
+                    gz-cmake
+                    gz-common
+                    gz-fuel-tools
+                    gz-gui
+                    gz-launch
+                    gz-math
+                    gz-msgs
+                    gz-physics
+                    gz-plugin
+                    gz-rendering
+                    gz-sensors
+                    gz-sim
+                    gz-tools
+                    gz-transport
+                    gz-utils
+                    sdformat
+                    # keep-sorted end
+                    ;
+                }
+              )
+
               // lib.mapAttrs' (n: lib.nameValuePair "ros-noetic-${n}") (
                 lib.optionalAttrs (system == "x86_64-linux") {
                   inherit (pkgs.rosPackages.noetic)
@@ -340,38 +463,6 @@
                 }
               )
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
-                inherit (pkgs.rosPackages.humble)
-                  # keep-sorted start
-                  # agimus-controller-ros
-                  # agimus-demo-00-franka-controller
-                  # agimus-demo-01-lfc-alone
-                  # agimus-demo-02-simple-pd-plus
-                  # agimus-demo-02-simple-pd-plus-tiago-pro
-                  # agimus-demo-03-mpc-dummy-traj
-                  # agimus-demo-03-mpc-dummy-traj-tiago-pro
-                  # agimus-demo-04-visual-servoing
-                  # agimus-demo-05-pick-and-place
-                  # agimus-demos
-                  # agimus-demos-common
-                  # agimus-msgs
-                  # franka-bringup
-                  # franka-description
-                  # franka-example-controllers
-                  # franka-fr3-moveit-config
-                  # franka-gazebo-bringup
-                  # franka-gripper
-                  # franka-hardware
-                  # franka-ign-ros2-control
-                  # franka-msgs
-                  # franka-robot-state-broadcaster
-                  # franka-ros2
-                  # franka-semantic-components
-                  # linear-feedback-controller
-                  # linear-feedback-controller-msgs
-                  # tiago-pro-description
-                  # tiago-pro-gazebo
-                  # keep-sorted end
-                  ;
               }
               // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
                 inherit (pkgs.rosPackages.jazzy)
@@ -383,6 +474,7 @@
                   # keep-sorted end
                   ;
               }
+
             );
             treefmt = {
               settings.global.excludes = [

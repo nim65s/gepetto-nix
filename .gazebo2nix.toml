@@ -1,0 +1,86 @@
+[harmonic.gz-common5]
+do_check = false
+patches = [{ url = "https://github.com/gazebosim/gz-common/pull/660.patch", hash = "sha256-LJBGGzUgS/AhKWawTeLpnOteJj3PdN9MR4wacuEgxVc=" }]
+
+[harmonic.gz-fuel-tools9]
+do_check = false
+
+[harmonic.gz-gui8]
+do_check = false
+patches = [{ url = "https://github.com/gazebosim/gz-gui/pull/676.patch", hash = "sha256-EVuGTAT/U3So/K1ti2B0QdMr2AErjRLDgENWkGZYMXc=" }]
+
+[harmonic.gz-launch7]
+do_check = false
+
+[harmonic.gz-msgs10]
+do_check = false
+
+[harmonic.gz-physics7]
+do_check = false
+
+[harmonic.gz-plugin2]
+do_check = false
+
+[harmonic.gz-rendering8]
+do_check = false
+propagated = [ "boost" ]
+
+[harmonic.gz-sensors8]
+do_check = false
+
+[harmonic.gz-sim8]
+do_check = false
+
+[harmonic.gz-tools2]
+do_check = false
+
+[harmonic.gz-transport13]
+do_check = false
+propagated = [ "libsodium" ]
+
+[harmonic.sdformat14]
+do_check = false
+
+[ionic.gz-common6]
+do_check = false
+propagated = [ "libz" ]
+
+[ionic.gz-fuel-tools10]
+do_check = false
+
+[ionic.gz-gui9]
+do_check = false
+patches = [{ url = "https://github.com/gazebosim/gz-gui/pull/676.patch", hash = "sha256-EVuGTAT/U3So/K1ti2B0QdMr2AErjRLDgENWkGZYMXc=" }]
+
+[ionic.gz-launch8]
+do_check = false
+
+[ionic.gz-msgs11]
+do_check = false
+
+[ionic.gz-physics8]
+do_check = false
+
+[ionic.gz-plugin3]
+do_check = false
+
+[ionic.gz-rendering9]
+do_check = false
+propagated = [ "boost", "libz", "python3" ]
+
+[ionic.gz-sensors9]
+do_check = false
+
+[ionic.gz-sim9]
+do_check = false
+
+[ionic.gz-tools2]
+do_check = false
+
+[ionic.gz-transport14]
+do_check = false
+propagated = [ "libsodium" ]
+
+[ionic.sdformat15]
+do_check = false
+

@@ -6,7 +6,7 @@
   writeShellApplication,
 }:
 writeShellApplication {
-  name = "ros2nix";
+  name = "gazebo2nix";
   runtimeInputs = [
     deadnix
     nixfmt
@@ -16,9 +16,10 @@ writeShellApplication {
       p.catkin-pkg
       p.jinja2
       p.pygithub
+      p.pyyaml
     ]))
   ];
   text = ''
-    python ${../bin/ros2nix.py} "$@"
+    python ${../bin/gazebo2nix.py} "$@"
   '';
 }

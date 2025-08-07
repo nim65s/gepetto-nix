@@ -12,40 +12,6 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
-    gazebo_11 = (prev.gazebo_11.override { ffmpeg_5 = final.ffmpeg_6; }).overrideAttrs (rec {
-      # 11.14.0 does not compile
-      version = "11.15.1";
-      src = final.fetchFromGitHub {
-        owner = "gazebosim";
-        repo = "gazebo-classic";
-        tag = "gazebo11_${version}";
-        hash = "sha256-EieBsedwxelKY9LfFUzxuO189OvziSNXoKX2hYDoxMQ=";
-      };
-      # fix build for boost >= 1.87
-      # I'm lazy, so this break runtime. If you want a working gazebo 11, override boost = boost186
-      # But also you may need to recompile opencv with that too
-      patches = [ ./patches/gz11.patch ];
-      postPatch = ''
-        sed  -i '1i #include <boost/asio.hpp>' gazebo/transport/Connection.cc gazebo/transport/Connection.hh
-        substituteInPlace gazebo/transport/IOManager.* \
-          --replace-fail  "io_service" "io_context"
-        substituteInPlace gazebo/transport/IOManager.cc \
-          --replace-fail \
-            "boost::asio::io_context::work *work = nullptr;" \
-            "std::optional<boost::asio::executor_work_guard<boost::asio::io_context::executor_type>> work;" \
-          --replace-fail \
-            "this->dataPtr->work = new boost::asio::io_context::work(" \
-            "this->dataPtr->work.emplace(boost::asio::make_work_guard(*this->dataPtr->io_context));" \
-          --replace-fail "*this->dataPtr->io_context);"  "" \
-          --replace-fail "delete this->dataPtr->work;" "this->dataPtr->work.reset();" \
-          --replace-fail "this->dataPtr->work = nullptr;" "" \
-          --replace-fail "this->dataPtr->io_context->reset();" ""
-        substituteInPlace gazebo/transport/Connection.hh \
-          --replace-fail \
-            "boost::asio::ip::tcp::resolver::iterator" \
-            "boost::asio::ip::tcp::resolver::results_type"
-      '';
-    });
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
@@ -239,6 +205,42 @@
       jazzy = prev.rosPackages.jazzy.overrideScope (
         jazzy-final: _jazzy-prev:
         {
+          inherit (prev.gazebo.harmonic)
+            # keep-sorted start
+            gz-cmake
+            gz-cmake3
+            gz-common
+            gz-common5
+            gz-fuel-tools
+            gz-fuel-tools9
+            gz-gui
+            gz-gui8
+            gz-launch
+            gz-launch7
+            gz-math
+            gz-math7
+            gz-msgs
+            gz-msgs10
+            gz-physics
+            gz-physics7
+            gz-plugin
+            gz-plugin2
+            gz-rendering
+            gz-rendering8
+            gz-sensors
+            gz-sensors8
+            gz-sim
+            gz-sim8
+            gz-tools
+            gz-tools2
+            gz-transport
+            gz-transport13
+            gz-utils
+            gz-utils2
+            sdformat
+            sdformat14
+            # keep-sorted end
+            ;
           inherit (inputs)
             # keep-sorted start
             src-agimus-controller

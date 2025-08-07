@@ -43,6 +43,12 @@
             ];
             overlays = [
               inputs.nix-ros-overlay.overlays.default
+              (final: prev: {
+                gazebo = prev.lib.filesystem.packagesFromDirectoryRecursive {
+                  inherit (final) callPackage newScope;
+                  directory = ./gazebo-pkgs;
+                };
+              })
               (import ./overlay.nix { inherit (localFlake) inputs; })
             ] ++ config.gepetto-pkgs.overlays;
           };
