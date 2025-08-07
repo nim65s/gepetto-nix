@@ -159,7 +159,6 @@
                     eigen
                     glpk
                     graphviz
-                    jrl-cmakemodules
                     libGL
                     libsForQt5.full
                     octomap
