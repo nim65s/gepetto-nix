@@ -14,7 +14,8 @@
   # propagatedBuildInputs
   controller-manager,
   franka-hardware,
-  ignition,
+  gz-plugin,
+  gz-sim,
   kdl-parser,
   tf2-eigen,
   tf2-geometry-msgs,
@@ -43,8 +44,8 @@ stdenv.mkDerivation {
   propagatedBuildInputs = [
     controller-manager
     franka-hardware
-    ignition.plugin2
-    ignition.sim8
+    gz-plugin
+    gz-sim
     kdl-parser
     tf2-eigen
     tf2-geometry-msgs

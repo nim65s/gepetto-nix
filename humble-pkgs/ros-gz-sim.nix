@@ -15,7 +15,10 @@
   cli11,
   geometry-msgs,
   gflags,
-  ignition,
+  gz-math,
+  gz-msgs,
+  gz-sim,
+  gz-transport,
   launch,
   launch-ros,
   launch-testing,
@@ -60,10 +63,10 @@ buildRosPackage {
     cli11
     geometry-msgs
     gflags
-    ignition.math7
-    ignition.msgs10
-    ignition.sim8
-    ignition.transport13
+    gz-math
+    gz-msgs
+    gz-sim
+    gz-transport
     launch
     launch-ros
     rclcpp

@@ -8,7 +8,8 @@
   ament-cmake,
   ament-lint-auto,
   ament-lint-common,
-  ignition,
+  gz-msgs,
+  gz-transport,
   image-transport,
   pkg-config,
   rclcpp,
@@ -35,8 +36,8 @@ buildRosPackage {
     ament-lint-common
   ];
   propagatedBuildInputs = [
-    ignition.msgs10
-    ignition.transport13
+    gz-msgs
+    gz-transport
     image-transport
     rclcpp
     ros-gz-bridge

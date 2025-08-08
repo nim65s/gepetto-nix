@@ -11,7 +11,7 @@
   ament-lint-common,
   pluginlib,
   rcutils,
-  sdformat_14,
+  sdformat,
   sdformat-test-files,
   tinyxml2-vendor,
   urdf,
@@ -45,7 +45,7 @@ buildRosPackage {
     ament-cmake-ros
     pluginlib
     rcutils
-    sdformat_14
+    sdformat
     tinyxml2-vendor
     urdf
     urdf-parser-plugin

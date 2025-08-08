@@ -9,7 +9,7 @@
   ament-lint-auto,
   ament-lint-common,
   ament-package,
-  ignition,
+  gz-sim,
   image-transport-plugins,
   robot-state-publisher,
   ros-gz-bridge,
@@ -41,7 +41,7 @@ buildRosPackage {
   ];
   propagatedBuildInputs = [
     ament-package
-    ignition.sim8
+    gz-sim
     image-transport-plugins
     robot-state-publisher
     ros-gz-bridge

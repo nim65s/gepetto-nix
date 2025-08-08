@@ -13,7 +13,8 @@
   ament-lint-common,
   geometry-msgs,
   gps-msgs,
-  ignition,
+  gz-msgs,
+  gz-transport,
   launch,
   launch-ros,
   launch-testing,
@@ -59,8 +60,8 @@ buildRosPackage {
     actuator-msgs
     geometry-msgs
     gps-msgs
-    ignition.msgs10
-    ignition.transport13
+    gz-msgs
+    gz-transport
     launch
     launch-ros
     nav-msgs
