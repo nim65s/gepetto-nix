@@ -29,12 +29,6 @@ buildRosPackage {
     hash = "sha256-DMMtrspefTiou5xnzeWx60UsqzAhJ+h9VCHbfMahhqw=";
   };
 
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-fail \
-      "sdformat12" \
-      "sdformat14"
-  '';
-
   checkInputs = [
     ament-cmake-gtest
     ament-lint-auto
