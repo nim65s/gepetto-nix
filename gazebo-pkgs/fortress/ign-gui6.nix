@@ -40,7 +40,7 @@ stdenv.mkDerivation {
       hash = "sha256-kr5bowr9/aHnuJsRZ/2Igf96BNKNr4Z2dDz0iv7AzA8=";
     })
     (fetchpatch {
-      url = "https://github.com/nim65s/gz-gui/commit/0e127c9c51dd1018da83ef0181d118dfcbeebf01.patch";
+      url = "https://github.com/gazebosim/gz-gui/pull/696.patch";
       hash = "sha256-eYGYYGkaWOp0H97hyMKk/5p5zAfPd+X5HPM+0NDp07U=";
     })
   ];

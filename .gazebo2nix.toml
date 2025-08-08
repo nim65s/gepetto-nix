@@ -8,11 +8,11 @@ do_check = false
 
 [fortress.ign-gazebo6]
 do_check = false
-patches = [{ url = "https://github.com/nim65s/gz-sim/commit/edb22bc840ae9beddf08dcc6fc5e24294b659157.patch", hash = "sha256-/cACcshZ3nkepvgjiDkpMCZpee9704MYPkQNdRpZntU=" }]
+patches = [{ url = "https://github.com/gazebosim/gz-sim/pull/3022.patch", hash = "sha256-/cACcshZ3nkepvgjiDkpMCZpee9704MYPkQNdRpZntU=" }]
 
 [fortress.ign-gui6]
 do_check = false
-patches = [{ url = "https://github.com/gazebosim/gz-gui/pull/544.patch", hash = "sha256-kr5bowr9/aHnuJsRZ/2Igf96BNKNr4Z2dDz0iv7AzA8=" }, { url = "https://github.com/nim65s/gz-gui/commit/0e127c9c51dd1018da83ef0181d118dfcbeebf01.patch", hash = "sha256-eYGYYGkaWOp0H97hyMKk/5p5zAfPd+X5HPM+0NDp07U=" }]
+patches = [{ url = "https://github.com/gazebosim/gz-gui/pull/544.patch", hash = "sha256-kr5bowr9/aHnuJsRZ/2Igf96BNKNr4Z2dDz0iv7AzA8=" }, { url = "https://github.com/gazebosim/gz-gui/pull/696.patch", hash = "sha256-eYGYYGkaWOp0H97hyMKk/5p5zAfPd+X5HPM+0NDp07U=" }]
 
 [fortress.ign-launch5]
 do_check = false
@@ -22,7 +22,7 @@ patches = [{ url = "https://github.com/gazebosim/gz-msgs/commit/0c0926c37042ac8f
 
 [fortress.ign-physics5]
 do_check = false
-patches = [{ url = "https://github.com/nim65s/gz-physics/commit/c73e57fbb6b9d75a5c22009327ba8c6a94aa8d4b.patch", hash = "sha256-qqqkWb5VWZZ6SCZFp1Md2Sd5zVQkWmlCuE0V4ZnUtUk=" }]
+patches = [{ url = "https://github.com/gazebosim/gz-physics/pull/768.patch", hash = "sha256-qqqkWb5VWZZ6SCZFp1Md2Sd5zVQkWmlCuE0V4ZnUtUk=" }]
 
 [fortress.ign-plugin1]
 do_check = false

@@ -33,7 +33,7 @@ stdenv.mkDerivation {
 
   patches = [
     (fetchpatch {
-      url = "https://github.com/nim65s/gz-physics/commit/c73e57fbb6b9d75a5c22009327ba8c6a94aa8d4b.patch";
+      url = "https://github.com/gazebosim/gz-physics/pull/768.patch";
       hash = "sha256-qqqkWb5VWZZ6SCZFp1Md2Sd5zVQkWmlCuE0V4ZnUtUk=";
     })
   ];
