@@ -532,6 +532,38 @@
                 }
               )
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
+                inherit (pkgs.rosPackages.humble)
+                  # keep-sorted start
+                  agimus-controller-ros
+                  agimus-demo-00-franka-controller
+                  agimus-demo-01-lfc-alone
+                  agimus-demo-02-simple-pd-plus
+                  agimus-demo-02-simple-pd-plus-tiago-pro
+                  agimus-demo-03-mpc-dummy-traj
+                  agimus-demo-03-mpc-dummy-traj-tiago-pro
+                  agimus-demo-04-visual-servoing
+                  agimus-demo-05-pick-and-place
+                  agimus-demos
+                  agimus-demos-common
+                  agimus-msgs
+                  franka-bringup
+                  franka-description
+                  franka-example-controllers
+                  franka-fr3-moveit-config
+                  franka-gazebo-bringup
+                  franka-gripper
+                  franka-hardware
+                  franka-ign-ros2-control
+                  franka-msgs
+                  franka-robot-state-broadcaster
+                  franka-ros2
+                  franka-semantic-components
+                  linear-feedback-controller
+                  linear-feedback-controller-msgs
+                  tiago-pro-description
+                  tiago-pro-gazebo
+                  # keep-sorted end
+                  ;
               }
               // lib.mapAttrs' (n: lib.nameValuePair "ros-jazzy-${n}") {
                 inherit (pkgs.rosPackages.jazzy)
@@ -543,7 +575,6 @@
                   # keep-sorted end
                   ;
               }
-
             );
             treefmt = {
               settings.global.excludes = [
