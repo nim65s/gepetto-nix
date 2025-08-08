@@ -24,7 +24,7 @@
   tinyxml-2,
 }:
 stdenv.mkDerivation {
-  pname = "gz-ionic-gz-fuel_tools10";
+  pname = "gz-ionic-gz-fuel-tools10";
   version = "10.1.0";
 
   rosPackage = true;

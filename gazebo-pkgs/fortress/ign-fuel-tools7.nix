@@ -6,17 +6,12 @@
   cmake,
   curl,
   gflags,
-  gz-cmake,
-  gz-common,
-  gz-common5,
-  gz-math,
-  gz-math7,
-  gz-msgs,
-  gz-msgs10,
-  gz-tools,
-  gz-tools2,
-  gz-utils,
-  gz-utils2,
+  ign-cmake,
+  ign-common,
+  ign-math,
+  ign-msgs,
+  ign-tools,
+  ign-utils,
   jsoncpp,
   libyaml,
   libzip,
@@ -24,8 +19,8 @@
   tinyxml-2,
 }:
 stdenv.mkDerivation {
-  pname = "gz-harmonic-gz-fuel-tools9";
-  version = "9.1.1";
+  pname = "ign-fortress-ign-fuel-tools7";
+  version = "7.3.1";
 
   rosPackage = true;
   dontWrapQtApps = true;
@@ -33,8 +28,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "gazebosim";
     repo = "gz-fuel-tools";
-    tag = "gz-fuel-tools9_9.1.1";
-    hash = "sha256-XQoBcCtzwzzPypS1kIeTCIbjtxrzaW3JvZLCYbwXAOk=";
+    tag = "ignition-fuel-tools7_7.3.1";
+    hash = "sha256-q5fH6g9jOZpVA4PTdvF1/nMejpcZVuPV19J2oPBVdSU=";
   };
 
   nativeBuildInputs = [
@@ -44,17 +39,16 @@ stdenv.mkDerivation {
   propagatedBuildInputs = [
     curl
     gflags
-    gz-cmake
-    gz-common
-    gz-common5
-    gz-math
-    gz-math7
-    gz-msgs
-    gz-msgs10
-    gz-tools
-    gz-tools2
-    gz-utils
-    gz-utils2
+    ign-cmake
+    ign-common
+    ign-common
+    ign-math
+    ign-math
+    ign-msgs
+    ign-msgs
+    ign-tools
+    ign-tools
+    ign-utils
     jsoncpp
     libyaml
     libzip

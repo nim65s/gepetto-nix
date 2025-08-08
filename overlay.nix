@@ -64,6 +64,42 @@
       humble = prev.rosPackages.humble.overrideScope (
         humble-final: humble-prev:
         {
+          inherit (prev.gazebo.fortress)
+            # keep-sorted start
+            gz-cmake
+            gz-common
+            gz-fuel-tools
+            gz-gui
+            gz-launch
+            gz-math
+            gz-msgs
+            gz-physics
+            gz-plugin
+            gz-rendering
+            gz-sensors
+            gz-sim
+            gz-tools
+            gz-transport
+            gz-utils
+            ign-cmake2
+            ign-common4
+            ign-fuel-tools7
+            ign-gazebo6
+            ign-gui6
+            ign-launch5
+            ign-math6
+            ign-msgs8
+            ign-physics5
+            ign-plugin1
+            ign-rendering6
+            ign-sensors6
+            ign-tools1
+            ign-transport11
+            ign-utils1
+            sdformat12
+            sdformat
+            # keep-sorted end
+            ;
           inherit (inputs)
             # keep-sorted start
             src-agimus-controller

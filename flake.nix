@@ -41,7 +41,7 @@
     };
     src-franka-ros2 = {
       # url = "github:agimus-project/franka_ros2";
-      url = "github:nim65s/franka_ros2/harmonic";
+      url = "github:agimus-project/franka_ros2/humble";
       flake = false;
     };
     # gepetto-viewer has a fix to understand AMENT_PREFIX_PATH in #239/devel
@@ -252,6 +252,36 @@
                       # keep-sorted end
                     ];
                   };
+                gz-fortress = pkgs.rosPackages.humble.buildEnv {
+                  name = "gz-fortress";
+                  postBuild = ''
+                    rosWrapperArgs+=(
+                    --set QT_QPA_PLATFORM_PLUGIN_PATH ${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms
+                    --prefix IGN_CONFIG_PATH : "$out/share/ignition"
+                    )
+                  '';
+                  paths = with pkgs.gazebo.fortress; [
+                    # keep-sorted start
+                    pkgs.qt5.wrapQtAppsHook
+                    gz-cmake
+                    gz-common
+                    gz-fuel-tools
+                    gz-gui
+                    gz-launch
+                    gz-math
+                    gz-msgs
+                    gz-physics
+                    gz-plugin
+                    gz-rendering
+                    gz-sensors
+                    gz-sim
+                    gz-tools
+                    gz-transport
+                    gz-utils
+                    sdformat
+                    # keep-sorted end
+                  ];
+                };
                 gz-harmonic = pkgs.rosPackages.jazzy.buildEnv {
                   name = "gz-harmonic";
                   postBuild = ''
@@ -321,7 +351,6 @@
                   example-robot-data
                   gazebo2nix
                   gepetto-viewer
-                  # gz-harmonic
                   hpp-affordance
                   hpp-affordance-corba
                   hpp-baxter
@@ -386,6 +415,46 @@
                   # keep-sorted end
                   ;
               }
+              // lib.mapAttrs' (n: lib.nameValuePair "gz-fortress-${n}") (
+                lib.optionalAttrs (system == "x86_64-linux") {
+                  inherit (pkgs.gazebo.fortress)
+                    # keep-sorted start
+                    gz-cmake
+                    gz-common
+                    gz-fuel-tools
+                    gz-gui
+                    gz-launch
+                    gz-math
+                    gz-msgs
+                    gz-physics
+                    gz-plugin
+                    gz-rendering
+                    gz-sensors
+                    gz-sim
+                    gz-tools
+                    gz-transport
+                    gz-utils
+                    ign-cmake2
+                    ign-common4
+                    ign-fuel-tools7
+                    ign-gazebo6
+                    ign-gui6
+                    ign-launch5
+                    ign-math6
+                    ign-msgs8
+                    ign-physics5
+                    ign-plugin1
+                    ign-rendering6
+                    ign-sensors6
+                    ign-tools1
+                    ign-transport11
+                    ign-utils1
+                    sdformat12
+                    sdformat
+                    # keep-sorted end
+                    ;
+                }
+              )
               // lib.mapAttrs' (n: lib.nameValuePair "gz-harmonic-${n}") (
                 lib.optionalAttrs (system == "x86_64-linux") {
                   inherit (pkgs.gazebo.harmonic)

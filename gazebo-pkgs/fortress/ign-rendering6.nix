@@ -2,33 +2,28 @@
   lib,
   stdenv,
   fetchFromGitHub,
+  fetchpatch,
 
   boost,
   cmake,
   freeglut,
   freeimage,
   glew,
-  gz-cmake,
-  gz-common,
-  gz-common6,
-  gz-math,
-  gz-math8,
-  gz-plugin,
-  gz-plugin3,
-  gz-utils,
-  gz-utils3,
+  ign-cmake,
+  ign-common,
+  ign-math,
+  ign-plugin,
+  ign-utils,
   libogre-next-23-dev,
-  libz,
   ogre1_9,
   pkg-config,
-  python3,
   util-linux,
   vulkan-loader,
   xorg,
 }:
 stdenv.mkDerivation {
-  pname = "gz-ionic-gz-rendering9";
-  version = "9.3.0";
+  pname = "ign-fortress-ign-rendering6";
+  version = "6.6.3";
 
   rosPackage = true;
   dontWrapQtApps = true;
@@ -36,9 +31,16 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "gazebosim";
     repo = "gz-rendering";
-    tag = "gz-rendering9_9.3.0";
-    hash = "sha256-mNDjqp54Y13BzZQdKvIfZkxXPq2Kn26sO9Gf+/aCaPk=";
+    tag = "ignition-rendering6_6.6.3";
+    hash = "sha256-FV35+LobIFJANJ+P6EOYQWVCIKVOpzmiDgLOk7axdMA=";
   };
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/gazebosim/gz-rendering/pull/1017.patch";
+      hash = "sha256-NQuyeGGZjzH4qm9CC+W/HdwmLx8d0HmP6S7dLRv8hSA=";
+    })
+  ];
 
   nativeBuildInputs = [
     cmake
@@ -49,19 +51,17 @@ stdenv.mkDerivation {
     freeglut
     freeimage
     glew
-    gz-cmake
-    gz-common
-    gz-common6
-    gz-math
-    gz-math8
-    gz-plugin
-    gz-plugin3
-    gz-utils
-    gz-utils3
+    ign-cmake
+    ign-common
+    ign-common
+    ign-math
+    ign-math
+    ign-plugin
+    ign-plugin
+    ign-utils
+    ign-utils
     libogre-next-23-dev
-    libz
     ogre1_9
-    python3
     util-linux
     vulkan-loader
     xorg.libXi

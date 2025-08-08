@@ -81,7 +81,7 @@ buildRosPackage {
     pkg-config
   ];
 
-  env.GZ_VERSION = "harmonic";
+  env.GZ_VERSION = "fortress";
 
   meta = {
     description = "Bridge communication between ROS and Gazebo Transport";

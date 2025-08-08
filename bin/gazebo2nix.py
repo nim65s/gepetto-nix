@@ -18,6 +18,7 @@ from typing import Any
 from caseconverter import kebabcase
 from catkin_pkg.package import parse_package_string
 from github import Auth, Github
+from github.GithubException import UnknownObjectException
 from jinja2 import Environment, Template
 from yaml import load
 
@@ -38,8 +39,8 @@ TEMPLATE = """{
   {{ dep }},{% endfor %}
 }:
 stdenv.mkDerivation {
-  pname = "gz-{{ distro }}-{{ pkg.name }}";
-  version = "{{ pkg.version }}";
+  pname = "{% if ign %}ign{% else %}gz{% endif %}-{{ distro }}-{{ pkg_name }}";
+  version = "{{ version }}";
 
   rosPackage = true;
   dontWrapQtApps = true;
@@ -86,6 +87,8 @@ stdenv.mkDerivation {
 logger = getLogger("ros2nix")
 
 parser = ArgumentParser(prog="gazebo2nix", description=__doc__)
+parser.add_argument("distro", nargs="?", help="generate only this distro")
+parser.add_argument("repo", nargs="?", help="generate only this repo")
 parser.add_argument(
     "-q",
     "--quiet",
@@ -110,6 +113,21 @@ def fix_name(name: str) -> str:
     return kebabcase(name)
 
 
+def fix_tag(name: str) -> str:
+    """please, no."""
+    name = name.replace("ign-", "ignition-")
+    if name.endswith("1") and not name[-2].isdigit():
+        name = name.removesuffix("1")
+    return name
+
+
+def gz_to_ign(name: str) -> str:
+    """please, no."""
+    if name.startswith("gz-") or name.startswith("sdformat"):
+        name = name.replace("gz-", "ign-").rstrip("0123456789")
+    return name
+
+
 class GazeboDistro:
     def __init__(
         self,
@@ -120,7 +138,10 @@ class GazeboDistro:
         rosdeps: dict[str, list[str]],
         distro: str,
         conf: Any,
+        repo: str | None,
     ):
+        logger.info("Gazebo Distro: %s", distro)
+
         self.gh = gh
         self.token = token
         self.path = path / distro
@@ -136,6 +157,8 @@ class GazeboDistro:
         )
         repositories = load(collection.decoded_content.decode(), Loader=Loader)
         for nick, data in repositories["repositories"].items():
+            if repo and repo != nick:
+                continue
             self.process_repo(nick, data)
 
     def rosdep(self, k: str) -> list[str]:
@@ -150,6 +173,10 @@ class GazeboDistro:
         url, pkg_name = (
             data["url"].removeprefix("https://github.com/"),
             fix_name(data["version"]),
+        )
+        logger.info("  Gazebo Repo: %s", nick)
+        ign = pkg_name.startswith("ign-") or (
+            nick == "sdformat" and int(pkg_name.removeprefix(nick)) < 13
         )
 
         do_check = True
@@ -170,12 +197,11 @@ class GazeboDistro:
         deps = [fix_name(d) for d in content["repositories"].keys()]
         owner, name = url.split("/")
         repo = self.gh.get_repo(url)
+        tag_start = fix_tag(pkg_name)
         for tag in repo.get_tags():
-            if (
-                tag.name.startswith(pkg_name.replace("ign-", "ignition-"))
-                and "pre" not in tag.name
-            ):
+            if tag.name.startswith(tag_start) and "pre" not in tag.name:
                 tag_name = tag.name
+                version = tag_name.removeprefix(tag_start).removeprefix("_")
                 break
         else:
             breakpoint()
@@ -185,7 +211,10 @@ class GazeboDistro:
             text=True,
         ).strip()
 
-        package_xml = repo.get_contents("package.xml", ref=tag_name)
+        if ign:
+            package_xml = repo.get_contents("package.xml", ref=repo.default_branch)
+        else:
+            package_xml = repo.get_contents("package.xml", ref=tag_name)
         pkg = parse_package_string(package_xml.decoded_content.decode())
         k = kebabcase(pkg.name).rstrip("0123456789")
 
@@ -203,20 +232,27 @@ class GazeboDistro:
             [d for d in deps if d != k] + propagated,
         )
         check = self.sort_deps(pkg.test_depends, check)
+        if ign:
+            native = list(map(gz_to_ign, native))
+            propagated = list(map(gz_to_ign, propagated))
+            check = list(map(gz_to_ign, check))
         nix = self.template.render(
             distro=self.distro,
-            pkg=pkg,
-            tag=tag_name,
+            ign=ign,
+            pkg_name=pkg_name,
+            version=version,
             owner=owner,
             name=name,
+            tag=tag_name,
             hash=hash,
             patches=patches,
-            licenses=licenses,
             repo=repo,
             native=native,
             propagated=propagated,
             check=check,
             do_check=str(do_check).lower(),
+            pkg=pkg,
+            licenses=licenses,
             deps=sorted(set([p.split(".")[0] for p in [*native, *propagated, *check]])),
         )
 
@@ -227,6 +263,11 @@ class GazeboDistro:
         alias = self.path / f"{nick}.nix"
         alias.write_text(f"{{ {kebabcase(pkg_name)} }}: {kebabcase(pkg_name)}")
         check_call(["nixfmt", alias])
+        if ign:
+            nick = gz_to_ign(nick)
+            alias = self.path / f"{nick}.nix"
+            alias.write_text(f"{{ {kebabcase(pkg_name)} }}: {kebabcase(pkg_name)}")
+            check_call(["nixfmt", alias])
 
 
 def main():
@@ -243,7 +284,6 @@ def main():
     basicConfig(level=30 - 10 * args.verbose + 10 * args.quiet)
 
     path = Path("gazebo-pkgs")
-    path.mkdir(exist_ok=True, parents=True)
 
     template = Environment().from_string(TEMPLATE)
     with Path(".gazebo2nix.toml").open("rb") as f:
@@ -251,6 +291,7 @@ def main():
 
     auth = Auth.Token(token)
     with Github(auth=auth) as gh:
+        logger.info("Importing rosdeps")
         rosdistro = gh.get_repo("ros/rosdistro")
         ref = rosdistro.default_branch
         base = rosdistro.get_contents("rosdep/base.yaml", ref=ref)
@@ -264,7 +305,9 @@ def main():
         }
 
         for distro, conf in cfg.items():
-            GazeboDistro(gh, token, path, template, rosdeps, distro, conf)
+            if args.distro and distro != args.distro:
+                continue
+            GazeboDistro(gh, token, path, template, rosdeps, distro, conf, args.repo)
 
 
 if __name__ == "__main__":

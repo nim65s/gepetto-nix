@@ -81,7 +81,7 @@ buildRosPackage {
   ];
 
   env = {
-    GZ_VERSION = "harmonic";
+    GZ_VERSION = "fortress";
     PYTHONPATH = python-with-ament-package;
   };
 

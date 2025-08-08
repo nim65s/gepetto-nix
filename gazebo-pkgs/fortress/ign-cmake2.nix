@@ -7,14 +7,17 @@
   pkg-config,
 }:
 stdenv.mkDerivation {
-  pname = "gz-garden-gz-cmake3";
-  version = "3.5.5";
+  pname = "ign-fortress-ign-cmake2";
+  version = "2.17.2";
+
+  rosPackage = true;
+  dontWrapQtApps = true;
 
   src = fetchFromGitHub {
     owner = "gazebosim";
     repo = "gz-cmake";
-    tag = "gz-cmake3_3.5.5";
-    hash = "sha256-biTJW5TOGRE6NgPaeobv3vv5fNHjaBpoxeplIK+3i5c=";
+    tag = "ignition-cmake2_2.17.2";
+    hash = "sha256-aEEUPbh1MX0VYz53p0wQAKWIoXUgf9lGhc6q0JUX9Sg=";
   };
 
   nativeBuildInputs = [
@@ -26,6 +29,8 @@ stdenv.mkDerivation {
   checkInputs = [
     cmake
   ];
+
+  cmakeFlags = [ "-DCMAKE_INSTALL_LIBDIR=lib" ];
 
   doCheck = true;
 

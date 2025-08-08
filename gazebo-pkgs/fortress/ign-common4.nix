@@ -2,6 +2,7 @@
   lib,
   stdenv,
   fetchFromGitHub,
+  fetchpatch,
 
   assimp,
   cmake,
@@ -9,23 +10,34 @@
   freeimage,
   gdal,
   gts,
-  gz-cmake3,
-  gz-math7,
-  gz-utils2,
+  ign-cmake,
+  ign-math,
+  ign-utils,
   pkg-config,
+  spdlog,
   tinyxml-2,
   util-linux,
 }:
 stdenv.mkDerivation {
-  pname = "gz-garden-gz-common5";
-  version = "5.7.1";
+  pname = "ign-fortress-ign-common4";
+  version = "4.7.0";
+
+  rosPackage = true;
+  dontWrapQtApps = true;
 
   src = fetchFromGitHub {
     owner = "gazebosim";
     repo = "gz-common";
-    tag = "gz-common5_5.7.1";
-    hash = "sha256-7M2KBqSUWSCUwQuaoUVpgn389Z2xGnd/tVlwAsl9OHE=";
+    tag = "ignition-common4_4.7.0";
+    hash = "sha256-y8qp0UVXxSJm0aJeUD64+aG+gfNEboInW7F6tvHYTPI=";
   };
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/gazebosim/gz-common/pull/521.patch";
+      hash = "sha256-NlUyAfGugYuNYURY1NjgStNsJ+jrLuaHmJ8Gp9QBSmQ=";
+    })
+  ];
 
   nativeBuildInputs = [
     cmake
@@ -37,16 +49,21 @@ stdenv.mkDerivation {
     freeimage
     gdal
     gts
-    gz-cmake3
-    gz-math7
-    gz-utils2
+    ign-cmake
+    ign-math
+    ign-math
+    ign-utils
+    ign-utils
+    spdlog
     tinyxml-2
     util-linux
   ];
   checkInputs = [
   ];
 
-  doCheck = true;
+  cmakeFlags = [ "-DCMAKE_INSTALL_LIBDIR=lib" ];
+
+  doCheck = false;
 
   meta = {
     description = "Gazebo Common : AV, Graphics, Events, and much more.";

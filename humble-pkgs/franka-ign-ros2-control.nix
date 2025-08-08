@@ -29,7 +29,7 @@ stdenv.mkDerivation {
   sourceRoot = "source/franka_gazebo/franka_ign_ros2_control";
 
   env = {
-    IGNITION_VERSION = "harmonic";
+    IGNITION_VERSION = "fortress";
     PYTHONPATH = python-with-ament-package;
   };
 

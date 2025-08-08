@@ -47,7 +47,7 @@ buildRosPackage {
     pkg-config
   ];
 
-  env.GZ_VERSION = "harmonic";
+  env.GZ_VERSION = "fortress";
 
   meta = {
     description = "Image utilities for Gazebo simulation with ROS.";
