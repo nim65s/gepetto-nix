@@ -96,8 +96,8 @@
             ign-tools1
             ign-transport11
             ign-utils1
-            sdformat12
             sdformat
+            sdformat12
             # keep-sorted end
             ;
           inherit (inputs)

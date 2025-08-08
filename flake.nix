@@ -262,7 +262,6 @@
                   '';
                   paths = with pkgs.gazebo.fortress; [
                     # keep-sorted start
-                    pkgs.qt5.wrapQtAppsHook
                     gz-cmake
                     gz-common
                     gz-fuel-tools
@@ -278,6 +277,7 @@
                     gz-tools
                     gz-transport
                     gz-utils
+                    pkgs.qt5.wrapQtAppsHook
                     sdformat
                     # keep-sorted end
                   ];
@@ -289,7 +289,6 @@
                   '';
                   paths = with pkgs.gazebo.harmonic; [
                     # keep-sorted start
-                    pkgs.qt5.wrapQtAppsHook
                     gz-cmake
                     gz-common
                     gz-fuel-tools
@@ -305,6 +304,7 @@
                     gz-tools
                     gz-transport
                     gz-utils
+                    pkgs.qt5.wrapQtAppsHook
                     sdformat
                     # keep-sorted end
                   ];
@@ -317,7 +317,6 @@
                   '';
                   paths = with pkgs.gazebo.ionic; [
                     # keep-sorted start
-                    pkgs.qt5.wrapQtAppsHook
                     gz-cmake
                     gz-common
                     gz-fuel-tools
@@ -333,6 +332,7 @@
                     gz-tools
                     gz-transport
                     gz-utils
+                    pkgs.qt5.wrapQtAppsHook
                     sdformat
                     # keep-sorted end
                   ];
@@ -449,8 +449,8 @@
                     ign-tools1
                     ign-transport11
                     ign-utils1
-                    sdformat12
                     sdformat
+                    sdformat12
                     # keep-sorted end
                     ;
                 }
