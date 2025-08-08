@@ -12,6 +12,16 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
+    gazebo_11 = prev.gazebo_11.overrideAttrs (rec {
+      # 11.14.0 does not compile
+      version = "11.15.1";
+      src = final.fetchFromGitHub {
+        owner = "gazebosim";
+        repo = "gazebo-classic";
+        tag = "gazebo11_${version}";
+        hash = "sha256-EieBsedwxelKY9LfFUzxuO189OvziSNXoKX2hYDoxMQ=";
+      };
+    });
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
@@ -27,6 +37,12 @@
             src-toolbox-parallel-robots
             # keep-sorted end
             ;
+          boost186 = python-final.toPythonModule (
+            final.boost186.override {
+              inherit (python-final) python numpy;
+              enablePython = true;
+            }
+          ); # for gz11
           brax = python-prev.brax.overrideAttrs {
             # depends on mujoco
             # which is broken on darwin
@@ -107,6 +123,8 @@
             src-franka-ros2
             # keep-sorted end
             ;
+          cv-bridge = humble-prev.cv-bridge.override { boost = final.python3Packages.boost186; }; # for gz11
+          filters = humble-prev.filters.override { boost = final.boost186; }; # for gz11
           franka-description = humble-prev.franka-description.overrideAttrs {
             src = inputs.src-franka-description;
             # depends on pyside2 which is broken on darwin
@@ -225,6 +243,7 @@
               ]);
             in
             "${python}/${python.sitePackages}";
+          realtime-tools = humble-prev.realtime-tools.override { boost = final.boost186; }; # for gz11
           ros-gz = humble-prev.ros-gz.overrideAttrs (_super: {
             env.PYTHONPATH = humble-final.python-with-ament-package;
             meta.platforms = final.lib.platforms.linux;
