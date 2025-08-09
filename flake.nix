@@ -120,6 +120,12 @@
                   # keep-sorted end
                 ];
               };
+              agimus = pkgs.mkShell {
+                name = "Agimus";
+                packages = [
+                  pkgs.agimus
+                ];
+              };
               hpp = pkgs.mkShell {
                 name = "dev shell for HPP";
                 CMAKE_C_COMPILER_LAUNCHER = "ccache";
@@ -229,6 +235,47 @@
             };
             packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
               {
+                agimus =
+                  with pkgs.rosPackages.humble;
+                  buildEnv {
+                    postBuild = ''
+                      rosWrapperArgs+=(
+                      --set QT_QPA_PLATFORM_PLUGIN_PATH ${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms
+                      --prefix IGN_CONFIG_PATH : "$out/share/ignition"
+                      )
+                    '';
+                    paths = [
+                      # keep-sorted start
+                      agimus-demo-00-franka-controller
+                      agimus-demo-01-lfc-alone
+                      agimus-demo-02-simple-pd-plus
+                      agimus-demo-02-simple-pd-plus-tiago-pro
+                      agimus-demo-03-mpc-dummy-traj
+                      agimus-demo-03-mpc-dummy-traj-tiago-pro
+                      agimus-demo-04-visual-servoing
+                      agimus-demo-05-pick-and-place
+                      agimus-demos
+                      agimus-demos-common
+                      gz-cmake
+                      gz-common
+                      gz-fuel-tools
+                      gz-gui
+                      gz-launch
+                      gz-math
+                      gz-msgs
+                      gz-physics
+                      gz-plugin
+                      gz-rendering
+                      gz-sensors
+                      gz-sim
+                      gz-tools
+                      gz-transport
+                      gz-utils
+                      pkgs.qt5.wrapQtAppsHook
+                      sdformat
+                      # keep-sorted end
+                    ];
+                  };
                 python = pkgs.python3.withPackages (p: [
                   # keep-sorted start
                   p.agimus-controller
