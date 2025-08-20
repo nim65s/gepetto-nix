@@ -43,6 +43,14 @@ buildRosPackage {
     hash = "sha256-Bck+Dzpi1N4XWSbbUnB/AXnSfPfp3Rq1gpRp1WYDPLw=";
   };
 
+  # ign is binary wrapped. dont ruby it.
+  # also use ogre
+  postPatch = ''
+    substituteInPlace launch/gz_sim.launch.py.in --replace-fail \
+      "exec = 'ruby ' + get_executable_path('ign') + ' gazebo'" \
+      "exec = get_executable_path('ign') + ' gazebo --render-engine ogre'"
+  '';
+
   buildType = "ament_cmake";
   buildInputs = [
     ament-cmake

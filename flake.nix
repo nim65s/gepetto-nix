@@ -123,7 +123,7 @@
               agimus = pkgs.mkShell {
                 name = "Agimus";
                 packages = [
-                  pkgs.agimus
+                  self'.packages.agimus
                 ];
               };
               hpp = pkgs.mkShell {
