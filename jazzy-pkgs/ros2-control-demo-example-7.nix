@@ -20,7 +20,6 @@
   pluginlib,
   rclcpp,
   rclcpp-lifecycle,
-  rcpputils,
   realtime-tools,
   robot-state-publisher,
   ros2-control-demo-description,
@@ -33,10 +32,9 @@
 
   # checkInputs
   ament-cmake-pytest,
-  controller-manager,
-  launch-testing-ros,
+  launch-testing,
   liburdfdom-tools,
-  xacro,
+  rclpy,
 }:
 buildRosPackage rec {
   pname = "ros-jazzy-ros2-control-demo-example-7";
@@ -45,7 +43,7 @@ buildRosPackage rec {
   src = fetchFromGitHub {
     owner = "ros-controls";
     repo = "ros2_control_demos";
-    rev = "7411d82030a0fbdf2366bfbc988040ab2e3f4dd1";
+    rev = "7732eec0d301b0544ff4b8a6fe0ed3842c475d86";
     hash = "sha256-bJxaqS20rEyDHpkkDtOd0rbYeuwrdDK212G8Qw2ZF/k=";
   };
   sourceRoot = "source/example_7";
@@ -69,7 +67,6 @@ buildRosPackage rec {
     pluginlib
     rclcpp
     rclcpp-lifecycle
-    rcpputils
     realtime-tools
     robot-state-publisher
     ros2-control-demo-description
@@ -82,17 +79,16 @@ buildRosPackage rec {
   ];
   checkInputs = [
     ament-cmake-pytest
-    controller-manager
-    launch-testing-ros
+    launch-testing
     liburdfdom-tools
-    xacro
+    rclpy
   ];
 
   doCheck = true;
 
   meta = {
     description = "Demo for 6 DOF robot.";
-    license = with lib.licenses; [ unfree ];
+    license = with lib.licenses; [ asl20 ];
     homepage = "https://github.com/ros-controls/ros2_control_demos";
     platforms = lib.platforms.linux;
     maintainers = [ lib.maintainers.nim65s ];
