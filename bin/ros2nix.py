@@ -73,6 +73,7 @@ buildRosPackage rec {
 logger = getLogger("ros2nix")
 
 parser = ArgumentParser(prog="ros2nix", description=__doc__)
+parser.add_argument("distro", nargs="?", help="generate only this distro")
 parser.add_argument("repo", nargs="?", help="generate only this repo")
 parser.add_argument(
     "-q",
@@ -226,6 +227,8 @@ def main():
     auth = Auth.Token(token)
     with Github(auth=auth) as gh:
         for distro, conf in cfg.items():
+            if args.distro and distro != args.distro:
+                continue
             for repo, repo_conf in conf.items():
                 if args.repo and repo != args.repo:
                     continue
