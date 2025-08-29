@@ -619,6 +619,7 @@
                   agimus-msgs
                   linear-feedback-controller
                   linear-feedback-controller-msgs
+                  ros2-control-demo-example-1
                   # keep-sorted end
                   ;
               }
