@@ -170,8 +170,9 @@ class Package:
                 logger.warning("Unknown license: %s", lic)
                 licenses.append("unfree")
 
-        def sort_deps(deps, overrides):
-            return sorted({kebabcase(dep.name) for dep in deps} | set(overrides))
+        def sort_deps(deps, overrides, blacklist):
+            deps = {kebabcase(dep.name) for dep in deps} | set(overrides)
+            return sorted(deps - set(blacklist))
 
         hash_url = f"{repo.repo.html_url}/archive"
         for tag in repo.repo.get_tags():
@@ -190,6 +191,9 @@ class Package:
             hash = check_output(["nurl", "-H", hash_url], text=True).strip()
             repo.hashes[hash_url] = hash
 
+        native = sort_deps(pkg.buildtool_depends, overrides.native, [])
+        propagated = sort_deps(pkg.exec_depends, overrides.propagated, native)
+        check = sort_deps(pkg.test_depends, overrides.check, [*native, *propagated])
         nix = template.render(
             pkg=pkg,
             rev=rev,
@@ -197,9 +201,9 @@ class Package:
             package=package,
             licenses=licenses,
             repo=repo.repo,
-            native=sort_deps(pkg.buildtool_depends, overrides.native),
-            propagated=sort_deps(pkg.exec_depends, overrides.propagated),
-            check=sort_deps(pkg.test_depends, overrides.check),
+            native=native,
+            propagated=propagated,
+            check=check,
             do_check=str(overrides.do_check).lower(),
         )
         path = repo.path / f"{kebabcase(pkg.name)}.nix"
