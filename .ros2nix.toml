@@ -45,3 +45,6 @@ tiago_pro_description = {do_check = false}
 
 [humble."pal-robotics/tiago_pro_simulation".packages]
 tiago_pro_gazebo = {do_check = false}
+
+[jazzy."ros-controls/ros2_control_demos"]
+branch = "jazzy"
