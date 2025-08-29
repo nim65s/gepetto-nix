@@ -20,7 +20,10 @@ from catkin_pkg.package import parse_package_string
 from github import Auth, Github
 from jinja2 import Environment, Template
 
-LICENSES = {"Apache License 2.0": "asl20"}
+LICENSES = {
+    "Apache License 2.0": "asl20",
+    "Apache-2.0": "asl20",  # https://github.com/ros-controls/ros2_control_demos
+}
 TEMPLATE = """{
   lib,
   buildRosPackage,
