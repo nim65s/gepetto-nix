@@ -12,17 +12,6 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
-    boost = prev.boost186;
-    gazebo_11 = prev.gazebo_11.overrideAttrs (rec {
-      # 11.14.0 does not compile
-      version = "11.15.1";
-      src = final.fetchFromGitHub {
-        owner = "gazebosim";
-        repo = "gazebo-classic";
-        tag = "gazebo11_${version}";
-        hash = "sha256-EieBsedwxelKY9LfFUzxuO189OvziSNXoKX2hYDoxMQ=";
-      };
-    });
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
