@@ -1,6 +1,6 @@
 {
   lib,
-  stdenv,
+  buildRosPackage,
 
   fetchFromGitHub,
 
@@ -28,14 +28,17 @@
   # checkInputs
   gtest,
 }:
-stdenv.mkDerivation (finalAttrs: {
-  pname = "linear-feedback-controller";
+let
   version = "2.0.0";
+in
+buildRosPackage {
+  pname = "linear-feedback-controller";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "loco-3d";
     repo = "linear-feedback-controller";
-    tag = "v${finalAttrs.version}";
+    tag = "v${version}";
     hash = "sha256-WB0QXTY74jqeYIt+lv5Y9slMw6lx8FfHO26aGpoX7T0=";
   };
 
@@ -91,4 +94,4 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = [ lib.maintainers.nim65s ];
     platforms = lib.platforms.linux;
   };
-})
+}
