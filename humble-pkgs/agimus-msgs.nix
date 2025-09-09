@@ -1,6 +1,6 @@
 {
   lib,
-  stdenv,
+  buildRosPackage,
 
   src-agimus-msgs,
 
@@ -18,7 +18,7 @@
   sensor-msgs,
   std-msgs,
 }:
-stdenv.mkDerivation {
+buildRosPackage {
   pname = "agimus-msgs";
   version = "0.0.2";
 

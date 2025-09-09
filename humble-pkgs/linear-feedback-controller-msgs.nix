@@ -1,6 +1,6 @@
 {
   lib,
-  stdenv,
+  buildRosPackage,
 
   fetchFromGitHub,
 
@@ -22,14 +22,17 @@
   sensor-msgs,
   tf2-eigen,
 }:
-stdenv.mkDerivation (finalAttrs: {
-  pname = "linear-feedback-controller-msgs";
+let
   version = "1.0.0";
+in
+buildRosPackage {
+  pname = "linear-feedback-controller-msgs";
+  inherit version;
 
   src = fetchFromGitHub {
     owner = "loco-3d";
     repo = "linear-feedback-controller-msgs";
-    tag = "v${finalAttrs.version}";
+    tag = "v${version}";
     hash = "sha256-iolp/25VccP7knwRUOj4eQ5kGlcvWEiCfTYHkx/AUrA=";
   };
 
@@ -62,4 +65,4 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = [ lib.maintainers.nim65s ];
     platforms = lib.platforms.linux;
   };
-})
+}

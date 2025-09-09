@@ -1,6 +1,7 @@
 {
   lib,
   python3Packages,
+  buildRosPackage,
 
   src-agimus-controller,
 
@@ -23,17 +24,13 @@
   geometry-msgs,
   builtin-interfaces,
 }:
-python3Packages.buildPythonPackage {
+buildRosPackage {
   pname = "agimus-controller-ros";
   version = "0-unstable-2025-04-23";
 
   src = src-agimus-controller;
   sourceRoot = "source/agimus_controller_ros";
-
-  dontUseCmakeConfigure = true;
-  dontUseCmakeBuild = true;
-  dontUseCmakeCheck = true;
-  dontUseCmakeInstall = true;
+  buildType = "ament_python";
 
   nativeBuildInputs = [
     fmt
