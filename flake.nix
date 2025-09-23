@@ -259,6 +259,7 @@
                 inherit (pkgs)
                   # keep-sorted start
                   aligator
+                  biped-stabilizer
                   colmpc
                   crocoddyl
                   example-robot-data
@@ -298,6 +299,7 @@
                 inherit (pkgs.python3Packages)
                   # keep-sorted start
                   aligator
+                  biped-stabilizer
                   brax
                   colmpc
                   crocoddyl
