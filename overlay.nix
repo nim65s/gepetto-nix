@@ -27,6 +27,11 @@
         substituteInPlace CMakeLists.txt --replace-fail "./flake." "#./flake."
       '';
     };
+    # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
+    openscenegraph = prev.openscenegraph.override {
+      colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
+      opencollada = final.collada-dom;
+    };
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
       (
