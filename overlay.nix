@@ -24,6 +24,9 @@
           hash = "sha256-muO6DwQhNPCv6DPmnHnEHjsh/FSj0ljgNCb+ZowLRaY=";
         })
       ];
+      postPatch = ''
+        substituteInPlace CMakeLists.txt --replace-fail "./flake." "#./flake."
+      '';
     };
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
