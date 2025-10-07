@@ -18,16 +18,15 @@
   pythonSupport ? false,
 }:
 
-stdenv.mkDerivation (_finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "flex-joints";
-  version = "1.1.0-unstable-2025-10-07";
+  version = "1.2.0";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "flex-joints";
-    #tag = "v${finalAttrs.version}";
-    rev = "3e9875fd1b2697e7031e0ba24f4b4819efa43718";
-    hash = "sha256-VjUXNQ4/ykdfha2KnAQDwi+foLbYLEvqUCaSIPJ/PgU=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-juzCWOSGP4DcrqGk0KCo18CNw8jb4xoTh5WPNqFJNHw=";
   };
 
   nativeBuildInputs = [
