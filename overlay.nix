@@ -12,13 +12,18 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
-    jrl-cmakemodules = prev.jrl-cmakemodules.overrideAttrs {
-      postInstall = ''
-        chmod +x $out/share/jrl-cmakemodules/*.{py,sh}
-      '';
-    };
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
+    };
+    jrl-cmakemodules = prev.jrl-cmakemodules.overrideAttrs {
+      patches = [
+        # ref. https://github.com/jrl-umi3218/jrl-cmakemodules/pull/783
+        (final.fetchpatch {
+          name = "fix-permissions.patch";
+          url = "https://github.com/jrl-umi3218/jrl-cmakemodules/commit/defed70c8a7c5e4bd5b26006bef26e3fb22c3b26.patch";
+          hash = "sha256-muO6DwQhNPCv6DPmnHnEHjsh/FSj0ljgNCb+ZowLRaY=";
+        })
+      ];
     };
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
