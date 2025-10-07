@@ -12,6 +12,11 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
+    jrl-cmakemodules = prev.jrl-cmakemodules.overrideAttrs {
+      postInstall = ''
+        chmod +x $out/share/jrl-cmakemodules/*.{py,sh}
+      '';
+    };
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
