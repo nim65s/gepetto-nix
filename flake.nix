@@ -286,6 +286,7 @@
                   hpp-universal-robot
                   hpp-util
                   mim-solvers
+                  ndcurves
                   odri-control-interface
                   odri-masterboard-sdk
                   pinocchio
@@ -319,6 +320,7 @@
                   hpp-tutorial
                   hpp-universal-robot
                   mim-solvers
+                  ndcurves
                   pinocchio
                   platypus
                   sensitivity
