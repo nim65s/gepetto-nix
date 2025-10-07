@@ -13,19 +13,21 @@
   jrl-cmakemodules,
   python3Packages,
 
+  # checkInputs,
+  doctest,
+
   pythonSupport ? false,
 }:
 
-stdenv.mkDerivation (_finalAttrs: {
+stdenv.mkDerivation (finalAttrs: {
   pname = "biped-stabilizer";
-  version = "1.3.0-unstable-2025-09-24";
+  version = "1.4.0";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "biped-stabilizer";
-    #tag = "v${finalAttrs.version}";
-    rev = "eaad861a58da05c79912580328e9da622596d3dd";
-    hash = "sha256-AlWKzxNQNcZSQJILQMTCvkFYiqdQcLuY6B0l17s983c=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-3LffArep/TA0gPu2DnXY2oXE9K6SuIAOM2cSYl3HBGE=";
   };
 
   nativeBuildInputs = [
@@ -47,6 +49,10 @@ stdenv.mkDerivation (_finalAttrs: {
       python3Packages.pinocchio
       python3Packages.pythonImportsCheckHook
     ];
+
+  checkInputs = [
+    doctest
+  ];
 
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
