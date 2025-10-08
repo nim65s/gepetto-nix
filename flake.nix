@@ -27,10 +27,6 @@
       url = "github:agimus-project/agimus_msgs";
       flake = false;
     };
-    src-colmpc = {
-      url = "github:agimus-project/colmpc";
-      flake = false;
-    };
     src-example-parallel-robots = {
       url = "github:gepetto/example-parallel-robots";
       flake = false;
@@ -263,6 +259,7 @@
                   colmpc
                   crocoddyl
                   example-robot-data
+                  flex-joints
                   gepetto-viewer
                   hpp-affordance
                   hpp-affordance-corba
@@ -289,6 +286,7 @@
                   hpp-universal-robot
                   hpp-util
                   mim-solvers
+                  ndcurves
                   odri-control-interface
                   odri-masterboard-sdk
                   pinocchio
@@ -305,6 +303,7 @@
                   crocoddyl
                   example-parallel-robots
                   example-robot-data
+                  flex-joints
                   gepetto-gui
                   hpp-affordance-corba
                   hpp-corba
@@ -321,6 +320,7 @@
                   hpp-tutorial
                   hpp-universal-robot
                   mim-solvers
+                  ndcurves
                   pinocchio
                   platypus
                   sensitivity

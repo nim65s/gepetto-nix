@@ -6,18 +6,26 @@
   {
     inherit (inputs)
       # keep-sorted start
-      src-colmpc
       src-odri-control-interface
       src-odri-masterboard-sdk
       # keep-sorted end
       ;
     # keep-sorted start block=yes
+    crocoddyl = prev.crocoddyl.overrideAttrs (super: {
+      # ref. https://github.com/loco-3d/crocoddyl/pull/1369
+      patches = (super.patches or [ ]) ++ [
+        (final.fetchpatch {
+          url = "https://github.com/loco-3d/crocoddyl/commit/ace3245a1ddaa27824a2678dd82573fef7716f44.patch";
+          hash = "sha256-PfHWBMGLZRBUitml/64eESRSXQrDQMDGHTUOjEmG+lw=";
+        })
+      ];
+    });
     gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
       src = inputs.src-gepetto-viewer;
     };
     jrl-cmakemodules = prev.jrl-cmakemodules.overrideAttrs {
+      # ref. https://github.com/jrl-umi3218/jrl-cmakemodules/pull/783
       patches = [
-        # ref. https://github.com/jrl-umi3218/jrl-cmakemodules/pull/783
         (final.fetchpatch {
           name = "fix-permissions.patch";
           url = "https://github.com/jrl-umi3218/jrl-cmakemodules/commit/defed70c8a7c5e4bd5b26006bef26e3fb22c3b26.patch";
@@ -27,6 +35,11 @@
       postPatch = ''
         substituteInPlace CMakeLists.txt --replace-fail "./flake." "#./flake."
       '';
+    };
+    # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
+    openscenegraph = prev.openscenegraph.override {
+      colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
+      opencollada = final.collada-dom;
     };
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
