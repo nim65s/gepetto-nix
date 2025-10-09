@@ -244,6 +244,7 @@
               // {
                 inherit (pkgs)
                   # keep-sorted start
+                  aig
                   aligator
                   biped-stabilizer
                   colmpc
@@ -288,6 +289,7 @@
               // lib.mapAttrs' (n: lib.nameValuePair "py-${n}") {
                 inherit (pkgs.python3Packages)
                   # keep-sorted start
+                  aig
                   aligator
                   biped-stabilizer
                   brax
