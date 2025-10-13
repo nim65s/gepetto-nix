@@ -23,17 +23,9 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "gepetto";
     repo = "toolbox-parallel-robots";
-    rev = "v${version}";
+    tag = "v${version}";
     hash = "sha256-g7W4Ql6yloEIYh65iwPNbOVK0gx8ZWruqJZ0yKvLLgE=";
   };
-
-  cmakeFlags = [
-    (lib.cmakeBool "BUILD_BENCHMARK" false)
-    (lib.cmakeBool "BUILD_DOCUMENTATION" false)
-    (lib.cmakeBool "BUILD_EXAMPLES" false)
-    (lib.cmakeBool "BUILD_TESTING" false)
-    (lib.cmakeBool "GENERATE_PYTHON_STUBS" false)
-  ];
 
   nativeBuildInputs = [
     cmake

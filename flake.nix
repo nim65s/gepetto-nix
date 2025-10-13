@@ -27,10 +27,6 @@
       url = "github:agimus-project/agimus_msgs";
       flake = false;
     };
-    src-example-parallel-robots = {
-      url = "github:gepetto/example-parallel-robots";
-      flake = false;
-    };
     src-franka-description = {
       url = "github:agimus-project/franka_description";
       flake = false;

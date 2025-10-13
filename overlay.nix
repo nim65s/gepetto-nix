@@ -49,8 +49,6 @@
           inherit (inputs)
             # keep-sorted start
             src-agimus-controller
-            src-example-parallel-robots
-            src-toolbox-parallel-robots
             # keep-sorted end
             ;
           brax = python-prev.brax.overrideAttrs {
