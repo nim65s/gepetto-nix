@@ -2,8 +2,7 @@
   lib,
 
   buildPythonPackage,
-
-  src-example-parallel-robots,
+  fetchFromGitHub,
 
   # nativeBuildInputs
   cmake,
@@ -16,19 +15,21 @@
   toolbox-parallel-robots,
 }:
 
-buildPythonPackage {
+buildPythonPackage rec {
   pname = "example-parallel-robots";
-  version = "0-unstable-2025-04-07";
+  version = "1.0.0";
   pyproject = false;
 
-  src = src-example-parallel-robots;
+  src = fetchFromGitHub {
+    owner = "Gepetto";
+    repo = "example-parallel-robots";
+    tag = "v${version}";
+    hash = "sha256-AXkbA+j7w5n+zSgDLHCXkkYgV2utR259P1B4O/Th62I=";
+  };
 
   cmakeFlags = [
-    (lib.cmakeBool "BUILD_BENCHMARK" false)
-    (lib.cmakeBool "BUILD_DOCUMENTATION" false)
-    (lib.cmakeBool "BUILD_EXAMPLES" false)
-    (lib.cmakeBool "BUILD_TESTING" false)
-    (lib.cmakeBool "GENERATE_PYTHON_STUBS" false)
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
+    (lib.cmakeBool "BUILD_TESTING" true)
   ];
 
   nativeBuildInputs = [
@@ -42,13 +43,15 @@ buildPythonPackage {
     toolbox-parallel-robots
   ];
 
-  doCheck = true;
+  preInstallCheck = ''
+    cmake --build . -t test
+  '';
   pythonImportsCheck = [ "example_parallel_robots" ];
 
   meta = {
     description = "Set of parallel robot models for general use in benchmarks and examples";
-    homepage = "https://github.com/gepetto/example-parallel-robots";
-    license = lib.licenses.bsd2;
+    homepage = "https://github.com/Gepetto/example-parallel-robots";
+    license = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [ nim65s ];
     platforms = lib.platforms.unix;
   };
