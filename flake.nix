@@ -50,10 +50,6 @@
       flake = false;
       # TODO: sparse checkout
     };
-    src-toolbox-parallel-robots = {
-      url = "github:gepetto/toolbox-parallel-robots";
-      flake = false;
-    };
 
     # keep-sorted end
   };
