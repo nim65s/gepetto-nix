@@ -3,6 +3,7 @@
   stdenv,
 
   fetchFromGitHub,
+  fetchpatch,
 
   pythonSupport ? false,
   python3Packages,
@@ -29,6 +30,17 @@ stdenv.mkDerivation (finalAttrs: {
     tag = "v${finalAttrs.version}";
     hash = "sha256-qvMD3uKRgb0+92DISEX9gfTX708+nmq8tlWjOtfE2yg=";
   };
+
+  patches = [
+    # fix for crocoddyl v3.1.0 explicit template instanciation
+    # ref. https://github.com/loco-3d/crocoddyl/pull/1367
+    (fetchpatch {
+      url = "https://github.com/agimus-project/colmpc/commit/cebc175fd20662cf57efaefd79d2831425fe9053.patch";
+      hash = "sha256-L9U2w49B84LscI47ztC3JT1HpnC94NX25mjzFAxAg1s=";
+    })
+  ];
+
+  env.NIX_CFLAGS_COMPILE = "-DCOAL_DISABLE_HPP_FCL_WARNINGS";
 
   nativeBuildInputs = [
     cmake

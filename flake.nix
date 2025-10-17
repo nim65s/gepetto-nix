@@ -301,6 +301,8 @@
                   example-robot-data
                   flex-joints
                   gepetto-gui
+                  gepetto-viewer
+                  gepetto-viewer-corba
                   hpp-affordance-corba
                   hpp-corba
                   hpp-corbaserver
@@ -322,6 +324,7 @@
                   platypus
                   sensitivity
                   toolbox-parallel-robots
+                  tsid
                   # keep-sorted end
                   ;
               }
