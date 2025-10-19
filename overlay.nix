@@ -16,7 +16,7 @@
     };
     gepetto-viewer-corba = prev.gepetto-viewer-corba.overrideAttrs {
       postPatch = ''
-        substituteInPlace CMakeLists.txt --replace-fail \
+        substituteInPlace CMakeLists.txt --replace-warn \
           "cmake_minimum_required(VERSION 3.10)" \
           "cmake_minimum_required(VERSION 3.22)"
       '';
