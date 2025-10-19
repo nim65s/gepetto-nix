@@ -81,6 +81,7 @@ buildPythonPackage rec {
 
   installCheckInputs = [
     pkgs.example-robot-data
+    pkgs.hpp-environments
   ];
 
   preInstallCheck = ''
