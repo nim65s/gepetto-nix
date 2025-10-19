@@ -85,7 +85,7 @@ buildPythonPackage rec {
   ];
 
   preInstallCheck = ''
-    export ROS_PACKAGE_PATH=${pkgs.example-robot-data}/share
+    export ROS_PACKAGE_PATH=${pkgs.example-robot-data}/share:${pkgs.hpp-environments}/share
     make test
   '';
 
