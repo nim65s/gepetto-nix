@@ -21,13 +21,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "aig";
-  version = "1.3.0";
+  version = "1.3.1";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "aig";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-gpUipse9VNSk67Y67U6IrxNt7NnAQAN7OKN5JGS2x2g=";
+    hash = "sha256-5Iph+0LxOYz0iIvLLI/zpS7Xrz1e1a56sapfDKCp2vM=";
   };
 
   nativeBuildInputs = [
