@@ -16,24 +16,18 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-util";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-util";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Op7bCaDOoKppEzj0wWNs52QhtdPTvMp+qEwW4ZA446M=";
+    hash = "sha256-vhGq/ttA2ZUgkbHf5jpn4fbvvuphGs2HV1I8xwqf6SI=";
   };
 
   prePatch = ''
     substituteInPlace tests/run_debug.sh.in \
       --replace-fail /bin/bash ${stdenv.shell}
-  '';
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
   '';
 
   outputs = [

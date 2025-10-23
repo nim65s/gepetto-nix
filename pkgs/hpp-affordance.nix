@@ -15,20 +15,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-affordance";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-affordance";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-UuhoYfSOY6QoENjuhA8uTARiDwPF2BoJ3gHvPOP5Qng=";
+    hash = "sha256-wY5ZoDf2WBF8S/SMRlIOnvsX1lPirgowtTSE0vIKq1s=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"

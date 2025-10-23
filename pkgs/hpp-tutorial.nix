@@ -12,20 +12,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-tutorial";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp_tutorial";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-mo9+IYlEDMSOi7fDyA6yb8ZdACBBy2uNCzR//icMCmg=";
+    hash = "sha256-usM2w3w4S5aGL8Umbq4UpcyOPxxyQphPRgaEnmlPMoA=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -41,7 +35,9 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     python3Packages.python
   ];
+
   buildInputs = [ libsForQt5.qtbase ];
+
   propagatedBuildInputs = [
     python3Packages.hpp-gepetto-viewer
     python3Packages.hpp-manipulation-corba

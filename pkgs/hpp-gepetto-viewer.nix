@@ -12,20 +12,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gepetto-viewer";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gepetto-viewer";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-tWPyeEc8mpC5nE+z4Wb7BRTEXfQxhzshl8nBx8AXHAo=";
+    hash = "sha256-KIz61zjBwMeV4IcPiE6b2TG3mnepbLUzr1gB0E+vnGo=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -41,7 +35,9 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     python3Packages.python
   ];
+
   buildInputs = [ libsForQt5.qtbase ];
+
   propagatedBuildInputs = [
     python3Packages.gepetto-viewer-corba
     python3Packages.hpp-corbaserver

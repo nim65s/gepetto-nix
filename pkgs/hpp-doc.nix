@@ -27,12 +27,6 @@ stdenv.mkDerivation (finalAttrs: {
       ${python3Packages.python.interpreter}
   '';
 
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
-
   outputs = [
     "out"
     "doc"
@@ -47,7 +41,9 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     python3Packages.python
   ];
+
   buildInputs = [ libsForQt5.qtbase ];
+
   propagatedBuildInputs = [
     python3Packages.hpp-practicals
     python3Packages.hpp-tutorial

@@ -18,20 +18,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-universal-robot";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-universal-robot";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-4sZPcFV/vDtWDnjaBcGzCpS9SWYa3S0LzgUYdrT9vzM=";
+    hash = "sha256-xvdkedPr2UK4x+BIpjFZIzOGleEyxF8fhWbQhdlB7lU=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -46,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ]
   ++ lib.optional pythonSupport python3Packages.python;
+
   propagatedBuildInputs = [
     jrl-cmakemodules
     example-robot-data

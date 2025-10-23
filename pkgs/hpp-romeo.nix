@@ -18,20 +18,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-romeo";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp_romeo";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-cGt+tL1BgrB4DtPswLI5nAyRfzq0yYlZw1eucY2OA5c=";
+    hash = "sha256-sZ3igc9RLPOL4AFb/UuLst6dzjAmQ6dBIA1+c0DGLJc=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -46,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ]
   ++ lib.optional pythonSupport python3Packages.python;
+
   propagatedBuildInputs = [
     jrl-cmakemodules
   ]

@@ -272,6 +272,7 @@
                   hpp-romeo
                   hpp-statistics
                   hpp-template-corba
+                  hpp-tools
                   hpp-tutorial
                   hpp-universal-robot
                   hpp-util

@@ -20,20 +20,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-environments";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-environments";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-GCyrt1SkBrfoT2VXrZOoOlysxH4gS2+n5pNYSuAbAs8=";
+    hash = "sha256-+pJnmowI+x8LM2TyvDMvZZ4Qz5m9K3kEpxqGGaZ8jE8=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -48,6 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ]
   ++ lib.optional pythonSupport python3Packages.python;
+
   propagatedBuildInputs = [
     jrl-cmakemodules
   ]

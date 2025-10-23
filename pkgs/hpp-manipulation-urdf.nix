@@ -17,20 +17,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation-urdf";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation-urdf";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-t62zULwKR5MSoEcsWt/NYr8ojS1Ca0tSXlR9NYwtSLY=";
+    hash = "sha256-AbIF1U1DUTPrNDL+yxqjx1FX+Ke8x5RBNVE4U77aZYc=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -44,13 +38,12 @@ stdenv.mkDerivation (finalAttrs: {
     doxygen
     pkg-config
   ];
-  propagatedBuildInputs = [ hpp-manipulation ];
-  checkInputs = [ example-robot-data ];
-  doCheck = true;
 
-  preCheck = ''
-    export ROS_PACKAGE_PATH=${example-robot-data}/share
-  '';
+  propagatedBuildInputs = [ hpp-manipulation ];
+
+  checkInputs = [ example-robot-data ];
+
+  doCheck = true;
 
   meta = {
     description = "Implementation of a parser for hpp-manipulation";
