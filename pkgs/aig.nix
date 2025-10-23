@@ -14,23 +14,20 @@
   pinocchio,
   example-robot-data,
   jrl-cmakemodules,
-  python3Packages,
 
-  # checkInputs,
-  # doctest,
-
-  pythonSupport ? false,
+# checkInputs,
+# doctest,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "aig";
-  version = "1.2.1";
+  version = "1.3.0";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "aig";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-yrB+no9k63yFmy4a1Fgji6cOcLo81lf7Fc+QW6rOoD4=";
+    hash = "sha256-gpUipse9VNSk67Y67U6IrxNt7NnAQAN7OKN5JGS2x2g=";
   };
 
   nativeBuildInputs = [
@@ -41,17 +38,8 @@ stdenv.mkDerivation (finalAttrs: {
     eigen
     eiquadprog
     jrl-cmakemodules
-  ]
-  ++ lib.optionals (!pythonSupport) [
     example-robot-data
     pinocchio
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.boost
-    python3Packages.eigenpy
-    python3Packages.example-robot-data
-    python3Packages.pinocchio
-    python3Packages.pythonImportsCheckHook
   ];
 
   checkInputs = [
@@ -59,11 +47,10 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   cmakeFlags = [
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
   ];
 
   doCheck = true;
-  pythonImportsCheck = [ "aig" ];
 
   meta = {
     description = "Analytical inverse geometry for 6 links kinematic chains";
