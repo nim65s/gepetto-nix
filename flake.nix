@@ -136,7 +136,7 @@
                       glpk
                       graphviz
                       libGL
-                      libsForQt5.full
+                      libsForQt5.qtbase # TODO
                       octomap
                       openscenegraph
                       osgqt
