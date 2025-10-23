@@ -29,7 +29,7 @@
   gtest,
 }:
 let
-  version = "2.0.0";
+  version = "3.0.0";
 in
 buildRosPackage {
   pname = "linear-feedback-controller";
@@ -39,7 +39,7 @@ buildRosPackage {
     owner = "loco-3d";
     repo = "linear-feedback-controller";
     tag = "v${version}";
-    hash = "sha256-WB0QXTY74jqeYIt+lv5Y9slMw6lx8FfHO26aGpoX7T0=";
+    hash = "sha256-u1so8DjH8rCfqpHfa6qT+uHbALv6OJF22zaT1T0GYps=";
   };
 
   nativeBuildInputs = [
