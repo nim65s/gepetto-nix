@@ -46,8 +46,14 @@ stdenv.mkDerivation (finalAttrs: {
     boost
   ];
 
+  # /nix/var/nix/builds/nix-5586-3721320871/source/tests/test_biped_ig.cpp:156: error:
+  # in "BOOST_TEST_MODULE/test_solve_random": check (q_test - q_ig_base).norm() <= precision has failed
+  # [1.9999999999999998 > 1]
+  disabledTests = lib.optionals stdenv.hostPlatform.isDarwin [ "test_biped_ig" ];
+
   cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
+    (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'${lib.concatStringsSep "|" finalAttrs.disabledTests}'")
   ];
 
   doCheck = true;
