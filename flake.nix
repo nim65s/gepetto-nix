@@ -31,11 +31,6 @@
       url = "github:agimus-project/franka_description";
       flake = false;
     };
-    # gepetto-viewer has a fix to understand AMENT_PREFIX_PATH in #239/devel
-    src-gepetto-viewer = {
-      url = "github:Gepetto/gepetto-viewer/devel";
-      flake = false;
-    };
     src-odri-control-interface = {
       # TODO url = "github:open-dynamic-robot-initiative/odri_control_interface"; see https://github.com/open-dynamic-robot-initiative/odri_control_interface/pull/26
       url = "github:gwennlbh/odri_control_interface/nix";

@@ -119,7 +119,6 @@
         "src-agimus-controller": "src-agimus-controller",
         "src-agimus-msgs": "src-agimus-msgs",
         "src-franka-description": "src-franka-description",
-        "src-gepetto-viewer": "src-gepetto-viewer",
         "src-odri-control-interface": "src-odri-control-interface",
         "src-odri-masterboard-sdk": "src-odri-masterboard-sdk",
         "system-manager": "system-manager",
@@ -176,23 +175,6 @@
       "original": {
         "owner": "agimus-project",
         "repo": "franka_description",
-        "type": "github"
-      }
-    },
-    "src-gepetto-viewer": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1760391797,
-        "narHash": "sha256-5aWplS40CWL1GvF4LuLtipRP4TkTLNnOJUVTwzixpHA=",
-        "owner": "Gepetto",
-        "repo": "gepetto-viewer",
-        "rev": "1c942ecf7c755f615dcd43e17101a1f680795b8b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Gepetto",
-        "ref": "devel",
-        "repo": "gepetto-viewer",
         "type": "github"
       }
     },
