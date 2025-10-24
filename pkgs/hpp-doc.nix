@@ -12,25 +12,19 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-doc";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-doc";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-GEseaoFwOE7ztqRf3X+Dztcnk9JSxnzpgoQpxLZXhBQ=";
+    hash = "sha256-jejf3WR1MZ6EXzk78NcXLqRr8WhWMe+6zCr55XYKeNk=";
   };
 
   prePatch = ''
     substituteInPlace scripts/packageDep --replace-fail \
       "/usr/bin/env python3" \
       ${python3Packages.python.interpreter}
-  '';
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
   '';
 
   outputs = [
