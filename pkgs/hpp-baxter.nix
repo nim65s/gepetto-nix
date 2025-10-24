@@ -18,20 +18,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-baxter";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-baxter";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-AdEmaDGlmlbHF+pUD9FbVZU3wwxBSKNfsknLKxuuf/c=";
+    hash = "sha256-YClyG+d/f9LalQWElC8mGEgfL+v/VRZdLVM6lH75nbM=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -46,6 +40,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ]
   ++ lib.optional pythonSupport python3Packages.python;
+
   propagatedBuildInputs = [
     jrl-cmakemodules
     example-robot-data

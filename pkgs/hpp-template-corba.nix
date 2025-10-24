@@ -15,20 +15,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-template-corba";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-template-corba";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-uDMf2p/9GS62lh7I0ZYYLaPe/d6W++cJhtwBIKf1G+U=";
+    hash = "sha256-KOKJM32WYV6dtknzDLOEqb2a5Cv9xI0kMy1wz/RBpAY=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   strictDeps = true;
 
@@ -37,6 +31,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     omniorb
   ];
+
   propagatedBuildInputs = [
     jrl-cmakemodules
     hpp-util

@@ -16,20 +16,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-constraints";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-constraints";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-5x5PvuxNP1iaXmwQJhg0UWlo7kPCzF3xgbUwenZ1xqk=";
+    hash = "sha256-A9GIIaXBEDQaKI4WIOe8rSOjblV4D/qFMfZ49BZzGao=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -43,6 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
     doxygen
     pkg-config
   ];
+
   propagatedBuildInputs = [
     hpp-pinocchio
     hpp-statistics

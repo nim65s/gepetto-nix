@@ -47,7 +47,9 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     python3Packages.python
   ];
+
   buildInputs = [ libsForQt5.qtbase ];
+
   propagatedBuildInputs = [
     python3Packages.hpp-practicals
     python3Packages.hpp-tutorial

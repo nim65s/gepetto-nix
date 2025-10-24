@@ -24,20 +24,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-centroidal-dynamics";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-centroidal-dynamics";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-DfxIyz7lylh+z38BrJhRwyBYQ9nvBW/3CI7dieJ/g+o=";
+    hash = "sha256-vueMIcNJeYIYVu12OHXq8Nl2+Ywk4zVY9hR3VW/5rFc=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -55,11 +49,13 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.python
     python3Packages.pythonImportsCheckHook
   ];
+
   buildInputs = [
     cddlib
     clp
     qpoases
   ];
+
   propagatedBuildInputs = [
     eigen
     jrl-cmakemodules

@@ -11,16 +11,6 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
-    gepetto-viewer = prev.gepetto-viewer.overrideAttrs {
-      src = inputs.src-gepetto-viewer;
-    };
-    gepetto-viewer-corba = prev.gepetto-viewer-corba.overrideAttrs {
-      postPatch = ''
-        substituteInPlace CMakeLists.txt --replace-warn \
-          "cmake_minimum_required(VERSION 3.10)" \
-          "cmake_minimum_required(VERSION 3.22)"
-      '';
-    };
     # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
     openscenegraph = prev.openscenegraph.override {
       colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
@@ -49,12 +39,6 @@
             # which is broken on darwin
             meta.broken = final.stdenv.hostPlatform.isDarwin;
           };
-          colmpc = python-final.toPythonModule (
-            final.colmpc.override {
-              pythonSupport = true;
-              python3Packages = python-final;
-            }
-          );
           tyro = python-prev.tyro.overrideAttrs (super: {
             nativeBuildInputs = (super.nativeBuildInputs or [ ]) ++ [ python-final.pythonRelaxDepsHook ];
             pythonRelaxDeps = true;

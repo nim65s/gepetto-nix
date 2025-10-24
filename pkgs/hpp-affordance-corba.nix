@@ -15,20 +15,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-affordance-corba";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-affordance-corba";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-5NR9EenpqGUNHG2ZeizUafxq4znXWZFPPMgHo3cjVfI=";
+    hash = "sha256-Pb0FXcKSsmXZDCZZy2QJkQBMify26rOkBlerAq/3t7E=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"

@@ -8,14 +8,12 @@
 
   standalone ? true,
 
-  boost,
-  eigenpy,
-  example-robot-data,
-  ndcurves,
-  pinocchio,
+  crocoddyl,
+  mim-solvers,
+  numdifftools,
 }:
 toPythonModule (
-  pkgs.multicontact-api.overrideAttrs (super: {
+  pkgs.colmpc.overrideAttrs (super: {
     pname = "py-${super.pname}";
 
     cmakeFlags = (super.cmakeFlags or [ ]) ++ [
@@ -26,18 +24,19 @@ toPythonModule (
     propagatedBuildInputs =
       (super.propagatedBuildInputs or [ ])
       ++ [
-        boost
-        eigenpy
-        example-robot-data
-        ndcurves
-        pinocchio
+        crocoddyl
       ]
-      ++ lib.optional standalone pkgs.multicontact-api;
+      ++ lib.optional standalone pkgs.colmpc;
 
     nativeCheckInputs = (super.nativeCheckInputs or [ ]) ++ [
       pythonImportsCheckHook
     ];
 
-    pythonImportsCheck = [ "multicontact_api" ];
+    checkInputs = [
+      mim-solvers
+      numdifftools
+    ];
+
+    pythonImportsCheck = [ "colmpc" ];
   })
 )

@@ -1,6 +1,7 @@
 {
   lib,
   fetchFromGitHub,
+  fetchpatch,
   buildPythonPackage,
 
   # nativeBuildInputs
@@ -42,6 +43,14 @@ buildPythonPackage rec {
   prePatch = ''
     patchShebangs doc/configure.py
   '';
+
+  patches = [
+    (fetchpatch {
+      name = "remove-hpp-core-gpl.patch";
+      url = "https://github.com/humanoid-path-planner/hpp-python/pull/48/commits/ac68fbd62ed0e3da080928dfb4dbff38a7b55d18.patch";
+      hash = "sha256-X0yft6jMgJyRm8qhLFEc/xQuIjr9Ug0BkYZOpYIh9K0=";
+    })
+  ];
 
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace-warn \

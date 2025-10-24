@@ -11,16 +11,16 @@
   boost,
   eigenpy,
   example-robot-data,
-  ndcurves,
   pinocchio,
 }:
 toPythonModule (
-  pkgs.multicontact-api.overrideAttrs (super: {
+  pkgs.aig.overrideAttrs (super: {
     pname = "py-${super.pname}";
 
     cmakeFlags = (super.cmakeFlags or [ ]) ++ [
       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
       (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" standalone)
+      (lib.cmakeBool "INSTALL_PYTHON_INTERFACE_ONLY" standalone)
     ];
 
     propagatedBuildInputs =
@@ -29,15 +29,14 @@ toPythonModule (
         boost
         eigenpy
         example-robot-data
-        ndcurves
         pinocchio
       ]
-      ++ lib.optional standalone pkgs.multicontact-api;
+      ++ lib.optional standalone pkgs.aig;
 
     nativeCheckInputs = (super.nativeCheckInputs or [ ]) ++ [
       pythonImportsCheckHook
     ];
 
-    pythonImportsCheck = [ "multicontact_api" ];
+    pythonImportsCheck = [ "aig" ];
   })
 )

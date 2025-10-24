@@ -22,20 +22,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-bezier-com-traj";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-bezier-com-traj";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-5G7FD/LNfygFHNk5btx0PrkUqWWdSpJwazb1I+CJhy4=";
+    hash = "sha256-/Eo2oNFdJii0F/mj33TX5G/UV8G1mvYTb3XvmVIPr6w=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -53,6 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.python
     python3Packages.pythonImportsCheckHook
   ];
+
   propagatedBuildInputs = [
     cddlib
     clp

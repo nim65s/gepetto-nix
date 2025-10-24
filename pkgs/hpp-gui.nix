@@ -12,20 +12,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gui";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gui";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-PNHwfNOGHSYIkttAMX8vUV9T3f4Sd+Tnu4N5O+5h2fk=";
+    hash = "sha256-yvZq9d6250SsbljrW+1Q8Xdty1ArrcACtvZdKE1jDhA=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -41,7 +35,9 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     python3Packages.python
   ];
+
   buildInputs = [ libsForQt5.qtbase ];
+
   propagatedBuildInputs = [
     python3Packages.gepetto-viewer-corba
     python3Packages.hpp-manipulation-corba

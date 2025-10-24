@@ -16,20 +16,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation-corba";
-  version = "6.0.0";
+  version = "6.1.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation-corba";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-WG2CqkC0Jhwi10hQ9kjtGM5bQiuqeNj0JIKYQwOoCEQ=";
+    hash = "sha256-cPQKVScuQ1KPZvwUKCRoiqzHoT3yugvrP8+hEzV991g=";
   };
-
-  postPatch = ''
-    substituteInPlace CMakeLists.txt --replace-warn \
-      "cmake_minimum_required(VERSION 3.10)" \
-      "cmake_minimum_required(VERSION 3.22)"
-  '';
 
   outputs = [
     "out"
@@ -45,6 +39,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     python3Packages.python
   ];
+
   propagatedBuildInputs = [
     hpp-manipulation-urdf
     python3Packages.hpp-corbaserver
