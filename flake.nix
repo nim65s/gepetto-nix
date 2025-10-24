@@ -136,7 +136,8 @@
                       glpk
                       graphviz
                       libGL
-                      libsForQt5.qtbase # TODO
+                      libsForQt5.qtbase
+                      libsForQt5.qttools
                       octomap
                       openscenegraph
                       osgqt
@@ -147,6 +148,7 @@
                           numpy
                           omniorb
                           omniorbpy
+                          pybind11
                           python-qt
                           scipy
                           (toPythonModule rosPackages.rolling.xacro)
