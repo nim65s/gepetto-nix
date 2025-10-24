@@ -283,6 +283,7 @@
                   odri-control-interface
                   odri-masterboard-sdk
                   pinocchio
+                  tsid
                   # keep-sorted end
                   ;
               }
