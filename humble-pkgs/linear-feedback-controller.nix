@@ -29,7 +29,7 @@
   gtest,
 }:
 let
-  version = "3.0.0";
+  version = "3.0.1";
 in
 buildRosPackage {
   pname = "linear-feedback-controller";
@@ -39,7 +39,7 @@ buildRosPackage {
     owner = "loco-3d";
     repo = "linear-feedback-controller";
     tag = "v${version}";
-    hash = "sha256-u1so8DjH8rCfqpHfa6qT+uHbALv6OJF22zaT1T0GYps=";
+    hash = "sha256-LeKn8myFQ7e9sS2UrPsmlHGPujTwGptkIHcT9G1wfLc=";
   };
 
   nativeBuildInputs = [
@@ -85,6 +85,7 @@ buildRosPackage {
   enableParallelBuilding = false;
 
   meta = {
+    changelog = "https://github.com/loco-3d/linear-feedback-controller/blob/v${version}/CHANGELOG.md";
     description = "RosControl linear feedback controller with pal base estimator and RosTopics external interface.";
     homepage = "https://github.com/loco-3d/linear-feedback-controller";
     license = lib.licenses.bsd2;
