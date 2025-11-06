@@ -21,13 +21,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "aig";
-  version = "1.3.1";
+  version = "2.0.0";
 
   src = fetchFromGitHub {
     owner = "Gepetto";
     repo = "aig";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-5Iph+0LxOYz0iIvLLI/zpS7Xrz1e1a56sapfDKCp2vM=";
+    hash = "sha256-9ZKPpL80IOk2xDg+ORta5xZqZq5QbRFvSom861xjPfk=";
   };
 
   nativeBuildInputs = [
@@ -59,6 +59,7 @@ stdenv.mkDerivation (finalAttrs: {
   doCheck = true;
 
   meta = {
+    changelog = "https://github.com/Gepetto/aig/blob/${finalAttrs.src.tag}/CHANGELOG.md";
     description = "Analytical inverse geometry for 6 links kinematic chains";
     homepage = "https://github.com/Gepetto/aig";
     license = lib.licenses.bsd2;
