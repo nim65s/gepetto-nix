@@ -1,7 +1,7 @@
 From 8da525f64895a47a08f915259f87da25bb0a1323 Mon Sep 17 00:00:00 2001
 From: Guilhem Saurel <guilhem.saurel@laas.fr>
 Date: Wed, 29 Oct 2025 08:28:54 +0100
-Subject: [PATCH 1/7] python3Packages.coal: make standalone optional
+Subject: [PATCH 1/8] python3Packages.coal: make standalone optional
 
 ---
  pkgs/development/python-modules/coal/default.nix | 11 +++++++----
@@ -49,7 +49,7 @@ index 773de813e0dac..b3bdd19b6aa41 100644
 From 92a3e7773187bb5be2a3896d4467a94e12e0f85d Mon Sep 17 00:00:00 2001
 From: Guilhem Saurel <guilhem.saurel@laas.fr>
 Date: Wed, 29 Oct 2025 08:29:08 +0100
-Subject: [PATCH 2/7] python3Packages.pinocchio: make standalone optional
+Subject: [PATCH 2/8] python3Packages.pinocchio: make standalone optional
 
 ---
  pkgs/development/python-modules/pinocchio/default.nix | 11 +++++++----
@@ -96,7 +96,7 @@ index d2f722d9ee5c6..6acf36e0cbb60 100644
 From fed984e5e78e4aeeaba311b83b0f3d4298ecf8a7 Mon Sep 17 00:00:00 2001
 From: Guilhem Saurel <guilhem.saurel@laas.fr>
 Date: Wed, 29 Oct 2025 08:29:24 +0100
-Subject: [PATCH 3/7] python3Packages.example-robot-data: make standalone
+Subject: [PATCH 3/8] python3Packages.example-robot-data: make standalone
  optional
 
 ---
@@ -143,7 +143,7 @@ index 3a9bfc18b39df..dec8878cfb6aa 100644
 From 8bd35bd19156552883d7449da343be408278cc72 Mon Sep 17 00:00:00 2001
 From: Guilhem Saurel <guilhem.saurel@laas.fr>
 Date: Wed, 29 Oct 2025 08:29:44 +0100
-Subject: [PATCH 4/7] python3Packages.ndcurves: make standalone optional
+Subject: [PATCH 4/8] python3Packages.ndcurves: make standalone optional
 
 ---
  pkgs/development/python-modules/ndcurves/default.nix | 10 +++++++---
@@ -191,7 +191,7 @@ index 885cfa64a0245..e7826c837d5ce 100644
 From 31c9d3187677cfab40986586a16b0783e8608d5c Mon Sep 17 00:00:00 2001
 From: Guilhem Saurel <guilhem.saurel@laas.fr>
 Date: Wed, 29 Oct 2025 08:29:53 +0100
-Subject: [PATCH 5/7] python3Packages.tsid: make standalone optional
+Subject: [PATCH 5/8] python3Packages.tsid: make standalone optional
 
 ---
  pkgs/development/python-modules/tsid/default.nix | 11 +++++++----
@@ -238,7 +238,7 @@ index 3894c80d28540..1d114b58262e4 100644
 From 40ea0c63a734ae1bd11269bafe8f0106fbaa3369 Mon Sep 17 00:00:00 2001
 From: Guilhem Saurel <guilhem.saurel@laas.fr>
 Date: Wed, 29 Oct 2025 08:30:03 +0100
-Subject: [PATCH 6/7] python3Packages.crocoddyl: make standalone optional
+Subject: [PATCH 6/8] python3Packages.crocoddyl: make standalone optional
 
 ---
  pkgs/development/python-modules/crocoddyl/default.nix | 11 +++++++----
@@ -285,7 +285,7 @@ index 5e5e449899f02..f9fd0165e756c 100644
 From 7f6585e6fe9c7ab388c33b1a4e8e3ec74d184262 Mon Sep 17 00:00:00 2001
 From: Guilhem Saurel <guilhem.saurel@laas.fr>
 Date: Wed, 29 Oct 2025 08:30:14 +0100
-Subject: [PATCH 7/7] python3Packages.aligator: make standalone optional
+Subject: [PATCH 7/8] python3Packages.aligator: make standalone optional
 
 ---
  pkgs/development/python-modules/aligator/default.nix | 11 +++++++----
@@ -328,4 +328,51 @@ index 6ef954f53a0ee..cd3da9a896335 100644
 +    ++ lib.optional standalone aligator;
  
      nativeCheckInputs = [
+       pythonImportsCheckHook
+
+From 43bf6dd58d63bbcaa999201ba3fb0aa1a6633971 Mon Sep 17 00:00:00 2001
+From: Guilhem Saurel <guilhem.saurel@laas.fr>
+Date: Mon, 10 Nov 2025 17:14:19 +0100
+Subject: [PATCH 8/8] python3Packages.mim-solvers: make standalone optional
+
+---
+ pkgs/development/python-modules/mim-solvers/default.nix | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/pkgs/development/python-modules/mim-solvers/default.nix b/pkgs/development/python-modules/mim-solvers/default.nix
+index ebb18af22dfdc..7d57a4e04b0b0 100644
+--- a/pkgs/development/python-modules/mim-solvers/default.nix
++++ b/pkgs/development/python-modules/mim-solvers/default.nix
+@@ -19,6 +19,8 @@
+ 
+   # nativeCheckInputs
+   pytest,
++
++  standalone ? true,
+ }:
+ toPythonModule (
+   mim-solvers.overrideAttrs (super: {
+@@ -26,7 +28,7 @@ toPythonModule (
+ 
+     cmakeFlags = super.cmakeFlags ++ [
+       (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
+-      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" true)
++      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" standalone)
+     ];
+ 
+     # this is used by CMake at configure/build time
+@@ -38,12 +40,12 @@ toPythonModule (
+       boost
+       crocoddyl
+       eigenpy
+-      mim-solvers
+       osqp
+       proxsuite
+       scipy
+     ]
+-    ++ super.propagatedBuildInputs;
++    ++ super.propagatedBuildInputs
++    ++ lib.optional standalone mim-solvers;
+ 
+     nativeCheckInputs = super.nativeCheckInputs ++ [
        pythonImportsCheckHook
