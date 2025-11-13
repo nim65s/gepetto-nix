@@ -11,11 +11,16 @@ on:
 jobs:
   pieces:
     name: "Nix build ${{ matrix.build }} on ${{ matrix.os }}"
-    runs-on: "${{ matrix.os }}-latest"
+    runs-on: "${{ matrix.os }}"
     strategy:
       matrix:
-        os: [macos, ubuntu]
+        os: [macos-15, ubuntu-24.04]
         build: ["pinocchio", "py-aligator", "gepetto-viewer", "dev-shell-hpp", "dev-shell-hpp-bin", "python", "ros"]
+        include:
+          - os: macos-15-intel
+            build: py-aligator
+          - os: ubuntu-24.04-arm
+            build: py-aligator
     steps:
       - uses: actions/checkout@v5
       - uses: cachix/install-nix-action@v31
@@ -24,7 +29,7 @@ jobs:
           name: gepetto
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: ros
-      - run: nix build -L ".#${{ matrix.build }}"
+      - run: nix build -L ".#${{ matrix.build }}" --cores 4
   complete:
     needs: pieces
     name: "Nix build on ${{ matrix.os }}"
@@ -40,7 +45,7 @@ jobs:
           name: gepetto
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: ros
-      - run: nix flake check -L
+      - run: nix flake check -L --cores 4
   check:
     if: always()
     name: check-macos-linux-nix
