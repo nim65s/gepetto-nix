@@ -249,6 +249,7 @@
                   aig
                   aligator
                   biped-stabilizer
+                  coal
                   colmpc
                   crocoddyl
                   example-robot-data
@@ -285,6 +286,7 @@
                   odri-control-interface
                   odri-masterboard-sdk
                   pinocchio
+                  proxsuite
                   tsid
                   # keep-sorted end
                   ;
@@ -296,6 +298,7 @@
                   aligator
                   biped-stabilizer
                   brax
+                  coal
                   colmpc
                   crocoddyl
                   example-parallel-robots
@@ -323,6 +326,7 @@
                   ndcurves
                   pinocchio
                   platypus
+                  proxsuite
                   sensitivity
                   toolbox-parallel-robots
                   tsid
