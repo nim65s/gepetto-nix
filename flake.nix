@@ -106,6 +106,23 @@
                     # keep-sorted end
                   ];
                 };
+                vscode = pkgs.mkShell {
+                  packages = [
+                    pkgs.cudaPackages.cudatoolkit
+                    (pkgs.vscode-with-extensions.override {
+                      vscodeExtensions = with pkgs.vscode-extensions.ms-vscode-remote; [
+                        remote-containers
+                      ];
+                    })
+                  ];
+                  # This contain coreutils and a 'id' binary not configured for LDAP,
+                  # so at LAAS, vscode 'id -u -n' fails
+                  shellHook = ''
+                    mkdir -p .nix-override-bin
+                    ln -sf /usr/bin/id .nix-override-bin/id
+                    export PATH="$PWD/.nix-override-bin:$PATH"
+                  '';
+                };
                 hpp = pkgs.mkShell {
                   name = "dev shell for HPP";
                   CMAKE_C_COMPILER_LAUNCHER = "ccache";
