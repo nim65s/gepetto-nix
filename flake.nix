@@ -109,11 +109,7 @@
                 vscode = pkgs.mkShell {
                   packages = [
                     pkgs.cudaPackages.cudatoolkit
-                    (pkgs.vscode-with-extensions.override {
-                      vscodeExtensions = with pkgs.vscode-extensions.ms-vscode-remote; [
-                        remote-containers
-                      ];
-                    })
+                    self'.packages.vscode
                   ];
                   # This contain coreutils and a 'id' binary not configured for LDAP,
                   # so at LAAS, vscode 'id -u -n' fails
@@ -256,6 +252,25 @@
                       # keep-sorted end
                     ];
                   };
+                vscode =
+                  let
+                    wrapped = pkgs.vscode-with-extensions.override {
+                      vscodeExtensions = with pkgs.vscode-extensions.ms-vscode-remote; [
+                        remote-containers
+                      ];
+                    };
+                  in
+                  pkgs.runCommand "vscode"
+                    {
+                      inherit (wrapped) meta dontPatchELF dontStrip;
+                      nativeBuildInputs = [ pkgs.makeWrapper ];
+                      buildInputs = [ wrapped ];
+                    }
+                    ''
+                      mkdir -p $out/bin
+                      makeWrapper "${lib.getExe wrapped}" $out/bin/vscode --add-flags --no-sandbox
+                      ln -s $out/bin/vscode $out/bin/code
+                    '';
               }
               // lib.optionalAttrs (system == "x86_64-linux") {
                 system-manager = inputs'.system-manager.packages.default;
