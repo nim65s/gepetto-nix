@@ -108,9 +108,9 @@
                 };
                 vscode = pkgs.mkShell {
                   packages = [
-                    pkgs.cudaPackages.cudatoolkit
                     self'.packages.vscode
-                  ];
+                  ]
+                  ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.cudaPackages.cudatoolkit;
                   # This contain coreutils and a 'id' binary not configured for LDAP,
                   # so at LAAS, vscode 'id -u -n' fails
                   shellHook = ''
