@@ -111,13 +111,6 @@
                     self'.packages.vscode
                   ]
                   ++ lib.optional pkgs.stdenv.hostPlatform.isLinux pkgs.cudaPackages.cudatoolkit;
-                  # This contain coreutils and a 'id' binary not configured for LDAP,
-                  # so at LAAS, vscode 'id -u -n' fails
-                  shellHook = ''
-                    mkdir -p .nix-override-bin
-                    ln -sf /usr/bin/id .nix-override-bin/id
-                    export PATH="$PWD/.nix-override-bin:$PATH"
-                  '';
                 };
                 hpp = pkgs.mkShell {
                   name = "dev shell for HPP";
@@ -254,23 +247,26 @@
                   };
                 vscode =
                   let
-                    wrapped = pkgs.vscode-with-extensions.override {
-                      vscodeExtensions = with pkgs.vscode-extensions.ms-vscode-remote; [
-                        remote-containers
-                      ];
-                    };
-                  in
-                  pkgs.runCommand "vscode"
-                    {
-                      inherit (wrapped) meta dontPatchELF dontStrip;
-                      nativeBuildInputs = [ pkgs.makeWrapper ];
-                      buildInputs = [ wrapped ];
-                    }
-                    ''
+                    # This contain coreutils and a 'id' binary not configured for LDAP,
+                    # so at LAAS, vscode 'id -u -n' fails
+                    id-link = pkgs.runCommand "id-link" { } ''
                       mkdir -p $out/bin
-                      makeWrapper "${lib.getExe wrapped}" $out/bin/vscode --add-flags --no-sandbox
-                      ln -s $out/bin/vscode $out/bin/code
+                      ln -s /usr/bin/id $out/bin/id
                     '';
+                  in
+                  pkgs.vscode-with-extensions.override {
+                    vscode = pkgs.vscode.overrideAttrs (super: {
+                      preFixup = super.preFixup + ''
+                        gappsWrapperArgs+=(
+                          --prefix PATH : ${id-link}/bin
+                          --add-flags --no-sandbox
+                        )
+                      '';
+                    });
+                    vscodeExtensions = with pkgs.vscode-extensions.ms-vscode-remote; [
+                      remote-containers
+                    ];
+                  };
               }
               // lib.optionalAttrs (system == "x86_64-linux") {
                 system-manager = inputs'.system-manager.packages.default;
