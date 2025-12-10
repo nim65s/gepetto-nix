@@ -281,6 +281,7 @@
                   aig
                   aligator
                   biped-stabilizer
+                  casadi
                   coal
                   colmpc
                   crocoddyl
@@ -330,6 +331,7 @@
                   aligator
                   biped-stabilizer
                   brax
+                  casadi
                   coal
                   colmpc
                   crocoddyl
