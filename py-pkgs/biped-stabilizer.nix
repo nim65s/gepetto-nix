@@ -1,10 +1,43 @@
 {
+  lib,
+
   toPythonModule,
+  pythonImportsCheckHook,
+
   pkgs,
+
+  boost,
+  eigenpy,
+  example-robot-data,
+  pinocchio,
+
+  buildStandalone ? true,
 }:
 toPythonModule (
-  pkgs.biped-stabilizer.override {
-    inherit (pkgs) python3Packages;
-    pythonSupport = true;
-  }
+  pkgs.biped-stabilizer.overrideAttrs (super: {
+    pname = "py-${super.pname}";
+
+    cmakeFlags = super.cmakeFlags ++ [
+      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" true)
+      (lib.cmakeBool "BUILD_STANDALONE_PYTHON_INTERFACE" buildStandalone)
+    ];
+
+    propagatedBuildInputs =
+      (super.propagatedBuildInputs or [ ])
+      ++ [
+        boost
+        eigenpy
+        example-robot-data
+        pinocchio
+      ]
+      ++ lib.optional buildStandalone pkgs.biped-stabilizer;
+
+    nativeCheckInputs = (super.nativeCheckInputs or [ ]) ++ [
+      pythonImportsCheckHook
+    ];
+
+    pythonImportsCheck = [
+      "biped_stabilizer"
+    ];
+  })
 )
