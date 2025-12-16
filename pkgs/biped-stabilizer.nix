@@ -3,6 +3,7 @@
 
   stdenv,
   fetchFromGitHub,
+  fetchpatch,
 
   # nativeBuildInputs
   cmake,
@@ -11,12 +12,9 @@
   boost,
   eigen,
   jrl-cmakemodules,
-  python3Packages,
 
   # checkInputs,
   doctest,
-
-  pythonSupport ? false,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -30,23 +28,21 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-3LffArep/TA0gPu2DnXY2oXE9K6SuIAOM2cSYl3HBGE=";
   };
 
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/Gepetto/biped-stabilizer/pull/72.patch";
+      hash = "sha256-nWAoxSpP5kANagQCcKhWso1K8U+bXGHLvzZcJNXcM78=";
+    })
+  ];
+
   nativeBuildInputs = [
     cmake
   ];
 
   propagatedBuildInputs = [
+    boost
     eigen
     jrl-cmakemodules
-  ]
-  ++ lib.optionals (!pythonSupport) [
-    boost
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.boost
-    python3Packages.eigenpy
-    python3Packages.example-robot-data
-    python3Packages.pinocchio
-    python3Packages.pythonImportsCheckHook
   ];
 
   checkInputs = [
@@ -54,11 +50,10 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   cmakeFlags = [
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
   ];
 
   doCheck = true;
-  pythonImportsCheck = [ "biped_stabilizer" ];
 
   meta = {
     description = "Stabilizer for Biped Locomotion";
