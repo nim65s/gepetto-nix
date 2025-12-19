@@ -25,7 +25,7 @@
 let
   version = "1.1.2";
 in
-buildRosPackage {
+buildRosPackage rec {
   pname = "linear-feedback-controller-msgs";
   inherit version;
 
@@ -60,6 +60,7 @@ buildRosPackage {
 
   meta = {
     description = "ROS messages which correspond to the loco-3d/linear-feedback-controller package.";
+    changelog = "https://github.com/loco-3d/linear-feedback-controller-msgs/blob/${src.tag}/CHANGELOG.md";
     homepage = "https://github.com/loco-3d/linear-feedback-controller-msgs";
     license = lib.licenses.bsd2;
     maintainers = [ lib.maintainers.nim65s ];
