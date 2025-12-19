@@ -23,7 +23,7 @@
   tf2-eigen,
 }:
 let
-  version = "1.1.1";
+  version = "1.1.2";
 in
 buildRosPackage rec {
   pname = "linear-feedback-controller-msgs";
@@ -33,7 +33,7 @@ buildRosPackage rec {
     owner = "loco-3d";
     repo = "linear-feedback-controller-msgs";
     tag = "v${version}";
-    hash = "sha256-WP1l+wsy9NPsQ/m55kGE2p2hFOVEJkbOkbjdweg0as4=";
+    hash = "sha256-DgL5ZjdT4aq2eS/gjH9O3/Lu0tNqxeupaFHbMr/Y0Yk=";
   };
 
   nativeBuildInputs = [
