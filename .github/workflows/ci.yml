@@ -48,6 +48,8 @@ jobs:
       matrix:
         os: [macos, ubuntu]
     steps:
+      - uses: jlumbroso/free-disk-space@main
+        if: ${{ matrix.os == 'ubuntu' }}
       - uses: actions/checkout@v6
       - uses: cachix/install-nix-action@v31
       - uses: cachix/cachix-action@v16
