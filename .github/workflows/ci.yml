@@ -12,8 +12,8 @@ jobs:
   populate-cache:
     name: "${{ matrix.build }} on ${{ matrix.os }}"
     runs-on: "${{ matrix.os }}"
-    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         os: [macos-15, ubuntu-24.04]
         build: ["pinocchio", "py-aligator", "gepetto-viewer", "dev-shell-hpp", "dev-shell-hpp-bin", "python", "ros"]
@@ -43,8 +43,8 @@ jobs:
     needs: populate-cache
     name: "${{ matrix.os }}"
     runs-on: "${{ matrix.os }}-latest"
-    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         os: [macos, ubuntu]
     steps:
