@@ -11,3 +11,4 @@ pull_request_rules:
           - author = pre-commit-ci[bot]
     actions:
       queue:
+        method: rebase
