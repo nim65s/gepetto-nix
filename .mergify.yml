@@ -2,7 +2,7 @@ queue_rules:
   - name: default
     autoqueue: true
     merge_method: rebase
-    update_mergod: rebase
+    update_method: rebase
     queue_conditions:
       - check-success = "check-macos-linux-nix"
       - check-success = "pre-commit.ci - pr"
