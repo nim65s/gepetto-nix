@@ -10,4 +10,4 @@ pull_request_rules:
           - author = hrp2-14
           - author = pre-commit-ci[bot]
     actions:
-      merge:
+      queue:
