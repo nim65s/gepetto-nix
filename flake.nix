@@ -177,6 +177,7 @@
                     (pkgs.python3.withPackages (p: [
                       p.gepetto-gui
                       p.hpp-corba
+                      p.pinocchio
                     ]))
                   ];
                 };
