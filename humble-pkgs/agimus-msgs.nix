@@ -12,6 +12,7 @@
   rosidl-default-generators,
 
   # propagatedBuildInputs
+  action-msgs,
   rosidl-typesupport-c,
   rosidl-typesupport-introspection-c,
   rosidl-runtime-py,
@@ -33,6 +34,7 @@ buildRosPackage {
   ];
 
   propagatedBuildInputs = [
+    action-msgs
     rosidl-typesupport-c
     rosidl-typesupport-introspection-c
     rosidl-runtime-py
