@@ -64,7 +64,8 @@
             yamizoyama = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
-                ./modules/system-manager/nvidia-590-48.nix
+                # ./modules/system-manager/nvidia-590-48.nix
+                ./modules/system-manager/shared.nix
               ];
             };
           };
