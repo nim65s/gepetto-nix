@@ -61,6 +61,12 @@
                 ./modules/system-manager/nvidia-575-64.nix
               ];
             };
+            tomuraushi = inputs.system-manager.lib.makeSystemConfig {
+              modules = [
+                inputs.nix-system-graphics.systemModules.default
+                ./modules/system-manager/nvidia-580-126.nix
+              ];
+            };
             yamizoyama = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
