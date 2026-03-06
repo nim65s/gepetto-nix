@@ -14,13 +14,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-statistics";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-statistics";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-2f7XMh/9vGp2KdHoibpmSU+pFpslzzs3LaEh1bXfiNQ=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-2f7XMh/9vGp2KdHoibpmSU+pFpslzzs3LaEh1bXfiNQ=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-Vsrrf1/JTyyx52sKKaVWv8rGV7qniw8SKN0fJc80xhk=";
   };
 
   outputs = [

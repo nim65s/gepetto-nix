@@ -13,8 +13,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-15, ubuntu-24.04]
-        build: ["pinocchio", "py-aligator", "gepetto-viewer", "dev-shell-hpp", "dev-shell-hpp-bin", "python"]
+        # os: TODO [macos-15, ubuntu-24.04]
+        os: [ubuntu-24.04]
+        build: ["pinocchio", "py-aligator", "gepetto-viewer", "devShells.x86_64-linux.hpp", "devShells.x86_64-linux.hpp-bin", "python"]
         # include:
         #   - os: macos-15-intel
         #     build: py-aligator

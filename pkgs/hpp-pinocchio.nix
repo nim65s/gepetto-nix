@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch,
   stdenv,
 
   # nativeBuildInputs
@@ -18,21 +17,16 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-pinocchio";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-pinocchio";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-B8lgWzmOe+/AbiJXWcu1mK3QrHFa7MkjJYiXLbvI3b8=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-B8lgWzmOe+/AbiJXWcu1mK3QrHFa7MkjJYiXLbvI3b8=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-DIbAlxHNAshgf6zke7ffusWFGhXrOpPObm4OnymkCwM=";
   };
-
-  patches = [
-    (fetchpatch {
-      url = "https://github.com/humanoid-path-planner/hpp-pinocchio/pull/282.patch?full_index=1";
-      hash = "sha256-CXm6grvGAlUKIzXi3CWPBj/HUcGZDaA63BQBDhPmENc=";
-    })
-  ];
 
   strictDeps = true;
 

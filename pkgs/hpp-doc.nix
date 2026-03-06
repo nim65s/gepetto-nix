@@ -12,13 +12,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-doc";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-doc";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-jejf3WR1MZ6EXzk78NcXLqRr8WhWMe+6zCr55XYKeNk=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-jejf3WR1MZ6EXzk78NcXLqRr8WhWMe+6zCr55XYKeNk=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-rEecoUfEXjtMrvljRwRExhlndyuN156DXzZPX6hW9Lo=";
   };
 
   prePatch = ''
