@@ -69,9 +69,6 @@ buildPythonPackage rec {
     hpp-corbaserver
     hpp-manipulation
     hpp-manipulation-urdf
-  ];
-
-  dependencies = [
     lxml
   ];
 
