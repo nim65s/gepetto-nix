@@ -35,10 +35,8 @@ buildPythonPackage rec {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-python";
-    # tag = "v${version}";
-    # hash = "sha256-tuxm81XdlwZmN/Grz/qIgTVI0mLixavxsWZmS4MqH9M=";
-    rev = "release/${version}";
-    hash = "sha256-5uyV+aRNBAB0V5Zif9O50AcBVFVPSWh0XnhB6c6my5Q=";
+    tag = "v${version}";
+    hash = "sha256-UWWdzg0GE2JE4d9xfabfQ/b9tA6+37ZynbF6IAVAjAQ=";
   };
 
   prePatch = ''

@@ -22,10 +22,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-pinocchio";
-    # tag = "v${finalAttrs.version}";
-    # hash = "sha256-B8lgWzmOe+/AbiJXWcu1mK3QrHFa7MkjJYiXLbvI3b8=";
-    rev = "release/${finalAttrs.version}";
-    hash = "sha256-DIbAlxHNAshgf6zke7ffusWFGhXrOpPObm4OnymkCwM=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-Qkd4tUSQN9BhHXi6t19B8pbfDjueC2yghrCrIzsISjQ=";
   };
 
   strictDeps = true;

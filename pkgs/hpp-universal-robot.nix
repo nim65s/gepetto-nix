@@ -23,10 +23,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-universal-robot";
-    # tag = "v${finalAttrs.version}";
-    # hash = "sha256-xvdkedPr2UK4x+BIpjFZIzOGleEyxF8fhWbQhdlB7lU=";
-    rev = "release/${finalAttrs.version}";
-    hash = "sha256-A65ZWekELmgGjA2epVl96zSmvvfuHGOYZKMeQIjKDfY=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-GMfw+kGX+kRrrx5OMUqaS9ABBWvrp0Sf0shn6EVSlHU=";
   };
 
   outputs = [

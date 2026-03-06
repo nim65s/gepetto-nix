@@ -21,10 +21,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-constraints";
-    # tag = "v${finalAttrs.version}";
-    # hash = "sha256-A9GIIaXBEDQaKI4WIOe8rSOjblV4D/qFMfZ49BZzGao=";
-    rev = "release/${finalAttrs.version}";
-    hash = "sha256-Iadir6UC+OGV0c1DxSqZY21oTr8KOG7OvePqcXYkzoA=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-cGX+TLhp9h8su1Pj1nDsKf5/ABQdZhrXr/tI97n5wBs=";
   };
 
   outputs = [

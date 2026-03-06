@@ -17,10 +17,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-plot";
-    # tag = "v${finalAttrs.version}";
-    # hash = "sha256-SF3w+IXTcO03Or2YsPP3drRUnrURzDrQSACLCBMNKes=";
-    rev = "release/${finalAttrs.version}";
-    hash = "sha256-5TMyxVUNiF0i9TbK/Mhq8uTztBECZQImfamgeZAn8hw=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-VTiKJQaTcyVZn9vF5tzRb2Y1gPch/ma3bclKqXEUWHc=";
   };
 
   outputs = [
