@@ -20,10 +20,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-affordance";
-    # tag = "v${finalAttrs.version}";
-    # hash = "sha256-wY5ZoDf2WBF8S/SMRlIOnvsX1lPirgowtTSE0vIKq1s=";
-    rev = "release/${finalAttrs.version}";
-    hash = "sha256-ndQp2NB9soeQpUPyIydPbClgg/VOYBULsBQkku+VS/8=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-uZ0PS9xOVgAPwVwJMRt7yhFBIvZIfksUm/sGR93nNtk=";
   };
 
   outputs = [

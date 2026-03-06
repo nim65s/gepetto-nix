@@ -23,10 +23,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp_romeo";
-    # tag = "v${finalAttrs.version}";
-    # hash = "sha256-sZ3igc9RLPOL4AFb/UuLst6dzjAmQ6dBIA1+c0DGLJc=";
-    rev = "release/${finalAttrs.version}";
-    hash = "sha256-cpeuSA1+mliXGQq8vSpTAIL6G0o/XQIX4vllb3cvjug=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-8VLfLWHELAusb9sj1zprIXPNRHEXRvtupjp2sjlLu9M=";
   };
 
   outputs = [

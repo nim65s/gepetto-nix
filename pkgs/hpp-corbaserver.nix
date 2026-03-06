@@ -26,10 +26,8 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-corbaserver";
-    # tag = "v${finalAttrs.version}";
-    # hash = "sha256-Yj/WCDV5TeELwVYNLyePYRTkpS0U+SxAtgdhDjc7MTg=";
-    rev = "release/${finalAttrs.version}";
-    hash = "sha256-y7lfNzO8qYxkgCAfIfK0DDZ0r2TG2zkmARKv98YowLE=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-7sMGI/HR6HlXMSJiLAyRpB1Rffg2YVcNmnTqwJVnXkg=";
   };
 
   prePatch = ''
