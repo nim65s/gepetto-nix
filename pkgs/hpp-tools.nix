@@ -12,13 +12,15 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-tools";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-tools";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-jiONAsWlOco+tgRbaT7w5f/8/NNVzTUrRo6hvVUwSxw=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-jiONAsWlOco+tgRbaT7w5f/8/NNVzTUrRo6hvVUwSxw=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-nHmdNFjpnI1isa68b8C0LPfZDzYtP7D/l+fZdBYk+hM=";
   };
 
   nativeBuildInputs = [

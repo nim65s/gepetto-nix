@@ -12,13 +12,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-plot";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-plot";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-SF3w+IXTcO03Or2YsPP3drRUnrURzDrQSACLCBMNKes=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-SF3w+IXTcO03Or2YsPP3drRUnrURzDrQSACLCBMNKes=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-5TMyxVUNiF0i9TbK/Mhq8uTztBECZQImfamgeZAn8hw=";
   };
 
   outputs = [
@@ -36,7 +38,10 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.python
   ];
 
-  buildInputs = [ libsForQt5.qtbase ];
+  buildInputs = [
+    libsForQt5.qtbase
+    libsForQt5.qtwayland
+  ];
 
   propagatedBuildInputs = [
     python3Packages.gepetto-viewer-corba

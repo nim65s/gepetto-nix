@@ -16,13 +16,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-constraints";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-constraints";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-A9GIIaXBEDQaKI4WIOe8rSOjblV4D/qFMfZ49BZzGao=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-A9GIIaXBEDQaKI4WIOe8rSOjblV4D/qFMfZ49BZzGao=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-Iadir6UC+OGV0c1DxSqZY21oTr8KOG7OvePqcXYkzoA=";
   };
 
   outputs = [

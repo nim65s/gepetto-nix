@@ -12,13 +12,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gepetto-viewer";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gepetto-viewer";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-KIz61zjBwMeV4IcPiE6b2TG3mnepbLUzr1gB0E+vnGo=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-KIz61zjBwMeV4IcPiE6b2TG3mnepbLUzr1gB0E+vnGo=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-JSHNKfgAZMABjuua1g0xnZuZ2gFh1NklUkYvuzN3wyY=";
   };
 
   outputs = [
@@ -41,6 +43,10 @@ stdenv.mkDerivation (finalAttrs: {
   propagatedBuildInputs = [
     python3Packages.gepetto-viewer-corba
     python3Packages.hpp-corbaserver
+    python3Packages.hpp-python
+    python3Packages.pycollada
+    python3Packages.trimesh
+    python3Packages.viser
   ];
 
   doCheck = true;

@@ -29,14 +29,16 @@
 
 buildPythonPackage rec {
   pname = "hpp-python";
-  version = "6.1.0";
+  version = "7.0.0";
   pyproject = false; # built with CMake
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-python";
-    rev = "v${version}";
-    hash = "sha256-tuxm81XdlwZmN/Grz/qIgTVI0mLixavxsWZmS4MqH9M=";
+    # tag = "v${version}";
+    # hash = "sha256-tuxm81XdlwZmN/Grz/qIgTVI0mLixavxsWZmS4MqH9M=";
+    rev = "release/${version}";
+    hash = "sha256-5uyV+aRNBAB0V5Zif9O50AcBVFVPSWh0XnhB6c6my5Q=";
   };
 
   prePatch = ''

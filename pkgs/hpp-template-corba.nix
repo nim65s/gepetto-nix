@@ -15,13 +15,15 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-template-corba";
-  version = "6.1.0";
+  version = "7.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-template-corba";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-KOKJM32WYV6dtknzDLOEqb2a5Cv9xI0kMy1wz/RBpAY=";
+    # tag = "v${finalAttrs.version}";
+    # hash = "sha256-KOKJM32WYV6dtknzDLOEqb2a5Cv9xI0kMy1wz/RBpAY=";
+    rev = "release/${finalAttrs.version}";
+    hash = "sha256-aU2noyM89iTEv7NNhyVvyUH2QcoJBsrvcELdjVIPMNM=";
   };
 
   strictDeps = true;
