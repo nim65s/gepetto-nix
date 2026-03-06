@@ -1,6 +1,7 @@
 {
   lib,
   fetchFromGitHub,
+  fetchpatch,
   stdenv,
 
   # nativeBuildInputs
@@ -25,6 +26,13 @@ stdenv.mkDerivation (finalAttrs: {
     tag = "v${finalAttrs.version}";
     hash = "sha256-B8lgWzmOe+/AbiJXWcu1mK3QrHFa7MkjJYiXLbvI3b8=";
   };
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/humanoid-path-planner/hpp-pinocchio/pull/282.patch?full_index=1";
+      hash = "sha256-CXm6grvGAlUKIzXi3CWPBj/HUcGZDaA63BQBDhPmENc=";
+    })
+  ];
 
   strictDeps = true;
 
