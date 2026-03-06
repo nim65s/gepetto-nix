@@ -20,7 +20,7 @@
   imports = [
     inputs.gazebros2nix.flakeModule
     {
-      gazebros2nix-pkgs = {
+      gazebros2nix = {
         overlays = [
           (import ./overlay.nix { inherit (localFlake) inputs; })
         ]
