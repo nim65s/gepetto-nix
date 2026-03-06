@@ -100,7 +100,6 @@
                     # keep-sorted start
                     pkgs.colcon
                     self'.packages.python
-                    self'.packages.ros
                     # keep-sorted end
                   ];
                 };
@@ -180,15 +179,6 @@
                     ]))
                   ];
                 };
-                gs = pkgs.mkShell {
-                  name = "Dev Shell for Guilhem";
-                  packages = [
-                    (pkgs.rosPackages.jazzy.python3.withPackages (p: [
-                      p.bloom
-                      p.rosdep
-                    ]))
-                  ];
-                };
                 ms = pkgs.mkShell {
                   name = "Dev Shell for Maxime";
                   inputsFrom = [ pkgs.python3Packages.crocoddyl ];
@@ -231,18 +221,6 @@
                   p.matplotlib
                   # keep-sorted end
                 ]);
-                ros =
-                  with pkgs.rosPackages.humble;
-                  buildEnv {
-                    paths = [
-                      # keep-sorted start
-                      pkgs.python3Packages.example-robot-data # for availability in AMENT_PREFIX_PATH
-                      pkgs.python3Packages.hpp-tutorial # for availability in AMENT_PREFIX_PATH
-                      ros-core
-                      turtlesim
-                      # keep-sorted end
-                    ];
-                  };
                 vscode =
                   let
                     # This contain coreutils and a 'id' binary not configured for LDAP,
