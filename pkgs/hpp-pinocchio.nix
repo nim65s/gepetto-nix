@@ -1,4 +1,5 @@
 {
+  coal,
   lib,
   fetchFromGitHub,
   stdenv,
@@ -6,6 +7,7 @@
   # nativeBuildInputs
   cmake,
   doxygen,
+  doxytagsHook,
   pkg-config,
 
   # propagatedBuildInputs
@@ -36,6 +38,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    doxytagsHook
     pkg-config
   ];
 
@@ -45,6 +48,8 @@ stdenv.mkDerivation (finalAttrs: {
     hpp-util
     pinocchio
   ];
+
+  doxytagsDeps = [ coal.doc ];
 
   doCheck = true;
 
