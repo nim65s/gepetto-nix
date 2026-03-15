@@ -6,6 +6,8 @@
 
   # nativeBuildInputs
   cmake,
+  doxygen,
+  pkg-config,
 
   # propagatedBuildInputs
   boost,
@@ -15,8 +17,8 @@
   example-robot-data,
   jrl-cmakemodules,
 
-# checkInputs,
-# doctest,
+  # checkInputs,
+  # doctest,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -30,8 +32,15 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-9ZKPpL80IOk2xDg+ORta5xZqZq5QbRFvSom861xjPfk=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   nativeBuildInputs = [
     cmake
+    doxygen
+    pkg-config
   ];
 
   propagatedBuildInputs = [

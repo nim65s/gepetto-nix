@@ -5,6 +5,7 @@
 
   # nativeBuildInputs
   cmake,
+  doxygen,
   pkg-config,
   omniorb,
 
@@ -24,10 +25,16 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-x7PM5gUdf2QYxTTAiMq0v84F/t+ZyTJc+Ln1Tx/LzhM=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   strictDeps = true;
 
   nativeBuildInputs = [
     cmake
+    doxygen
     pkg-config
     omniorb
   ];

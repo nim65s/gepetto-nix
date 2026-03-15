@@ -6,6 +6,7 @@
 
   # Native build inputs
   cmake,
+  doxygen,
 
   # Propagated build inputs
   boost,
@@ -25,8 +26,14 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-eCDC1InnDFZ1GdTLtZeuGJYOExTxaEJ/ekD0Ilnir9w=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   nativeBuildInputs = [
     cmake
+    doxygen
   ];
 
   propagatedBuildInputs = [

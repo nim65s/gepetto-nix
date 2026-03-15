@@ -5,6 +5,7 @@
 
   # nativeBuildInputs
   cmake,
+  doxygen,
   python3Packages,
 
   # propagatedBuildInputs
@@ -21,8 +22,14 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-jfBQJ5zSVCQ48WxFcrVJbAtX6xlwQrrSg+i+I28Uadw=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   nativeBuildInputs = [
     cmake
+    doxygen
     python3Packages.python
   ];
 
