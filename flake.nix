@@ -302,6 +302,7 @@
                   hpp-tutorial
                   hpp-universal-robot
                   hpp-util
+                  jrl-cmakemodules
                   mim-solvers
                   multicontact-api
                   ndcurves

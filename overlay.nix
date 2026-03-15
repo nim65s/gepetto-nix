@@ -11,6 +11,15 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
+    # TODO: PR this
+    jrl-cmakemodules = prev.jrl-cmakemodules.overrideAttrs (super: {
+      patches = super.patches ++ [
+        (final.fetchpatch2 {
+          url = "https://github.com/jrl-umi3218/jrl-cmakemodules/commit/7fed5a1fa24348e9baba9c3e5d273beba393fcbe.patch?full_index=1";
+          hash = "sha256-8zXZ35LkWEWL4e6GBBWRrikAlpi0boTSuWUoQ4LpV2w=";
+        })
+      ];
+    });
     # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
     openscenegraph = prev.openscenegraph.override {
       colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
