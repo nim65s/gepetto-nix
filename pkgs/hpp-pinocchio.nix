@@ -1,5 +1,4 @@
 {
-  coal,
   lib,
   fetchFromGitHub,
   stdenv,
@@ -15,6 +14,9 @@
   hpp-environments,
   hpp-util,
   pinocchio,
+
+  # doc
+  coal,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -49,7 +51,10 @@ stdenv.mkDerivation (finalAttrs: {
     pinocchio
   ];
 
-  doxytagsDeps = [ coal.doc ];
+  doxytagsDeps = [
+    coal.doc
+    pinocchio.doc
+  ];
 
   doCheck = true;
 

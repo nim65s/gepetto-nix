@@ -6,6 +6,7 @@
   # nativeBuildInputs
   cmake,
   doxygen,
+  doxytagsHook,
   pkg-config,
 
   # propagatedBuildInputs
@@ -34,12 +35,14 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    doxytagsHook
     pkg-config
   ];
   propagatedBuildInputs = [
     coal
     jrl-cmakemodules
   ];
+  doxytagsDeps = [ coal.doc ];
 
   meta = {
     description = "Implements affordance extraction for multi-contact planning";

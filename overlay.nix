@@ -24,6 +24,11 @@
     openscenegraph = prev.openscenegraph.override {
       colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
     };
+    # TODO: PR this
+    tsid = prev.tsid.overrideAttrs (super: {
+      nativeBuildInputs = super.nativeBuildInputs ++ [ final.doxytagsHook ];
+      doxytagsDeps = [ final.pinocchio.doc ];
+    });
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
       (
