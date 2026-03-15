@@ -17,8 +17,8 @@
   example-robot-data,
   jrl-cmakemodules,
 
-  # checkInputs,
-  # doctest,
+# checkInputs,
+# doctest,
 }:
 
 stdenv.mkDerivation (finalAttrs: {

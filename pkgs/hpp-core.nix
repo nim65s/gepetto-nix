@@ -24,6 +24,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-62Aon05GmGk36o3CRHY2l8phSZA3QkIMOHH6wGzdlVo=";
   };
 
+  postPatch = ''
+    substituteInPlace CMakeLists.txt --replace-fail \
+      "DESTINATION $""{CMAKE_INSTALL_DATAROOTDIR}/doc/$""{PROJECT_NAME}/doxygen-html)" \
+      "DESTINATION $""{CMAKE_INSTALL_FULL_DOCDIR}/doxygen-html)"
+  '';
+
   outputs = [
     "out"
     "doc"

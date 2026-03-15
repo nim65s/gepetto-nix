@@ -276,6 +276,7 @@
                   example-robot-data
                   flex-joints
                   force-feedback-mpc
+                  gepetto-doc
                   gepetto-viewer
                   hpp-affordance
                   hpp-affordance-corba
