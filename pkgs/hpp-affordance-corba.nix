@@ -6,8 +6,12 @@
   # nativeBuildInputs
   cmake,
   doxygen,
+  writableTmpDirAsHomeHook,
   pkg-config,
   python3Packages,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   hpp-affordance,
@@ -34,9 +38,13 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    writableTmpDirAsHomeHook
     pkg-config
     python3Packages.omniorb
     python3Packages.python
+    texliveBasic
+    ghostscript
+    graphviz
   ];
   buildInputs = [
     python3Packages.boost

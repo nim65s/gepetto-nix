@@ -7,6 +7,10 @@
   # Native build inputs
   cmake,
   doxygen,
+  writableTmpDirAsHomeHook,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # Propagated build inputs
   boost,
@@ -34,6 +38,10 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    writableTmpDirAsHomeHook
+    texliveBasic
+    ghostscript
+    graphviz
   ];
 
   propagatedBuildInputs = [

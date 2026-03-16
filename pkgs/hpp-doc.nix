@@ -5,9 +5,13 @@
 
   cmake,
   doxygen,
+  writableTmpDirAsHomeHook,
   libsForQt5,
   pkg-config,
   python3Packages,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -37,9 +41,13 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    writableTmpDirAsHomeHook
     libsForQt5.wrapQtAppsHook
     pkg-config
     python3Packages.python
+    texliveBasic
+    ghostscript
+    graphviz
   ];
 
   buildInputs = [ libsForQt5.qtbase ];

@@ -11,6 +11,19 @@
       # keep-sorted end
       ;
     # keep-sorted start block=yes
+    crocoddyl = prev.crocoddyl.overrideAttrs (super: {
+      nativeBuildInputs = super.nativeBuildInputs ++ [
+        final.graphviz
+        final.texliveBasic
+        final.ghostscript
+        final.writableTmpDirAsHomeHook
+      ];
+      postPatch = (super.postPatch or "") + ''
+        substituteInPlace CMakeLists.txt --replace-fail "set(DOXYGEN_USE_MATHJAX YES)" ""
+        sed -i "/MATHJAX/d" doc/Doxyfile.extra.in
+        sed -i "/HTML_OUTPUT/d" doc/Doxyfile.extra.in
+      '';
+    });
     # TODO: PR this
     jrl-cmakemodules = prev.jrl-cmakemodules.overrideAttrs (super: {
       patches = super.patches ++ [
@@ -24,10 +37,43 @@
     openscenegraph = prev.openscenegraph.override {
       colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
     };
+    pinocchio = prev.pinocchio.overrideAttrs (super: {
+      postPatch = (super.postPatch or "") + ''
+        substituteInPlace CMakeLists.txt --replace-fail "set(DOXYGEN_USE_MATHJAX YES)" ""
+        substituteInPlace doc/Doxyfile.extra.in --replace-fail "USE_MATHJAX            = YES" ""
+      '';
+      nativeBuildInputs = super.nativeBuildInputs ++ [
+        final.graphviz
+        final.texliveBasic
+        final.ghostscript
+        final.writableTmpDirAsHomeHook
+      ];
+    });
+    proxsuite = prev.proxsuite.overrideAttrs (super: {
+      postPatch = (super.postPatch or "") + ''
+        substituteInPlace CMakeLists.txt --replace-fail "set(DOXYGEN_USE_MATHJAX YES)" ""
+        substituteInPlace doc/Doxyfile.extra.in --replace-fail "MATHJAX_FORMAT          = SVG" ""
+      '';
+      nativeBuildInputs = super.nativeBuildInputs ++ [
+        final.graphviz
+        final.texliveBasic
+        final.ghostscript
+        final.writableTmpDirAsHomeHook
+      ];
+    });
     # TODO: PR this
     tsid = prev.tsid.overrideAttrs (super: {
-      nativeBuildInputs = super.nativeBuildInputs ++ [ final.doxytagsHook ];
+      nativeBuildInputs = super.nativeBuildInputs ++ [
+        final.doxytagsHook
+        final.graphviz
+        final.texliveBasic
+        final.ghostscript
+        final.writableTmpDirAsHomeHook
+      ];
       doxytagsDeps = [ final.pinocchio.doc ];
+      postPatch = (super.postPatch or "") + ''
+        substituteInPlace CMakeLists.txt --replace-fail "set(DOXYGEN_USE_MATHJAX YES)" ""
+      '';
     });
     # keep-sorted end
     pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
