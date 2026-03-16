@@ -1,7 +1,10 @@
 {
   lib,
   buildEnv,
+
   stdenvNoCC,
+  fclones,
+  minify,
 
   # keep-sorted start
   aig,
@@ -90,6 +93,11 @@ stdenvNoCC.mkDerivation {
   name = "gepetto-doc";
   dontUnpack = true;
 
+  nativeBuildInputs = [
+    fclones
+    minify
+  ];
+
   postInstall = ''
     mkdir $out
     cp -rL ${env}/share/doc/* $out
@@ -100,6 +108,13 @@ stdenvNoCC.mkDerivation {
     chmod -R +w .
     find . -maxdepth 3 -mindepth 3 -type f -exec sed -i -e "s=$NIX_STORE/.*/share/doc=../..=g" {} +
     find . -maxdepth 4 -mindepth 4 -type f -exec sed -i -e "s=$NIX_STORE/.*/share/doc=../../..=g" {} +
+
+    # TODO (proxsuite)
+    sed -i "s/'The solver's/'The solver\\\'s/" $(grep -rl "'The solver's")
+
+    echo "dedup & minify"
+    fclones group . | fclones link
+    minify -ri .
 
     echo "<html><head><title>Gepetto Doc</title></head><body><ul>" > index.html
     for prj in *

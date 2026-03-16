@@ -33,6 +33,16 @@
         })
       ];
     });
+    minify = prev.minify.overrideAttrs (super: rec {
+      # https://github.com/NixOS/nixpkgs/pull/455633/changes
+      version = "2.24.5";
+      src = final.fetchFromGitHub {
+        inherit (super.src) owner repo;
+        rev = "v${version}";
+        hash = "sha256-0OmL/HG4pt2iDha6NcQoUKWz2u9vsLH6QzYhHb+mTL0=";
+      };
+      vendorHash = "sha256-QS0vffGJaaDhXvc7ylJmFJ1s83kaIqFWsBXNWVozt1k=";
+    });
     # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
     openscenegraph = prev.openscenegraph.override {
       colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
