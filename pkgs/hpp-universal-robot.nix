@@ -9,7 +9,11 @@
   # nativeBuildInputs
   cmake,
   doxygen,
+  writableTmpDirAsHomeHook,
   pkg-config,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   example-robot-data,
@@ -37,7 +41,11 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    writableTmpDirAsHomeHook
     pkg-config
+    texliveBasic
+    ghostscript
+    graphviz
   ]
   ++ lib.optional pythonSupport python3Packages.python;
 

@@ -6,7 +6,12 @@
   # nativeBuildInputs
   cmake,
   doxygen,
+  writableTmpDirAsHomeHook,
+  doxytagsHook,
   pkg-config,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   coal,
@@ -34,12 +39,18 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    writableTmpDirAsHomeHook
+    doxytagsHook
     pkg-config
+    texliveBasic
+    ghostscript
+    graphviz
   ];
   propagatedBuildInputs = [
     coal
     jrl-cmakemodules
   ];
+  doxytagsDeps = [ coal.doc ];
 
   meta = {
     description = "Implements affordance extraction for multi-contact planning";

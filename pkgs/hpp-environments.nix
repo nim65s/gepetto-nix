@@ -9,7 +9,11 @@
   # nativeBuildInputs
   cmake,
   doxygen,
+  writableTmpDirAsHomeHook,
   pkg-config,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   boost,
@@ -39,7 +43,11 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     doxygen
+    writableTmpDirAsHomeHook
     pkg-config
+    texliveBasic
+    ghostscript
+    graphviz
   ]
   ++ lib.optional pythonSupport python3Packages.python;
 

@@ -6,13 +6,21 @@
   # nativeBuildInputs
   cmake,
   doxygen,
+  writableTmpDirAsHomeHook,
+  doxytagsHook,
   pkg-config,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   example-robot-data,
   hpp-environments,
   hpp-util,
   pinocchio,
+
+  # doc
+  coal,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -26,12 +34,22 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Qkd4tUSQN9BhHXi6t19B8pbfDjueC2yghrCrIzsISjQ=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   strictDeps = true;
 
   nativeBuildInputs = [
     cmake
     doxygen
+    writableTmpDirAsHomeHook
+    doxytagsHook
     pkg-config
+    texliveBasic
+    ghostscript
+    graphviz
   ];
 
   propagatedBuildInputs = [
@@ -39,6 +57,11 @@ stdenv.mkDerivation (finalAttrs: {
     hpp-environments
     hpp-util
     pinocchio
+  ];
+
+  doxytagsDeps = [
+    coal.doc
+    pinocchio.doc
   ];
 
   doCheck = true;

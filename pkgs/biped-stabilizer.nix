@@ -6,6 +6,11 @@
 
   # nativeBuildInputs
   cmake,
+  doxygen,
+  writableTmpDirAsHomeHook,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   boost,
@@ -27,8 +32,18 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-Gi3IwVFb8pYB3/Vat7L2klGnEx2CXLzIVfb1CmT85yY=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   nativeBuildInputs = [
     cmake
+    doxygen
+    writableTmpDirAsHomeHook
+    texliveBasic
+    ghostscript
+    graphviz
   ];
 
   propagatedBuildInputs = [

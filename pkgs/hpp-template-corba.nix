@@ -5,8 +5,13 @@
 
   # nativeBuildInputs
   cmake,
+  doxygen,
+  writableTmpDirAsHomeHook,
   pkg-config,
   omniorb,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   hpp-util,
@@ -24,12 +29,22 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-x7PM5gUdf2QYxTTAiMq0v84F/t+ZyTJc+Ln1Tx/LzhM=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   strictDeps = true;
 
   nativeBuildInputs = [
     cmake
+    doxygen
+    writableTmpDirAsHomeHook
     pkg-config
     omniorb
+    texliveBasic
+    ghostscript
+    graphviz
   ];
 
   propagatedBuildInputs = [

@@ -5,7 +5,12 @@
 
   # nativeBuildInputs
   cmake,
+  doxygen,
+  writableTmpDirAsHomeHook,
   python3Packages,
+  texliveBasic,
+  ghostscript,
+  graphviz,
 
   # propagatedBuildInputs
   jrl-cmakemodules,
@@ -21,9 +26,19 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-jfBQJ5zSVCQ48WxFcrVJbAtX6xlwQrrSg+i+I28Uadw=";
   };
 
+  outputs = [
+    "out"
+    "doc"
+  ];
+
   nativeBuildInputs = [
     cmake
+    doxygen
+    writableTmpDirAsHomeHook
     python3Packages.python
+    texliveBasic
+    ghostscript
+    graphviz
   ];
 
   propagatedBuildInputs = [

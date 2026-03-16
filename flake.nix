@@ -276,6 +276,7 @@
                   example-robot-data
                   flex-joints
                   force-feedback-mpc
+                  gepetto-doc
                   gepetto-viewer
                   hpp-affordance
                   hpp-affordance-corba
@@ -302,6 +303,7 @@
                   hpp-tutorial
                   hpp-universal-robot
                   hpp-util
+                  jrl-cmakemodules
                   mim-solvers
                   multicontact-api
                   ndcurves
