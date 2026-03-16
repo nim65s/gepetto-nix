@@ -2,16 +2,7 @@
   lib,
   fetchFromGitHub,
   stdenv,
-
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  doxytagsHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
+  jrl-cmakemodules,
 
   # propagatedBuildInputs
   example-robot-data,
@@ -41,16 +32,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    doxytagsHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ];
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     example-robot-data
@@ -63,6 +47,8 @@ stdenv.mkDerivation (finalAttrs: {
     coal.doc
     pinocchio.doc
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

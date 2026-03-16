@@ -2,17 +2,11 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  jrl-cmakemodules,
 
   # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
   omniorb,
-  pkg-config,
   python3Packages,
-  texliveBasic,
-  ghostscript,
-  graphviz,
 
   # propagatedBuildInputs
   hpp-manipulation-urdf,
@@ -36,23 +30,20 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
     omniorb
-    pkg-config
     python3Packages.python
-    texliveBasic
-    ghostscript
-    graphviz
   ];
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     hpp-manipulation-urdf
     python3Packages.hpp-corbaserver
     python3Packages.omniorbpy
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   enableParallelBuilding = false;
 

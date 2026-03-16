@@ -2,19 +2,9 @@
   lib,
   fetchFromGitHub,
   stdenv,
-
-  # nativeBuildInput
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
-  # propagatedBuildInputs
-  boost,
   jrl-cmakemodules,
+
+  boost,
   tinyxml-2,
 }:
 
@@ -41,20 +31,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ];
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+
+  buildInputs = [ jrl-cmakemodules ];
+
   propagatedBuildInputs = [
     boost
-    jrl-cmakemodules
     tinyxml-2
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

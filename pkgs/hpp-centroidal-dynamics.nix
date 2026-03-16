@@ -2,18 +2,10 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  jrl-cmakemodules,
 
   pythonSupport ? false,
   python3Packages,
-
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
 
   # buildInputs
   cddlib,
@@ -23,7 +15,6 @@
   # propagatedBuildInputs
   boost,
   eigen,
-  jrl-cmakemodules,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -44,29 +35,22 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.python
-    python3Packages.pythonImportsCheckHook
-  ];
+  nativeBuildInputs =
+    jrl-cmakemodules.doxygenNativeInputs
+    ++ lib.optionals pythonSupport [
+      python3Packages.python
+      python3Packages.pythonImportsCheckHook
+    ];
 
   buildInputs = [
     cddlib
     clp
+    jrl-cmakemodules
     qpoases
   ];
 
   propagatedBuildInputs = [
     eigen
-    jrl-cmakemodules
   ]
   ++ lib.optionals pythonSupport [
     python3Packages.boost
@@ -74,7 +58,7 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optional (!pythonSupport) boost;
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
     (lib.cmakeBool "BUILD_WITH_CLP" true)
   ];

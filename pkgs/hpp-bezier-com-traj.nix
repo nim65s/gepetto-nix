@@ -6,20 +6,12 @@
   pythonSupport ? false,
   python3Packages,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
   # propagatedBuildInputs
   cddlib,
   clp,
   glpk,
   hpp-centroidal-dynamics,
+  jrl-cmakemodules,
   ndcurves,
   qpoases,
 }:
@@ -42,19 +34,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.python
-    python3Packages.pythonImportsCheckHook
-  ];
+  nativeBuildInputs =
+    jrl-cmakemodules.doxygenNativeInputs
+    ++ lib.optionals pythonSupport [
+      python3Packages.python
+      python3Packages.pythonImportsCheckHook
+    ];
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     cddlib
@@ -71,13 +58,15 @@ stdenv.mkDerivation (finalAttrs: {
     ndcurves
   ];
 
-  cmakeFlags = [
-    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
-    (lib.cmakeBool "USE_GLPK" true)
-  ]
-  ++ lib.optionals stdenv.targetPlatform.isDarwin [
-    (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
-  ];
+  cmakeFlags =
+    jrl-cmakemodules.doxygenCmakeFlags
+    ++ [
+      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+      (lib.cmakeBool "USE_GLPK" true)
+    ]
+    ++ lib.optionals stdenv.targetPlatform.isDarwin [
+      (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
+    ];
 
   doCheck = true;
 

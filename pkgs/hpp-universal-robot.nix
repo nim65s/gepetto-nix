@@ -2,22 +2,12 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  jrl-cmakemodules,
 
-  pythonSupport ? false,
+  example-robot-data,
   python3Packages,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
-  # propagatedBuildInputs
-  example-robot-data,
-  jrl-cmakemodules,
+  pythonSupport ? false,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -38,23 +28,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ]
-  ++ lib.optional pythonSupport python3Packages.python;
+  nativeBuildInputs =
+    jrl-cmakemodules.doxygenNativeInputs ++ lib.optional pythonSupport python3Packages.python;
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
-    jrl-cmakemodules
     example-robot-data
   ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
   ];
 

@@ -2,18 +2,9 @@
   lib,
   fetchFromGitHub,
   stdenv,
-
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  python3Packages,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
-  # propagatedBuildInputs
   jrl-cmakemodules,
+
+  python3Packages,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-tools";
@@ -31,20 +22,17 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
     python3Packages.python
-    texliveBasic
-    ghostscript
-    graphviz
   ];
 
+  buildInputs = [ jrl-cmakemodules ];
+
   propagatedBuildInputs = [
-    jrl-cmakemodules
     python3Packages.numpy
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   meta = {
     description = "Various tools for hpp";

@@ -5,19 +5,13 @@
   stdenv,
 
   # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
   omniorb,
-  pkg-config,
   python3Packages,
-  texliveBasic,
-  ghostscript,
-  graphviz,
 
   # propagatedBuildInputs
   hpp-core,
   hpp-template-corba,
+  jrl-cmakemodules,
   makeWrapper,
 
   # checkInputs
@@ -44,17 +38,12 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
     omniorb
-    pkg-config
     python3Packages.pythonImportsCheckHook
-    texliveBasic
-    ghostscript
-    graphviz
   ];
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     hpp-core
@@ -66,6 +55,8 @@ stdenv.mkDerivation (finalAttrs: {
   checkInputs = [
     psmisc
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   enableParallelBuilding = false;
 
