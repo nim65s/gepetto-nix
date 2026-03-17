@@ -4,7 +4,6 @@
   lib,
   stdenv,
   jrl-cmakemodules,
-  cmake,
   python3Packages,
   catch2_3,
 }:
@@ -23,19 +22,20 @@ stdenv.mkDerivation {
 
   doCheck = true;
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
     # see https://github.com/open-dynamic-robot-initiative/master-board/pull/128
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" stdenv.hostPlatform.isLinux)
   ];
 
-  nativeBuildInputs = [
-    jrl-cmakemodules
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
     python3Packages.python
-    cmake
   ];
 
   # from package.xml
-  buildInputs = with python3Packages; [ numpy ];
+  buildInputs = [
+    jrl-cmakemodules
+    python3Packages.numpy
+  ];
 
   nativeCheckInputs = [ catch2_3 ];
 

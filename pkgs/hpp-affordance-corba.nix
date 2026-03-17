@@ -4,17 +4,11 @@
   stdenv,
 
   # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
   python3Packages,
-  texliveBasic,
-  ghostscript,
-  graphviz,
 
   # propagatedBuildInputs
   hpp-affordance,
+  jrl-cmakemodules,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -35,25 +29,23 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
     python3Packages.omniorb
     python3Packages.python
-    texliveBasic
-    ghostscript
-    graphviz
   ];
+
   buildInputs = [
+    jrl-cmakemodules
     python3Packages.boost
   ];
+
   propagatedBuildInputs = [
     hpp-affordance
     python3Packages.hpp-corbaserver
     python3Packages.omniorbpy
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   enableParallelBuilding = false;
 

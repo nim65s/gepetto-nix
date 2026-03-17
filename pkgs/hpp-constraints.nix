@@ -1,20 +1,13 @@
 {
   lib,
   fetchFromGitHub,
+  fetchpatch,
   stdenv,
-
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
 
   # propagatedBuildInputs
   hpp-pinocchio,
   hpp-statistics,
+  jrl-cmakemodules,
   qpoases,
 }:
 
@@ -29,6 +22,13 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-cGX+TLhp9h8su1Pj1nDsKf5/ABQdZhrXr/tI97n5wBs=";
   };
 
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/humanoid-path-planner/hpp-constraints/pull/278.patch?full_index=1";
+      hash = "sha256-MM6yJfqnFHaelWKkv1emrZ6s2tkhMGo2fcsz0dIpm9Y=";
+    })
+  ];
+
   outputs = [
     "out"
     "doc"
@@ -36,15 +36,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ];
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     hpp-pinocchio
@@ -54,9 +48,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   doCheck = true;
 
-  cmakeFlags = lib.optionals stdenv.hostPlatform.isDarwin [
-    "-DCMAKE_CTEST_ARGUMENTS=--exclude-regex;'test-jacobians|solver-by-substitution'"
-  ];
+  cmakeFlags =
+    jrl-cmakemodules.doxygenCmakeFlags
+    ++ lib.optional stdenv.hostPlatform.isDarwin "-DCMAKE_CTEST_ARGUMENTS=--exclude-regex;'test-jacobians|solver-by-substitution'";
 
   meta = {
     description = "Definition of basic geometric constraints for motion planning";

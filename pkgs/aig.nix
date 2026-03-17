@@ -4,15 +4,6 @@
   stdenv,
   fetchFromGitHub,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
   # propagatedBuildInputs
   boost,
   eigen,
@@ -20,9 +11,6 @@
   pinocchio,
   example-robot-data,
   jrl-cmakemodules,
-
-# checkInputs,
-# doctest,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -41,20 +29,13 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ];
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     eigen
     eiquadprog
-    jrl-cmakemodules
     example-robot-data
     pinocchio
   ];
@@ -63,12 +44,14 @@ stdenv.mkDerivation (finalAttrs: {
     boost
   ];
 
+  doxytagsDeps = [ pinocchio.doc ];
+
   # /nix/var/nix/builds/nix-5586-3721320871/source/tests/test_biped_ig.cpp:156: error:
   # in "BOOST_TEST_MODULE/test_solve_random": check (q_test - q_ig_base).norm() <= precision has failed
   # [1.9999999999999998 > 1]
   disabledTests = lib.optionals stdenv.hostPlatform.isDarwin [ "test_biped_ig" ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
     (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'${lib.concatStringsSep "|" finalAttrs.disabledTests}'")
   ];

@@ -2,20 +2,10 @@
   lib,
   fetchFromGitHub,
   stdenv,
-
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  omniorb,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
-  # propagatedBuildInputs
-  hpp-util,
   jrl-cmakemodules,
+
+  omniorb,
+  hpp-util,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -36,22 +26,18 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
     omniorb
-    texliveBasic
-    ghostscript
-    graphviz
   ];
 
+  buildInputs = [ jrl-cmakemodules ];
+
   propagatedBuildInputs = [
-    jrl-cmakemodules
     hpp-util
     omniorb
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

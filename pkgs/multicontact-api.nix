@@ -1,20 +1,10 @@
 {
   lib,
-
   fetchFromGitHub,
   stdenv,
-
-  # Native build inputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
-  # Propagated build inputs
-  boost,
   jrl-cmakemodules,
+
+  boost,
   ndcurves,
   pinocchio,
 }:
@@ -35,23 +25,17 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    texliveBasic
-    ghostscript
-    graphviz
-  ];
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+
+  buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     boost
-    jrl-cmakemodules
     ndcurves
     pinocchio
   ];
 
-  cmakeFlags = [
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
   ];
 

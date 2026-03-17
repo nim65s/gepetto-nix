@@ -2,19 +2,10 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  jrl-cmakemodules,
 
   pythonSupport ? false,
   python3Packages,
-
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  jrl-cmakemodules,
-  texliveBasic,
-  ghostscript,
-  graphviz,
 
   # propagatedBuildInputs
   hpp-corbaserver,
@@ -38,24 +29,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ]
-  ++ lib.optional pythonSupport python3Packages.python;
+  nativeBuildInputs =
+    jrl-cmakemodules.doxygenNativeInputs ++ lib.optional pythonSupport python3Packages.python;
 
-  propagatedBuildInputs = [
-    jrl-cmakemodules
-  ]
-  ++ lib.optional pythonSupport python3Packages.hpp-corbaserver
-  ++ lib.optional (!pythonSupport) hpp-corbaserver;
+  buildInputs = [ jrl-cmakemodules ];
 
-  cmakeFlags = [
+  propagatedBuildInputs =
+    lib.optional pythonSupport python3Packages.hpp-corbaserver
+    ++ lib.optional (!pythonSupport) hpp-corbaserver;
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
   ];
 

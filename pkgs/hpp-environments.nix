@@ -6,15 +6,6 @@
   python3Packages,
   pythonSupport ? false,
 
-  # nativeBuildInputs
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
-  pkg-config,
-  texliveBasic,
-  ghostscript,
-  graphviz,
-
   # propagatedBuildInputs
   boost,
   example-robot-data,
@@ -40,33 +31,25 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
-    pkg-config
-    texliveBasic
-    ghostscript
-    graphviz
-  ]
-  ++ lib.optional pythonSupport python3Packages.python;
+  nativeBuildInputs =
+    jrl-cmakemodules.doxygenNativeInputs ++ lib.optional pythonSupport python3Packages.python;
 
-  propagatedBuildInputs = [
-    jrl-cmakemodules
-  ]
-  ++ lib.optionals pythonSupport [
-    python3Packages.boost
-    python3Packages.eigenpy
-    python3Packages.pinocchio
-    python3Packages.example-robot-data
-  ]
-  ++ lib.optionals (!pythonSupport) [
-    boost
-    pinocchio
-    example-robot-data
-  ];
+  buildInputs = [ jrl-cmakemodules ];
 
-  cmakeFlags = [
+  propagatedBuildInputs =
+    lib.optionals pythonSupport [
+      python3Packages.boost
+      python3Packages.eigenpy
+      python3Packages.pinocchio
+      python3Packages.example-robot-data
+    ]
+    ++ lib.optionals (!pythonSupport) [
+      boost
+      pinocchio
+      example-robot-data
+    ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
   ];
 

@@ -2,16 +2,10 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  jrl-cmakemodules,
 
-  cmake,
-  doxygen,
-  writableTmpDirAsHomeHook,
   libsForQt5,
-  pkg-config,
   python3Packages,
-  texliveBasic,
-  ghostscript,
-  graphviz,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -32,25 +26,23 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    writableTmpDirAsHomeHook
+  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
     libsForQt5.wrapQtAppsHook
-    pkg-config
     python3Packages.python
-    texliveBasic
-    ghostscript
-    graphviz
   ];
 
-  buildInputs = [ libsForQt5.qtbase ];
+  buildInputs = [
+    libsForQt5.qtbase
+    jrl-cmakemodules
+  ];
 
   propagatedBuildInputs = [
     python3Packages.hpp-gepetto-viewer
     python3Packages.hpp-gui
     python3Packages.hpp-plot
   ];
+
+  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 
