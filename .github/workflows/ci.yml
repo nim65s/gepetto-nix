@@ -76,7 +76,7 @@ jobs:
       - uses: cachix/cachix-action@v16
         with:
           name: gepetto
-      - run: nix build -L .#homeConfiguration.cpene.activationPackage
+      - run: nix build -L .#homeConfigurations.cpene.activationPackage
   check:
     if: always()
     name: check-macos-linux-nix
