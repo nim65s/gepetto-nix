@@ -57,10 +57,26 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: ros
       - run: nix flake check -L
-        continue-on-error: true
-        id: fast
+  fallback:
+    needs: complete
+    if: needs.complete.result == 'failure'
+    name: "${{ matrix.os }}"
+    runs-on: "${{ matrix.os }}-latest"
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu] # TODO: macos
+    steps:
+      - uses: jlumbroso/free-disk-space@main
+        if: ${{ matrix.os == 'ubuntu' }}
+      - uses: actions/checkout@v6
+      - uses: cachix/install-nix-action@v31
+      - uses: cachix/cachix-action@v16
+        with:
+          name: gepetto
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          extraPullNames: ros
       - run: nix flake check -L -j 1 --cores 1
-        if: steps.fast.outcome == 'failure'
   system:
     runs-on: "ubuntu-latest"
     steps:
@@ -86,8 +102,7 @@ jobs:
     name: check-macos-linux-nix
     runs-on: ubuntu-latest
     needs:
-      - populate-cache
-      - complete
+      - fallback
       - system
       - home
     steps:
