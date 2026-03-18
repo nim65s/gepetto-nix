@@ -2,6 +2,8 @@
   inputs = {
     gazebros2nix.url = "github:gepetto/gazebros2nix";
     flake-parts.follows = "gazebros2nix/flake-parts";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.follows = "gazebros2nix/nixpkgs";
     nix-ros-overlay.follows = "gazebros2nix/nix-ros-overlay";
     systems.follows = "gazebros2nix/systems";
@@ -41,6 +43,7 @@
         systems = import inputs.systems;
         imports = [
           flakeModule
+          inputs.home-manager.flakeModules.home-manager
           {
             config.gazebros2nix = {
               checkAll = true;
@@ -50,6 +53,10 @@
         ];
         flake = {
           inherit flakeModule;
+          homeConfiguration.cpene = inputs.home-manager.lib.homeManagerConfiguration {
+            pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+            modules = [ ./home/cpene.nix ];
+          };
           systemConfigs = {
             default = inputs.system-manager.lib.makeSystemConfig {
               modules = [
@@ -226,7 +233,10 @@
                 '';
               };
             };
-            packages = lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
+            packages = {
+              inherit (inputs'.home-manager.packages) home-manager;
+            }
+            // lib.filterAttrs (_n: v: v.meta.available && !v.meta.broken) (
               {
                 python = pkgs.python3.withPackages (p: [
                   # keep-sorted start
