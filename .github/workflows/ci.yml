@@ -56,7 +56,7 @@ jobs:
           name: gepetto
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
           extraPullNames: ros
-      - run: nix flake check -L --cores 4
+      - run: nix flake check -L --cores 4 || nix flake check -L -j 1 --cores 1
   system:
     runs-on: "ubuntu-latest"
     steps:
@@ -76,7 +76,7 @@ jobs:
       - uses: cachix/cachix-action@v16
         with:
           name: gepetto
-      - run: nix build -L .#homeConfiguration.cpene.activationPackage
+      - run: nix build -L .#homeConfigurations.cpene.activationPackage
   check:
     if: always()
     name: check-macos-linux-nix
