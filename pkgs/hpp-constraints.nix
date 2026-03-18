@@ -23,8 +23,10 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   patches = [
+    # https://github.com/humanoid-path-planner/hpp-constraints/pull/278 merged
     (fetchpatch {
-      url = "https://github.com/humanoid-path-planner/hpp-constraints/pull/278.patch?full_index=1";
+      name = "latex-fixes.patch";
+      url = "https://github.com/humanoid-path-planner/hpp-constraints/commit/0b15d57c77621576fb7a299feccbf3cd20e9fd0a.patch?full_index=1";
       hash = "sha256-MM6yJfqnFHaelWKkv1emrZ6s2tkhMGo2fcsz0dIpm9Y=";
     })
   ];
