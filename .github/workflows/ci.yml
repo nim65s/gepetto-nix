@@ -40,7 +40,7 @@ jobs:
       - run: nix build -L ".#${{ matrix.build }}" --cores 4
   complete:
     needs: populate-cache
-    name: "${{ matrix.os }}"
+    name: "complete ${{ matrix.os }}"
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       fail-fast: false
@@ -60,7 +60,7 @@ jobs:
   fallback:
     needs: complete
     if: always() && needs.complete.result == 'failure'
-    name: "${{ matrix.os }}"
+    name: "fallback ${{ matrix.os }}"
     runs-on: "${{ matrix.os }}-latest"
     strategy:
       fail-fast: false
@@ -108,4 +108,5 @@ jobs:
     steps:
       - uses: re-actors/alls-green@release/v1
         with:
+          allowed-skips: fallback
           jobs: ${{ toJSON(needs) }}
