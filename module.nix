@@ -20,15 +20,13 @@
   imports = [
     inputs.gazebros2nix.flakeModule
     {
-      gazebros2nix = {
-        overlays = [
-          (import ./overlay.nix { inherit (localFlake) inputs; })
-        ]
-        ++ config.gepetto-pkgs.overlays;
-        patches =
-          lib.fileset.toList (lib.fileset.maybeMissing ./patches/NixOS/nixpkgs)
-          ++ config.gepetto-pkgs.patches;
-      };
+      flakoboros.overlays = [
+        (import ./overlay.nix { inherit (localFlake) inputs; })
+      ]
+      ++ config.gepetto-pkgs.overlays;
+      gazebros2nix.patches =
+        lib.fileset.toList (lib.fileset.maybeMissing ./patches/NixOS/nixpkgs)
+        ++ config.gepetto-pkgs.patches;
     }
   ];
 }

@@ -1,6 +1,7 @@
 {
   inputs = {
     gazebros2nix.url = "github:gepetto/gazebros2nix";
+    flakoboros.follows = "gazebros2nix/flakoboros";
     flake-parts.follows = "gazebros2nix/flake-parts";
     home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -45,10 +46,7 @@
           flakeModule
           inputs.home-manager.flakeModules.home-manager
           {
-            config.gazebros2nix = {
-              checkAll = true;
-              rosShellDistro = "jazzy";
-            };
+            flakoboros.check = true;
           }
         ];
         flake = {
