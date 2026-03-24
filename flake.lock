@@ -352,6 +352,10 @@
           "gazebros2nix",
           "flake-parts"
         ],
+        "flakoboros": [
+          "gazebros2nix",
+          "flakoboros"
+        ],
         "gazebros2nix": "gazebros2nix",
         "home-manager": "home-manager",
         "nix-ros-overlay": [
