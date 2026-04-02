@@ -59,10 +59,6 @@
         };
       };
     });
-    # TODO remove once https://github.com/NixOS/nixpkgs/pull/422562 is available
-    openscenegraph = prev.openscenegraph.override {
-      colladaSupport = final.lib.meta.availableOn final.stdenv.hostPlatform final.collada-dom;
-    };
     pinocchio = prev.pinocchio.overrideAttrs (super: final.jrl-cmakemodules.docsOverrides super);
     proxsuite = prev.proxsuite.overrideAttrs (
       super:
@@ -103,14 +99,16 @@
               ];
           });
           brax = python-prev.brax.overrideAttrs {
-            # depends on mujoco
-            # which is broken on darwin
-            meta.broken = final.stdenv.hostPlatform.isDarwin;
+            # becausee keras
+            doInstallCheck = false;
           };
-          tyro = python-prev.tyro.overrideAttrs (super: {
-            nativeBuildInputs = (super.nativeBuildInputs or [ ]) ++ [ python-final.pythonRelaxDepsHook ];
-            pythonRelaxDeps = true;
-          });
+          keras = python-prev.keras.overrideAttrs {
+            # WTF ?
+            doInstallCheck = false;
+          };
+          python-qt = python-final.toPythonModule (
+            final.python-qt.override { python3 = python-final.python; }
+          );
         }
         // final.lib.filesystem.packagesFromDirectoryRecursive {
           inherit (python-final) callPackage;

@@ -1,6 +1,7 @@
 {
   lib,
   fetchFromGitHub,
+  fetchpatch,
   stdenv,
   jrl-cmakemodules,
 
@@ -18,6 +19,13 @@ stdenv.mkDerivation (finalAttrs: {
     tag = "v${finalAttrs.version}";
     hash = "sha256-VTiKJQaTcyVZn9vF5tzRb2Y1gPch/ma3bclKqXEUWHc=";
   };
+
+  patches = [
+    (fetchpatch {
+      url = "https://github.com/nim65s/hpp-plot/commit/51d354a82039f05161973c1adb3c2949818d0aec.patch?full_index=1";
+      hash = "sha256-npFQvwqcHMB6pEI8CGD71HCMilX91jSTSBCbbMYL5Aw=";
+    })
+  ];
 
   outputs = [
     "out"

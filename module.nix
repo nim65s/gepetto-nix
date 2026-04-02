@@ -11,10 +11,6 @@
       default = [ ];
       description = "Additionnal overlays for nixpkgs";
     };
-    patches = lib.mkOption {
-      default = [ ];
-      description = "Additionnal patches for nixpkgs";
-    };
   };
 
   imports = [
@@ -24,9 +20,6 @@
         (import ./overlay.nix { inherit (localFlake) inputs; })
       ]
       ++ config.gepetto-pkgs.overlays;
-      gazebros2nix.patches =
-        lib.fileset.toList (lib.fileset.maybeMissing ./patches/NixOS/nixpkgs)
-        ++ config.gepetto-pkgs.patches;
     }
   ];
 }
