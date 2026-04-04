@@ -4,7 +4,10 @@
   stdenv,
   jrl-cmakemodules,
 
+  cmake,
+  doxygen,
   omniorb,
+  pkg-config,
   hpp-util,
 }:
 
@@ -26,8 +29,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
+  nativeBuildInputs = [
+    cmake
+    doxygen
     omniorb
+    pkg-config
   ];
 
   buildInputs = [ jrl-cmakemodules ];
@@ -36,8 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     hpp-util
     omniorb
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

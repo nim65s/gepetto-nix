@@ -4,6 +4,10 @@
   stdenv,
   jrl-cmakemodules,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   hpp-core,
   hpp-universal-robot,
@@ -27,7 +31,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -35,8 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     hpp-core
     hpp-universal-robot
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

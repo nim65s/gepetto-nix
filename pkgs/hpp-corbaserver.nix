@@ -5,7 +5,10 @@
   stdenv,
 
   # nativeBuildInputs
+  cmake,
+  doxygen,
   omniorb,
+  pkg-config,
   python3Packages,
 
   # propagatedBuildInputs
@@ -38,8 +41,11 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
+  nativeBuildInputs = [
+    cmake
+    doxygen
     omniorb
+    pkg-config
     python3Packages.pythonImportsCheckHook
   ];
 
@@ -55,8 +61,6 @@ stdenv.mkDerivation (finalAttrs: {
   checkInputs = [
     psmisc
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   enableParallelBuilding = false;
 

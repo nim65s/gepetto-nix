@@ -4,6 +4,9 @@
   stdenv,
 
   # nativeBuildInputs
+  cmake,
+  doxygen,
+  pkg-config,
   python3Packages,
 
   # propagatedBuildInputs
@@ -29,7 +32,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
+  nativeBuildInputs = [
+    cmake
+    doxygen
+    pkg-config
     python3Packages.omniorb
     python3Packages.python
   ];
@@ -44,8 +50,6 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.hpp-corbaserver
     python3Packages.omniorbpy
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   enableParallelBuilding = false;
 

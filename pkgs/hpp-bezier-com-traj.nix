@@ -6,6 +6,10 @@
   pythonSupport ? false,
   python3Packages,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   cddlib,
   clp,
@@ -34,12 +38,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs =
-    jrl-cmakemodules.doxygenNativeInputs
-    ++ lib.optionals pythonSupport [
-      python3Packages.python
-      python3Packages.pythonImportsCheckHook
-    ];
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.python
+    python3Packages.pythonImportsCheckHook
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -58,15 +64,13 @@ stdenv.mkDerivation (finalAttrs: {
     ndcurves
   ];
 
-  cmakeFlags =
-    jrl-cmakemodules.doxygenCmakeFlags
-    ++ [
-      (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
-      (lib.cmakeBool "USE_GLPK" true)
-    ]
-    ++ lib.optionals stdenv.targetPlatform.isDarwin [
-      (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
-    ];
+  cmakeFlags = [
+    (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
+    (lib.cmakeBool "USE_GLPK" true)
+  ]
+  ++ lib.optionals stdenv.targetPlatform.isDarwin [
+    (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'transition'")
+  ];
 
   doCheck = true;
 

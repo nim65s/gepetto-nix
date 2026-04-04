@@ -2,6 +2,8 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  cmake,
+  doxygen,
   jrl-cmakemodules,
 
   boost,
@@ -31,16 +33,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
-
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
   buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
     boost
     tinyxml-2
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

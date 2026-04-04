@@ -2,6 +2,8 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  cmake,
+  doxygen,
   jrl-cmakemodules,
 
   boost,
@@ -25,8 +27,10 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
-
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
   buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
@@ -35,7 +39,7 @@ stdenv.mkDerivation (finalAttrs: {
     pinocchio
   ];
 
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
+  cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
   ];
 

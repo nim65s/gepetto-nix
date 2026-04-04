@@ -3,6 +3,10 @@
   fetchFromGitHub,
   stdenv,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   coal,
   jrl-cmakemodules,
@@ -26,7 +30,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -34,8 +41,6 @@ stdenv.mkDerivation (finalAttrs: {
     coal
   ];
   doxytagsDeps = [ coal.doc ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   meta = {
     description = "Implements affordance extraction for multi-contact planning";

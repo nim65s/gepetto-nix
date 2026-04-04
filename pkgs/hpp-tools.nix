@@ -2,6 +2,8 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  cmake,
+  doxygen,
   jrl-cmakemodules,
 
   python3Packages,
@@ -22,7 +24,9 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
+  nativeBuildInputs = [
+    cmake
+    doxygen
     python3Packages.python
   ];
 
@@ -31,8 +35,6 @@ stdenv.mkDerivation (finalAttrs: {
   propagatedBuildInputs = [
     python3Packages.numpy
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   meta = {
     description = "Various tools for hpp";
