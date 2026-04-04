@@ -1,6 +1,11 @@
 {
+  gazebros2nix,
+  nix-ros-overlay,
+  nixpkgs,
+  ...
+}:
+{
   config,
-  inputs,
   lib,
   self,
   ...
@@ -18,7 +23,7 @@ in
   };
 
   imports = [
-    inputs.gazebros2nix.flakeModule
+    gazebros2nix.flakeModule
     {
       gazebros2nix.pkgs = false;
     }
@@ -30,11 +35,11 @@ in
     perSystem =
       { system, ... }:
       lib.optionalAttrs cfg.pkgs {
-        _module.args.pkgs = import inputs.nixpkgs {
+        _module.args.pkgs = import nixpkgs {
           inherit system;
           config = config.flakoboros.nixpkgsConfig;
           overlays = [
-            inputs.nix-ros-overlay.overlays.default
+            nix-ros-overlay.overlays.default
             self.overlays.gazebros2nix
             self.overlays.gepetto-pkgs
             self.overlays.flakoboros
