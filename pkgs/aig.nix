@@ -4,6 +4,10 @@
   stdenv,
   fetchFromGitHub,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   boost,
   eigen,
@@ -29,7 +33,10 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -51,7 +58,7 @@ stdenv.mkDerivation (finalAttrs: {
   # [1.9999999999999998 > 1]
   disabledTests = lib.optionals stdenv.hostPlatform.isDarwin [ "test_biped_ig" ];
 
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
+  cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
     (lib.cmakeFeature "CMAKE_CTEST_ARGUMENTS" "--exclude-regex;'${lib.concatStringsSep "|" finalAttrs.disabledTests}'")
   ];

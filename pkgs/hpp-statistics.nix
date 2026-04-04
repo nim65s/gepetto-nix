@@ -4,6 +4,10 @@
   stdenv,
   jrl-cmakemodules,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   hpp-util,
 }:
@@ -26,13 +30,13 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
-
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
   buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [ hpp-util ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

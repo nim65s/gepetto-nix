@@ -7,6 +7,10 @@
   pythonSupport ? false,
   python3Packages,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # buildInputs
   cddlib,
   clp,
@@ -35,12 +39,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs =
-    jrl-cmakemodules.doxygenNativeInputs
-    ++ lib.optionals pythonSupport [
-      python3Packages.python
-      python3Packages.pythonImportsCheckHook
-    ];
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ]
+  ++ lib.optionals pythonSupport [
+    python3Packages.python
+    python3Packages.pythonImportsCheckHook
+  ];
 
   buildInputs = [
     cddlib
@@ -58,7 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optional (!pythonSupport) boost;
 
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
+  cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
     (lib.cmakeBool "BUILD_WITH_CLP" true)
   ];

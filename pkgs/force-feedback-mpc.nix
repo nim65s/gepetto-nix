@@ -4,9 +4,12 @@
   fetchFromGitHub,
   jrl-cmakemodules,
 
+  cmake,
+  doxygen,
   eigen,
   llvmPackages,
   pinocchio,
+  pkg-config,
   crocoddyl,
   boost,
 }:
@@ -22,7 +25,11 @@ stdenv.mkDerivation (_finalAttrs: {
     hash = "sha256-w5mW33EfD0H1euhG9k0PHAcL0yu8qS1grQJVUTkY6Bw=";
   };
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+    pkg-config
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -37,7 +44,7 @@ stdenv.mkDerivation (_finalAttrs: {
     boost
   ];
 
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
+  cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" false)
   ];
 

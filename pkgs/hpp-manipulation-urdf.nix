@@ -4,6 +4,10 @@
   stdenv,
   jrl-cmakemodules,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   hpp-manipulation,
 
@@ -29,15 +33,16 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [ hpp-manipulation ];
 
   checkInputs = [ example-robot-data ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

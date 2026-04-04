@@ -4,6 +4,10 @@
   stdenv,
   jrl-cmakemodules,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   example-robot-data,
   hpp-environments,
@@ -32,7 +36,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -47,8 +54,6 @@ stdenv.mkDerivation (finalAttrs: {
     coal.doc
     pinocchio.doc
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

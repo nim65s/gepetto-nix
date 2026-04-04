@@ -7,6 +7,11 @@
   pythonSupport ? false,
   python3Packages,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+  pkg-config,
+
   # propagatedBuildInputs
   hpp-corbaserver,
 }:
@@ -29,8 +34,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs =
-    jrl-cmakemodules.doxygenNativeInputs ++ lib.optional pythonSupport python3Packages.python;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+    pkg-config
+  ]
+  ++ lib.optional pythonSupport python3Packages.python;
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -38,7 +47,7 @@ stdenv.mkDerivation (finalAttrs: {
     lib.optional pythonSupport python3Packages.hpp-corbaserver
     ++ lib.optional (!pythonSupport) hpp-corbaserver;
 
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
+  cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
   ];
 

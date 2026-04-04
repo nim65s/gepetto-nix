@@ -4,6 +4,10 @@
   fetchpatch,
   stdenv,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   hpp-pinocchio,
   hpp-statistics,
@@ -38,8 +42,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
-
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
   buildInputs = [ jrl-cmakemodules ];
 
   propagatedBuildInputs = [
@@ -50,9 +56,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   doCheck = true;
 
-  cmakeFlags =
-    jrl-cmakemodules.doxygenCmakeFlags
-    ++ lib.optional stdenv.hostPlatform.isDarwin "-DCMAKE_CTEST_ARGUMENTS=--exclude-regex;'test-jacobians|solver-by-substitution'";
+  cmakeFlags = lib.optional stdenv.hostPlatform.isDarwin "-DCMAKE_CTEST_ARGUMENTS=--exclude-regex;'test-jacobians|solver-by-substitution'";
 
   meta = {
     description = "Definition of basic geometric constraints for motion planning";

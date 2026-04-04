@@ -2,9 +2,12 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  cmake,
+  doxygen,
   jrl-cmakemodules,
 
   libsForQt5,
+  pkg-config,
   python3Packages,
 }:
 
@@ -26,8 +29,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs ++ [
+  nativeBuildInputs = [
+    cmake
+    doxygen
     libsForQt5.wrapQtAppsHook
+    pkg-config
     python3Packages.python
   ];
 
@@ -41,8 +47,6 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.hpp-gui
     python3Packages.hpp-plot
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

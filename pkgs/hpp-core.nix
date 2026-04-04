@@ -3,6 +3,10 @@
   fetchFromGitHub,
   stdenv,
 
+  # nativeBuildInputs
+  cmake,
+  doxygen,
+
   # propagatedBuildInputs
   hpp-constraints,
   jrl-cmakemodules,
@@ -33,7 +37,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs = jrl-cmakemodules.doxygenNativeInputs;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ];
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -41,8 +48,6 @@ stdenv.mkDerivation (finalAttrs: {
     hpp-constraints
     proxsuite
   ];
-
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags;
 
   doCheck = true;
 

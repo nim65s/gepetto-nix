@@ -2,6 +2,8 @@
   lib,
   fetchFromGitHub,
   stdenv,
+  cmake,
+  doxygen,
   jrl-cmakemodules,
 
   example-robot-data,
@@ -28,8 +30,11 @@ stdenv.mkDerivation (finalAttrs: {
 
   strictDeps = true;
 
-  nativeBuildInputs =
-    jrl-cmakemodules.doxygenNativeInputs ++ lib.optional pythonSupport python3Packages.python;
+  nativeBuildInputs = [
+    cmake
+    doxygen
+  ]
+  ++ lib.optional pythonSupport python3Packages.python;
 
   buildInputs = [ jrl-cmakemodules ];
 
@@ -37,7 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
     example-robot-data
   ];
 
-  cmakeFlags = jrl-cmakemodules.doxygenCmakeFlags ++ [
+  cmakeFlags = [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
   ];
 
