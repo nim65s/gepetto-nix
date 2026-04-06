@@ -3,6 +3,9 @@
   fetchFromGitHub,
   buildPythonPackage,
 
+  # buildInputs
+  boost,
+
   # nativeBuildInputs
   cmake,
   doxygen,
@@ -49,6 +52,10 @@ buildPythonPackage rec {
   ];
 
   strictDeps = true;
+
+  buildInputs = [
+    boost
+  ];
 
   nativeBuildInputs = [
     cmake
