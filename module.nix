@@ -33,19 +33,27 @@ in
     flake.overlays.gepetto-pkgs = import ./overlay.nix { inherit lib; };
 
     perSystem =
-      { system, ... }:
+      {
+        pkgs,
+        system,
+        ...
+      }:
       lib.optionalAttrs cfg.pkgs {
-        _module.args.pkgs = import nixpkgs {
-          inherit system;
-          config = config.flakoboros.nixpkgsConfig;
-          overlays = [
-            nix-ros-overlay.overlays.default
-            self.overlays.gazebros2nix
-            self.overlays.gepetto-pkgs
-            self.overlays.flakoboros
-          ]
-          ++ config.flakoboros.overlays;
-        };
+        _module.args.pkgs =
+          import nixpkgs {
+            inherit system;
+            config = config.flakoboros.nixpkgsConfig;
+            overlays = [
+              nix-ros-overlay.overlays.default
+              self.overlays.gazebros2nix
+              self.overlays.gepetto-pkgs
+              self.overlays.flakoboros
+            ]
+            ++ config.flakoboros.overlays;
+          }
+          // lib.mapAttrs' (
+            name: overlay: lib.nameValuePair ("pkgs-" + name) (pkgs.extend overlay)
+          ) config.flakoboros.extends;
       };
   };
 }
