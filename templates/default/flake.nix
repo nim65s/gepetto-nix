@@ -16,12 +16,14 @@
         imports = [
           inputs.gepetto.flakeModule
           {
-            flakoboros.overrideAttrs.CHANGEME = _: {
-              src = lib.fileset.toSource {
-                root = ./.;
-                fileset = lib.fileset.unions [
-                  ./CHANGEME
-                ];
+            flakoboros = {
+              overrideAttrs.CHANGEME = _: {
+                src = lib.fileset.toSource {
+                  root = ./.;
+                  fileset = lib.fileset.unions [
+                    ./CHANGEME
+                  ];
+                };
               };
             };
           }
