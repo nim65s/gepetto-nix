@@ -25,7 +25,7 @@
       { lib, ... }:
       let
         flakeModule = inputs.flake-parts.lib.importApply ./module.nix {
-          inherit (inputs) gazebros2nix nix-ros-overlay nixpkgs;
+          inherit (inputs) gazebros2nix;
         };
       in
       {
