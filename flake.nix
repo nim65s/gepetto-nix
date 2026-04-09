@@ -81,9 +81,15 @@
               ];
             };
           };
-          templates.default = {
-            path = ./template;
-            description = "A template for use with gepetto/nix";
+          templates = {
+            default = {
+              path = ./templates/default;
+              description = "A template for use with gepetto/nix";
+            };
+            ros = {
+              path = ./templates/ros;
+              description = "A template for use with gepetto/nix and ROS";
+            };
           };
         };
         perSystem =
