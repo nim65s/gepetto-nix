@@ -103,6 +103,7 @@
           {
 
             devShells = {
+              up = pkgs.callPackage ./shell.nix { };
               default = pkgs.mkShell {
                 name = "Gepetto Main Dev Shell";
                 packages = [
