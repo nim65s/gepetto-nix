@@ -43,6 +43,15 @@
             pkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
             modules = [ ./home/cpene.nix ];
           };
+          lib.mkFlakoboros =
+            module:
+            inputs.flake-parts.lib.mkFlake { inherit inputs; } (args: {
+              systems = inputs.systems;
+              imports = [
+                flakeModule
+                { flakoboros = module args; }
+              ];
+            });
           systemConfigs = {
             default = inputs.system-manager.lib.makeSystemConfig {
               modules = [
