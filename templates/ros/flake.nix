@@ -5,7 +5,7 @@
 
   outputs =
     inputs:
-    inputs.gepetto.lib.mkFlakoboros (
+    inputs.gepetto.lib.mkFlakoboros inputs (
       { lib, ... }:
       {
         rosOverrideAttrs.CHANGEME = {
