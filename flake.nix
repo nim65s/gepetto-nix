@@ -44,7 +44,7 @@
             modules = [ ./home/cpene.nix ];
           };
           lib.mkFlakoboros =
-            module:
+            inputs: module:
             inputs.flake-parts.lib.mkFlake { inherit inputs; } (args: {
               systems = import inputs.systems;
               imports = [
