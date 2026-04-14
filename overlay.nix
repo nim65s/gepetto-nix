@@ -1,6 +1,10 @@
 { lib, ... }:
 final: prev:
 {
+  eiquadprog = prev.eiquadprog.overrideAttrs {
+    # TODO: nixpkgs has it in propagatedBuildInputs, which does not end up in devShell correctly
+    buildInputs = [ final.jrl-cmakemodules ];
+  };
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (
       python-final: python-prev:
