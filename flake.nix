@@ -83,6 +83,12 @@
                 ./modules/system-manager/nvidia-590-48.nix
               ];
             };
+            shunbetsu = inputs.system-manager.lib.makeSystemConfig {
+              modules = [
+                inputs.nix-system-graphics.systemModules.default
+                ./modules/system-manager/nvidia-535-288-01.nix
+              ];
+            };
             tomuraushi = inputs.system-manager.lib.makeSystemConfig {
               modules = [
                 inputs.nix-system-graphics.systemModules.default
