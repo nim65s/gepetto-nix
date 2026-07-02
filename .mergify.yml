@@ -15,3 +15,5 @@ queue_rules:
 merge_protections_settings:
   auto_merge_conditions: true
   reporting_method: check-runs
+merge_queue:
+  queue_controls_comment: false
