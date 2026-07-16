@@ -14,13 +14,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-affordance";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-affordance";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-CJ2oIbBdh9mfGTx1UoJO7sVTFinbqvxo9vwhAuKwuvY=";
+    hash = "sha256-VfLy4/ZwAXhCIeN5mUjrzr0KTiEj60+OLLWjG0nm9WM=";
   };
 
   outputs = [
