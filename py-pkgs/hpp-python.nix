@@ -1,7 +1,8 @@
 {
   lib,
   fetchFromGitHub,
-  buildPythonPackage,
+  toPythonModule,
+  stdenv,
 
   # buildInputs
   boost,
@@ -30,66 +31,67 @@
   pkgs,
 }:
 
-buildPythonPackage rec {
-  pname = "hpp-python";
-  version = "8.0.0";
-  pyproject = false; # built with CMake
+toPythonModule (
+  stdenv.mkDerivation (finalAttrs: {
+    pname = "hpp-python";
+    version = "8.0.0";
 
-  src = fetchFromGitHub {
-    owner = "humanoid-path-planner";
-    repo = "hpp-python";
-    tag = "v${version}";
-    hash = "sha256-eVatSGqTINzDZQCv7GDsfYTZKHCw7voEZGFev70scvI=";
-  };
+    src = fetchFromGitHub {
+      owner = "humanoid-path-planner";
+      repo = "hpp-python";
+      tag = "v${finalAttrs.version}";
+      hash = "sha256-eVatSGqTINzDZQCv7GDsfYTZKHCw7voEZGFev70scvI=";
+    };
 
-  prePatch = ''
-    patchShebangs doc/configure.py
-  '';
+    prePatch = ''
+      patchShebangs doc/configure.py
+    '';
 
-  outputs = [
-    "out"
-    "doc"
-  ];
+    outputs = [
+      "out"
+      "doc"
+    ];
 
-  strictDeps = true;
+    strictDeps = true;
 
-  buildInputs = [
-    boost
-  ];
+    buildInputs = [
+      boost
+    ];
 
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    pkg-config
-  ];
+    nativeBuildInputs = [
+      cmake
+      doxygen
+      pkg-config
+    ];
 
-  propagatedBuildInputs = [
-    eigenpy
-    jrl-cmakemodules
-    pinocchio
-    hpp-util
-    hpp-pinocchio
-    hpp-constraints
-    hpp-core
-    hpp-corbaserver
-    hpp-manipulation
-    hpp-manipulation-urdf
-    lxml
-  ];
+    propagatedBuildInputs = [
+      eigenpy
+      jrl-cmakemodules
+      pinocchio
+      hpp-util
+      hpp-pinocchio
+      hpp-constraints
+      hpp-core
+      hpp-corbaserver
+      hpp-manipulation
+      hpp-manipulation-urdf
+      lxml
+    ];
 
-  installCheckInputs = [
-    pkgs.example-robot-data
-    pkgs.hpp-environments
-  ];
+    installCheckInputs = [
+      pkgs.example-robot-data
+      pkgs.hpp-environments
+    ];
 
-  pythonImportsCheck = [
-    "pyhpp"
-  ];
+    pythonImportsCheck = [
+      "pyhpp"
+    ];
 
-  meta = {
-    homepage = "https://github.com/humanoid-path-planner/hpp-python/";
-    license = lib.licenses.gpl3Only;
-    maintainers = with lib.maintainers; [ nim65s ];
-    platforms = lib.platforms.linux; # TODO: macos
-  };
-}
+    meta = {
+      homepage = "https://github.com/humanoid-path-planner/hpp-python/";
+      license = lib.licenses.gpl3Only;
+      maintainers = with lib.maintainers; [ nim65s ];
+      platforms = lib.platforms.linux; # TODO: macos
+    };
+  })
+)
