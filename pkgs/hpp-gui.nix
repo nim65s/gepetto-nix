@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch2,
   stdenv,
 
   cmake,
@@ -14,22 +13,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gui";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gui";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-cYUaSlj7S9BZf7ZSqxApb2IldWMd4DxoJ9okPAQlnU4=";
+    hash = "sha256-kfMUjLdk+8ZX4wTsbsKmWc7Ot+L5Bn/OkTp1QVUoB7c=";
   };
-
-  # https://github.com/humanoid-path-planner/hpp-gui/pull/147
-  patches = [
-    (fetchpatch2 {
-      url = "https://github.com/humanoid-path-planner/hpp-gui/commit/fb765498a060616fbb0a27c7c4d0deaca824d9ae.patch?full_index=1";
-      hash = "sha256-m6D3TInfhfOoT/BzOqUkflUQV/r7tLbxsVfeuCvjtG0=";
-    })
-  ];
 
   outputs = [
     "out"
