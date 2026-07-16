@@ -34,13 +34,13 @@
 toPythonModule (
   stdenv.mkDerivation (finalAttrs: {
     pname = "hpp-python";
-    version = "8.0.0";
+    version = "9.0.1";
 
     src = fetchFromGitHub {
       owner = "humanoid-path-planner";
       repo = "hpp-python";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-eVatSGqTINzDZQCv7GDsfYTZKHCw7voEZGFev70scvI=";
+      hash = "sha256-tAZnFWsoqme0ALKnG2h/QSmiFP/8AHsuUiV4ECwUErc=";
     };
 
     prePatch = ''
