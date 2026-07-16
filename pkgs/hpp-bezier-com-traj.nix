@@ -22,13 +22,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-bezier-com-traj";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-bezier-com-traj";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-I8LgQ9cLQ/JwiRwXy4DXBD8+OlTqjgSFpSPcsXxZXY0=";
+    hash = "sha256-8J1SK9Zx8WDBirZQjQs3SyOKaIIq32lNxW8Ir5NeB7g=";
   };
 
   outputs = [
