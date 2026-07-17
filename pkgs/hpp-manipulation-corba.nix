@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation-corba";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation-corba";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-nEPxXM63PUM1jUud0HOwGcoqDhXgeUARjv3mSZKrn08=";
+    hash = "sha256-3mmBZqfEcUuBVVNfRGvCg0ZSbPgbIjT/yXwjzczPI5U=";
   };
 
   outputs = [

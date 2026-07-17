@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-baxter";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-baxter";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-EBJTv50A/JzTcTFyfJoKrNf2zOR+BmV4muJmJxpW2KE=";
+    hash = "sha256-1n4P2LWPbINWjDJCq4chWcGQ3L9v3EQaZv3FI8eqZbc=";
   };
 
   outputs = [

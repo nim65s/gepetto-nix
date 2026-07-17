@@ -20,13 +20,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-toppra";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-toppra";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-mwF/3kskiBylLhqoCk+iB4uaqj8hxSB3yNFuMAmLj7o=";
+    hash = "sha256-cge+OuTUscc0+2Sj8kB8c/gTqIphD6Auetf1hbMNBPQ=";
   };
 
   nativeBuildInputs = [

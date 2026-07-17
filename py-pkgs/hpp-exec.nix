@@ -11,7 +11,7 @@
 toPythonModule (
   stdenv.mkDerivation (_finalAttrs: {
     pname = "hpp-exec";
-    version = "0-unstable-2026-06-22";
+    version = "9.0.0";
     __structuredAttrs = true;
     strictDeps = true;
 

@@ -13,13 +13,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-gepetto-viewer";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-gepetto-viewer";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-UquLzNJ8kxAs/CCAVoc/Z6rut9tn+gsVmUWWe9BgMJU=";
+    hash = "sha256-J8IeqTIlc0+7hrueLzP4QKMrt8/zKxVvR44H4ETNmKI=";
   };
 
   outputs = [

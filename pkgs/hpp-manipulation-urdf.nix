@@ -17,13 +17,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-manipulation-urdf";
-  version = "8.0.0";
+  version = "9.0.0";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-manipulation-urdf";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-5lie5WjnB6OyBtR1hJIz1QOmVZ+tRIUPy3bXbEkfXc8=";
+    hash = "sha256-6ZmqQ2q2WG6aNEyTKA0TjHXlGeA6hAKYF5I/7mLuNqg=";
   };
 
   outputs = [
