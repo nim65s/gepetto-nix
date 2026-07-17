@@ -11,6 +11,7 @@
   cmake,
   doxygen,
   pkg-config,
+  pybind11-stubgen,
 
   # propagatedBuildInputs
   eigenpy,
@@ -62,6 +63,7 @@ toPythonModule (
       cmake
       doxygen
       pkg-config
+      pybind11-stubgen
     ];
 
     propagatedBuildInputs = [
