@@ -224,11 +224,38 @@
                   pkgs.hpp-environments
                 ];
                 packages = [
+                  # keep-sorted start
+                  pkgs.hpp-affordance
+                  pkgs.hpp-constraints
+                  pkgs.hpp-core
+                  pkgs.hpp-manipulation
+                  pkgs.hpp-manipulation-urdf
+                  pkgs.hpp-pinocchio
+                  pkgs.hpp-statistics
+                  pkgs.hpp-tools
+                  pkgs.hpp-util
+                  # keep-sorted end
                   (pkgs.python3.withPackages (p: [
-                    # p.gepetto-gui
+                    # keep-sorted start
+                    p.hpp-affordance-corba
+                    p.hpp-baxter
+                    p.hpp-bezier-com-traj
+                    p.hpp-centroidal-dynamics
+                    p.hpp-corbaserver
+                    p.hpp-environments
+                    p.hpp-exec
                     p.hpp-gepetto-viewer
+                    p.hpp-gui
+                    p.hpp-manipulation-corba
                     p.hpp-plot
-                    # p.pinocchio
+                    p.hpp-practicals
+                    p.hpp-python
+                    p.hpp-romeo
+                    # p.hpp-rviz
+                    p.hpp-toppra
+                    p.hpp-tutorial
+                    p.hpp-universal-robot
+                    # keep-sorted end
                   ]))
                 ];
               };
@@ -240,7 +267,6 @@
                   (pkgs.python3.withPackages (p: [
                     # keep-sorted start
                     p.example-parallel-robots
-                    p.fatrop
                     p.gepetto-gui
                     p.ipython
                     p.matplotlib
