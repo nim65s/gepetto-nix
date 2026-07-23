@@ -240,7 +240,6 @@
                   (pkgs.python3.withPackages (p: [
                     # keep-sorted start
                     p.example-parallel-robots
-                    p.fatrop
                     p.gepetto-gui
                     p.ipython
                     p.matplotlib
