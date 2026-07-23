@@ -18,10 +18,27 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-a+O3jQDJFq/v0zhpGJVuwjgWAZWkIqiNfKt/L4IOSco=";
   };
 
-  nativeBuildInputs = [ cmake ];
+  outputs = [
+    "out"
+    "examples"
+  ];
+
+  nativeBuildInputs = [
+    cmake
+  ];
 
   buildInputs = [
     eigen
+  ];
+
+  postInstall = ''
+    mkdir -p $examples/bin
+    install -Dm755 -t $examples/bin nix/store/*/bin/*
+  '';
+
+  cmakeFlags = [
+    "-DCMAKE_SKIP_BUILD_RPATH=ON"
+    "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON"
   ];
 
   meta = {
