@@ -335,7 +335,7 @@
                   name = "ros-rolling";
                   postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "rolling" { };
                   paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-rolling-" n) self'.packages) ++ [
-                    pkgs.qt5.wrapQtAppsHook
+                    pkgs.qt6.wrapQtAppsHook
                   ];
                 };
 
