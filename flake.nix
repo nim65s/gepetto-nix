@@ -323,6 +323,22 @@
                   ];
                 };
 
+                ros-kilted = pkgs.rosPackages.kilted.buildEnv {
+                  name = "ros-kilted";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "kilted" { };
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-kilted-" n) self'.packages) ++ [
+                    pkgs.qt5.wrapQtAppsHook
+                  ];
+                };
+
+                ros-rolling = pkgs.rosPackages.rolling.buildEnv {
+                  name = "ros-rolling";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "rolling" { };
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-rolling-" n) self'.packages) ++ [
+                    pkgs.qt6.wrapQtAppsHook
+                  ];
+                };
+
                 vscode =
                   let
                     # This contain coreutils and a 'id' binary not configured for LDAP,
@@ -458,6 +474,7 @@
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
                 inherit (pkgs.rosPackages.humble)
                   agimus-demo-03-mpc-dummy-traj
+                  hpp-rviz
                   quest-control
                   ;
               }
@@ -467,9 +484,20 @@
                   tiago-pro-gazebo
                   # TODO : those 4 are required for tiago_pro_gazebo tiago_pro_gazebo.launch.py, this should not be the case
                   br2-gazebo-worlds
+                  hpp-rviz
                   ros2launch
                   ros-gz-bridge
                   ros-gz-image
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-kilted-${n}") {
+                inherit (pkgs.rosPackages.kilted)
+                  hpp-rviz
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-rolling-${n}") {
+                inherit (pkgs.rosPackages.rolling)
+                  hpp-rviz
                   ;
               }
             );
