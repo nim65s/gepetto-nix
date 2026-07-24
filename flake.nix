@@ -458,6 +458,7 @@
               // lib.mapAttrs' (n: lib.nameValuePair "ros-humble-${n}") {
                 inherit (pkgs.rosPackages.humble)
                   agimus-demo-03-mpc-dummy-traj
+                  hpp-rviz
                   quest-control
                   ;
               }
@@ -467,9 +468,20 @@
                   tiago-pro-gazebo
                   # TODO : those 4 are required for tiago_pro_gazebo tiago_pro_gazebo.launch.py, this should not be the case
                   br2-gazebo-worlds
+                  hpp-rviz
                   ros2launch
                   ros-gz-bridge
                   ros-gz-image
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-kilted-${n}") {
+                inherit (pkgs.rosPackages.kilted)
+                  hpp-rviz
+                  ;
+              }
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-rolling${n}") {
+                inherit (pkgs.rosPackages.rolling)
+                  hpp-rviz
                   ;
               }
             );
