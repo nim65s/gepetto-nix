@@ -323,6 +323,22 @@
                   ];
                 };
 
+                ros-kilted = pkgs.rosPackages.kilted.buildEnv {
+                  name = "ros-kilted";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "kilted" { };
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-kilted-" n) self'.packages) ++ [
+                    pkgs.qt5.wrapQtAppsHook
+                  ];
+                };
+
+                ros-rolling = pkgs.rosPackages.rolling.buildEnv {
+                  name = "ros-rolling";
+                  postBuild = inputs.flakoboros.lib.rosWrapperArgs pkgs "rolling" { };
+                  paths = lib.attrValues (lib.filterAttrs (n: _p: lib.hasPrefix "ros-rolling-" n) self'.packages) ++ [
+                    pkgs.qt5.wrapQtAppsHook
+                  ];
+                };
+
                 vscode =
                   let
                     # This contain coreutils and a 'id' binary not configured for LDAP,
@@ -479,7 +495,7 @@
                   hpp-rviz
                   ;
               }
-              // lib.mapAttrs' (n: lib.nameValuePair "ros-rolling${n}") {
+              // lib.mapAttrs' (n: lib.nameValuePair "ros-rolling-${n}") {
                 inherit (pkgs.rosPackages.rolling)
                   hpp-rviz
                   ;
