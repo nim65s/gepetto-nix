@@ -369,6 +369,7 @@
               // {
                 inherit (pkgs)
                   # keep-sorted start
+                  acados
                   aig
                   aligator
                   biped-stabilizer
