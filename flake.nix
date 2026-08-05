@@ -392,6 +392,7 @@
                   hpp-core
                   hpp-doc
                   hpp-environments
+                  hpp-exec
                   hpp-gepetto-viewer
                   hpp-gui
                   hpp-manipulation
@@ -400,6 +401,7 @@
                   hpp-pinocchio
                   hpp-plot
                   hpp-practicals
+                  hpp-python
                   hpp-romeo
                   hpp-statistics
                   hpp-template-corba

@@ -2,24 +2,25 @@
   lib,
   fetchFromGitHub,
   stdenv,
-  cmake,
-  doxygen,
+
+  # nativeBuildInputs
+  python3Packages,
+
+  # buildInputs
   jrl-cmakemodules,
 
-  libsForQt5,
-  pkg-config,
-  python3Packages,
+  nix-update-script,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "hpp-practicals";
-  version = "9.0.0";
+  version = "9.0.2";
 
   src = fetchFromGitHub {
     owner = "humanoid-path-planner";
     repo = "hpp-practicals";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-SOui4qBvkaGZZxxaz0Et80quxKIx/dm2YGQBV8vVjQA=";
+    hash = "sha256-KXPqdBxcY0bt0eZq2EfNmpvjBRAtGKQCuGD+4uZOleQ=";
   };
 
   outputs = [
@@ -27,18 +28,11 @@ stdenv.mkDerivation (finalAttrs: {
     "doc"
   ];
 
-  strictDeps = true;
-
-  nativeBuildInputs = [
-    cmake
-    doxygen
-    libsForQt5.wrapQtAppsHook
-    pkg-config
+  nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.python
   ];
 
   buildInputs = [
-    libsForQt5.qtbase
     jrl-cmakemodules
   ];
 
@@ -48,7 +42,17 @@ stdenv.mkDerivation (finalAttrs: {
     python3Packages.hpp-plot
   ];
 
+  cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
+    (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
+    (lib.cmakeBool "USE_CORBA" true)
+  ];
+
   doCheck = true;
+
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  passthru.updateScript = nix-update-script { };
 
   meta = {
     description = "Practicals for Humanoid Path Planner software";
