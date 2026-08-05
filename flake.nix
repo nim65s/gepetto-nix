@@ -471,6 +471,7 @@
                   toppra
                   tsid
                   unitree-sdk2-python
+                  viser
                   # keep-sorted end
                   ;
               }
