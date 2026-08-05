@@ -8,6 +8,7 @@
 
   # buildInputs
   jrl-cmakemodules,
+  libsForQt5,
 
   nix-update-script,
 }:
@@ -30,10 +31,12 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     python3Packages.python
+    libsForQt5.wrapQtAppsHook
   ];
 
   buildInputs = [
     jrl-cmakemodules
+    libsForQt5.qtbase
   ];
 
   propagatedBuildInputs = [
