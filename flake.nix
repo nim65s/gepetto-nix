@@ -430,7 +430,7 @@
                   aig
                   aligator
                   biped-stabilizer
-                  brax
+                  # brax TODO https://github.com/tensorflow/tensorflow/issues/102890
                   casadi
                   coal
                   colmpc
