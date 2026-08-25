@@ -13,6 +13,9 @@ final: prev:
         tyro = python-prev.tyro.overrideAttrs {
           patches = [ ./patches/fix-shtab-1.9.patch ];
         };
+
+        # https://github.com/tensorflow/tensorflow/issues/102890
+        tensorflow-bin = null;
       }
       // lib.filesystem.packagesFromDirectoryRecursive {
         inherit (python-final) callPackage;
