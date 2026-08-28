@@ -21,6 +21,7 @@
         eval "$(${lib.getExe' pkgs.python3Packages.argcomplete "register-python-argcomplete"} colcon ros2)"
       '';
     };
+    btop.enable = true;
     direnv = {
       enable = true;
       nix-direnv.enable = true;
