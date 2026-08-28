@@ -37,14 +37,14 @@
   services.home-manager = {
     autoExpire = {
       enable = true;
-      frequency = "minutely";
+      frequency = "monthly";
       store.cleanup = true;
       store.options = "--delete-older-than 30d";
     };
     autoUpgrade = {
       enable = true;
       flakeUrl = "github:gepetto/nix/test";
-      frequency = "weekly";
+      frequency = "minutely";
       useFlake = true;
       flags = [
         "-b"
