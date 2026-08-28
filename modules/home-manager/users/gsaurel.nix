@@ -27,12 +27,13 @@
       POETRY_VIRTUALENVS_IN_PROJECT = "true";
       RUSTC_WRAPPER = lib.getExe pkgs.sccache;
       SHELL = lib.getExe config.programs.fish.package;
-      EDITOR = lib.getExe config.programs.nixvim.build.package;
-      VISUAL = lib.getExe config.programs.nixvim.build.package;
+      # EDITOR = lib.getExe config.programs.nixvim.build.package;
+      # VISUAL = lib.getExe config.programs.nixvim.build.package;
     };
   };
 
   programs = {
+    helix.enable = true;
     starship.enable = true;
   };
 }

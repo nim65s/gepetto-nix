@@ -37,7 +37,7 @@
   services.home-manager = {
     autoExpire = {
       enable = true;
-      frequency = "weekly";
+      frequency = "minutely";
       store.cleanup = true;
       store.options = "--delete-older-than 30d";
     };
