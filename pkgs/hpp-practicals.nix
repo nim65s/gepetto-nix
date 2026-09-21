@@ -9,6 +9,7 @@
   # buildInputs
   jrl-cmakemodules,
   libsForQt5,
+  qgv,
 
   nix-update-script,
 }:
@@ -37,6 +38,7 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     jrl-cmakemodules
     libsForQt5.qtbase
+    qgv
   ];
 
   propagatedBuildInputs = [
@@ -46,7 +48,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
-    (lib.cmakeBool "USE_CORBA" true)
+    (lib.cmakeBool "USE_CORBA" false)
   ];
 
   doCheck = true;
