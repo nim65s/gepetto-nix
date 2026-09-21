@@ -372,11 +372,11 @@
         "userborn": "userborn"
       },
       "locked": {
-        "lastModified": 1789854950,
-        "narHash": "sha256-JQmCeY70N7ERwWojhSMlZFCrpn/bypXEoejeNIWhgBs=",
+        "lastModified": 1789973414,
+        "narHash": "sha256-6JF58nNvQ+BylQ9o7xzLF8r5StIz8yvn63b3B1xyZNc=",
         "owner": "numtide",
         "repo": "system-manager",
-        "rev": "eeffc81b593cc05666cbeedd70a98e52610bc63b",
+        "rev": "22909079d4f6bf60804b33949d7180ccd7e74c6c",
         "type": "github"
       },
       "original": {
