@@ -49,7 +49,7 @@ stdenv.mkDerivation (finalAttrs: {
   meta = {
     description = "Various tools for hpp";
     homepage = "https://github.com/humanoid-path-planner/hpp-tools";
-    changelog = "https://github.com/humanoid-path-planner/hpp-corbaserver/releases/tag/${finalAttrs.src.tag}";
+    changelog = "https://github.com/humanoid-path-planner/hpp-tools/releases/tag/${finalAttrs.src.tag}";
     license = lib.licenses.bsd2;
     maintainers = [ lib.maintainers.nim65s ];
     platforms = lib.platforms.unix;

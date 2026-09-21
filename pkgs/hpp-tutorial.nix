@@ -38,7 +38,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   propagatedBuildInputs = [
     python3Packages.hpp-gepetto-viewer
-    python3Packages.hpp-manipulation-corba
   ];
 
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
