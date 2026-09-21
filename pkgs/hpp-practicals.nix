@@ -41,7 +41,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   propagatedBuildInputs = [
     python3Packages.hpp-gepetto-viewer
-    python3Packages.hpp-gui
     python3Packages.hpp-plot
   ];
 
