@@ -191,7 +191,6 @@
                     p.hpp-environments
                     p.hpp-exec
                     p.hpp-gepetto-viewer
-                    p.hpp-gui
                     p.hpp-plot
                     p.hpp-practicals
                     p.hpp-python
@@ -344,7 +343,6 @@
                   hpp-environments
                   hpp-exec
                   hpp-gepetto-viewer
-                  hpp-gui
                   hpp-manipulation
                   hpp-manipulation-urdf
                   hpp-pinocchio
@@ -393,7 +391,6 @@
                   hpp-environments
                   hpp-exec
                   hpp-gepetto-viewer
-                  hpp-gui
                   hpp-plot
                   hpp-practicals
                   hpp-python

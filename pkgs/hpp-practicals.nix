@@ -9,6 +9,7 @@
   # buildInputs
   jrl-cmakemodules,
   libsForQt5,
+  qgv,
 
   nix-update-script,
 }:
@@ -37,17 +38,17 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     jrl-cmakemodules
     libsForQt5.qtbase
+    qgv
   ];
 
   propagatedBuildInputs = [
     python3Packages.hpp-gepetto-viewer
-    python3Packages.hpp-gui
     python3Packages.hpp-plot
   ];
 
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
-    (lib.cmakeBool "USE_CORBA" true)
+    (lib.cmakeBool "USE_CORBA" false)
   ];
 
   doCheck = true;

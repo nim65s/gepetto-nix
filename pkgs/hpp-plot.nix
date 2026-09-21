@@ -11,7 +11,9 @@
   python3Packages,
 
   # buildInputs
+  hpp-manipulation,
   jrl-cmakemodules,
+  qgv,
 
   nix-update-script,
 }:
@@ -34,15 +36,18 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = jrl-cmakemodules.docsNativeBuildInputs ++ [
     libsForQt5.wrapQtAppsHook
+    python3Packages.numpy
     python3Packages.python
     npmHooks.npmConfigHook
     nodejs
   ];
 
   buildInputs = [
+    hpp-manipulation
     jrl-cmakemodules
     libsForQt5.qtbase
     libsForQt5.qtwayland
+    qgv
   ];
 
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
