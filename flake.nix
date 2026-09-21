@@ -111,7 +111,6 @@
                   export PATH=$INSTALL_HPP_DIR/bin:$PATH
                   export LD_LIBRARY_PATH=$INSTALL_HPP_DIR/lib
                   export PYTHONPATH=$INSTALL_HPP_DIR/${pkgs.python3.sitePackages}
-                  export GEPETTO_GUI_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/gepetto-gui-plugins
                   export HPP_PLUGIN_DIRS=$INSTALL_HPP_DIR/lib/hppPlugins
                 '';
                 packages =
@@ -186,16 +185,13 @@
                   # keep-sorted end
                   (pkgs.python3.withPackages (p: [
                     # keep-sorted start
-                    p.hpp-affordance-corba
                     p.hpp-baxter
                     p.hpp-bezier-com-traj
                     p.hpp-centroidal-dynamics
-                    p.hpp-corbaserver
                     p.hpp-environments
                     p.hpp-exec
                     p.hpp-gepetto-viewer
                     p.hpp-gui
-                    p.hpp-manipulation-corba
                     p.hpp-plot
                     p.hpp-practicals
                     p.hpp-python
@@ -216,7 +212,6 @@
                   (pkgs.python3.withPackages (p: [
                     # keep-sorted start
                     p.example-parallel-robots
-                    p.gepetto-gui
                     p.ipython
                     p.matplotlib
                     p.mim-solvers
@@ -251,8 +246,6 @@
                 python = pkgs.python3.withPackages (p: [
                   # keep-sorted start
                   p.crocoddyl
-                  p.gepetto-gui
-                  p.hpp-corba
                   p.ipython
                   p.matplotlib
                   # keep-sorted end
@@ -341,14 +334,11 @@
                   example-robot-data
                   flex-joints
                   force-feedback-mpc
-                  gepetto-viewer
                   hpp-affordance
-                  hpp-affordance-corba
                   hpp-baxter
                   hpp-bezier-com-traj
                   hpp-centroidal-dynamics
                   hpp-constraints
-                  hpp-corbaserver
                   hpp-core
                   hpp-doc
                   hpp-environments
@@ -356,7 +346,6 @@
                   hpp-gepetto-viewer
                   hpp-gui
                   hpp-manipulation
-                  hpp-manipulation-corba
                   hpp-manipulation-urdf
                   hpp-pinocchio
                   hpp-plot
@@ -364,7 +353,6 @@
                   hpp-python
                   hpp-romeo
                   hpp-statistics
-                  hpp-template-corba
                   hpp-tools
                   hpp-toppra
                   hpp-tutorial
@@ -401,18 +389,11 @@
                   example-robot-data
                   flex-joints
                   force-feedback-mpc
-                  gepetto-gui
-                  gepetto-viewer
-                  gepetto-viewer-corba
-                  hpp-affordance-corba
-                  hpp-corba
-                  hpp-corbaserver
                   hpp-doc
                   hpp-environments
                   hpp-exec
                   hpp-gepetto-viewer
                   hpp-gui
-                  hpp-manipulation-corba
                   hpp-plot
                   hpp-practicals
                   hpp-python

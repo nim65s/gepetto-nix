@@ -36,11 +36,6 @@ stdenv.mkDerivation (finalAttrs: {
     libsForQt5.qtbase
   ];
 
-  propagatedBuildInputs = [
-    python3Packages.gepetto-viewer-corba
-    python3Packages.hpp-manipulation-corba
-  ];
-
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
   ];

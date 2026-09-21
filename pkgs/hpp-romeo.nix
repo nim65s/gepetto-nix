@@ -9,9 +9,6 @@
   # buildInputs
   jrl-cmakemodules,
 
-  # propagatedBuildInputs
-  hpp-corbaserver,
-
   # checkInputs
   example-robot-data,
 
@@ -41,10 +38,6 @@ stdenv.mkDerivation (finalAttrs: {
     jrl-cmakemodules
   ];
 
-  propagatedBuildInputs =
-    lib.optional pythonSupport python3Packages.hpp-corbaserver
-    ++ lib.optional (!pythonSupport) hpp-corbaserver;
-
   checkInputs = [
     example-robot-data
   ];
@@ -52,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_PYTHON_INTERFACE" pythonSupport)
     (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
-    (lib.cmakeBool "USE_CORBA" true)
+    (lib.cmakeBool "USE_CORBA" false)
   ];
 
   doCheck = true;

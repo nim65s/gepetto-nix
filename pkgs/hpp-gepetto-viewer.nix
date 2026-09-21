@@ -41,8 +41,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   propagatedBuildInputs = [
     python3Packages.boost
-    python3Packages.gepetto-viewer-corba
-    python3Packages.hpp-corbaserver
     python3Packages.hpp-python
     python3Packages.pycollada
     python3Packages.trimesh

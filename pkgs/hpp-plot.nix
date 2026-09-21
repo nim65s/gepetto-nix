@@ -45,14 +45,9 @@ stdenv.mkDerivation (finalAttrs: {
     libsForQt5.qtwayland
   ];
 
-  propagatedBuildInputs = [
-    python3Packages.gepetto-viewer-corba
-    python3Packages.hpp-manipulation-corba
-  ];
-
   cmakeFlags = jrl-cmakemodules.docsCmakeFlags ++ [
     (lib.cmakeBool "BUILD_TESTING" finalAttrs.doCheck)
-    (lib.cmakeBool "USE_CORBA" true)
+    (lib.cmakeBool "USE_CORBA" false)
     (lib.cmakeBool "USE_JS" false) # build from nix not cmake
     (lib.cmakeBool "USE_QT" true)
   ];
